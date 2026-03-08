@@ -1,5 +1,22 @@
 import { CalculatorCategory } from './types';
 
+const IMPLEMENTED_CALCULATOR_IDS = new Set([
+  'arithmetic',
+  'break-even',
+  'compound-interest',
+  'currency-converter',
+  'discount',
+  'emi',
+  'gst',
+  'jewellery',
+  'lumpsum',
+  'markup-margin',
+  'percentage',
+  'roi',
+  'simple-interest',
+  'sip',
+]);
+
 export const calculatorCategories: CalculatorCategory[] = [
   {
     id: 'basic',
@@ -426,6 +443,23 @@ export const calculatorCategories: CalculatorCategory[] = [
 
 export const getAllCalculators = () => {
   return calculatorCategories.flatMap(category => category.calculators);
+};
+
+export const isCalculatorImplemented = (id: string) => {
+  return IMPLEMENTED_CALCULATOR_IDS.has(id);
+};
+
+export const getImplementedCategories = () => {
+  return calculatorCategories
+    .map((category) => ({
+      ...category,
+      calculators: category.calculators.filter((calc) => isCalculatorImplemented(calc.id)),
+    }))
+    .filter((category) => category.calculators.length > 0);
+};
+
+export const getImplementedCategoryById = (id: string) => {
+  return getImplementedCategories().find((category) => category.id === id);
 };
 
 export const getCalculatorById = (id: string) => {

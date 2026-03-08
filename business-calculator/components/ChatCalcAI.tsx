@@ -35,7 +35,6 @@ export default function ChatCalcAI() {
     setMessages([...messages, userMessage]);
     setInput('');
 
-    // Simulate AI response
     setTimeout(() => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -49,7 +48,7 @@ export default function ChatCalcAI() {
 
   const getAIResponse = (query: string): string => {
     const lowerQuery = query.toLowerCase();
-    
+
     if (lowerQuery.includes('emi') || lowerQuery.includes('loan')) {
       return 'The EMI Calculator helps you calculate monthly loan payments. You need to enter the loan amount, interest rate, and tenure. The formula is: EMI = [P × r × (1+r)^n] / [(1+r)^n-1], where P is principal, r is monthly rate, and n is tenure in months.';
     } else if (lowerQuery.includes('sip') || lowerQuery.includes('investment')) {
@@ -65,7 +64,6 @@ export default function ChatCalcAI() {
 
   return (
     <>
-      {/* Floating Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -76,10 +74,8 @@ export default function ChatCalcAI() {
         </button>
       )}
 
-      {/* Chat Panel */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 w-96 h-[500px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200">
-          {/* Header */}
           <div className="bg-indigo-600 text-white p-4 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <MessageCircle className="w-5 h-5" />
@@ -93,7 +89,6 @@ export default function ChatCalcAI() {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.map((message) => (
               <div
@@ -113,7 +108,6 @@ export default function ChatCalcAI() {
             ))}
           </div>
 
-          {/* Input */}
           <div className="p-4 border-t border-gray-200">
             <div className="flex space-x-2">
               <input

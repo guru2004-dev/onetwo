@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Search, Calculator as CalcIcon, TrendingUp, Sparkles } from 'lucide-react';
-import CategoryCard from '@/components/CategoryCard';
 import ExpandableCategoryCard from '@/components/ExpandableCategoryCard';
 import { calculatorCategories } from '@/lib/calculators-data';
 
@@ -22,9 +21,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              All Business Calculators
-              <br />
-              <span className="text-indigo-200">in One Place</span>
+              Advanced AI Business Intelligence Calculator
             </h1>
             <p className="text-xl md:text-2xl text-indigo-100 mb-8 max-w-3xl mx-auto">
               Fast, accurate, and easy-to-use calculators for business, finance, banking, accounting, taxes, and more.
@@ -45,23 +42,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Calculator Categories */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 rounded-2xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Calculator Categories</h2>
-          <p className="text-lg text-gray-600">
-            Explore our comprehensive collection organized by category
+      {/* Calculator Categories - Expandable Section at Bottom */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mb-4">
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">Calculator Categories</h2>
+          <p className="text-lg text-gray-600 text-center">
+            Browse and explore all our calculators by category
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {calculatorCategories.map((category) => (
-            <CategoryCard
+            <ExpandableCategoryCard
               key={category.id}
               id={category.id}
               name={category.name}
               description={category.description}
               icon={category.icon}
-              calculatorCount={category.calculators.length}
+              calculators={category.calculators}
             />
           ))}
         </div>
@@ -97,28 +94,6 @@ export default function Home() {
               Chat Calc AI helps you understand and calculate
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* Calculator Categories - Expandable Section at Bottom */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mb-4">
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">Calculator Categories</h2>
-          <p className="text-lg text-gray-600 text-center">
-            Browse and explore all our calculators by category
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {calculatorCategories.map((category) => (
-            <ExpandableCategoryCard
-              key={category.id}
-              id={category.id}
-              name={category.name}
-              description={category.description}
-              icon={category.icon}
-              calculators={category.calculators}
-            />
-          ))}
         </div>
       </section>
 

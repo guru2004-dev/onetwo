@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import ChatCalcAI from "@/components/ChatCalcAI";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <ChatCalcAI />
+        <CurrencyProvider>
+          <Header />
+          {children}
+          <ChatCalcAI />
+        </CurrencyProvider>
       </body>
     </html>
   );

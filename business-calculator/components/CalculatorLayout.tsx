@@ -3,6 +3,7 @@
 import React, { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
+import CurrencyChanger from '@/components/CurrencyChanger';
 
 interface CalculatorLayoutProps {
   title: string;
@@ -56,6 +57,7 @@ export default function CalculatorLayout({
           {/* Results Section */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Results</h2>
+            <CurrencyChanger />
             {results || (
               <div className="text-gray-500 text-center py-8">
                 Enter values to see results
