@@ -32,7 +32,8 @@ export default function InputField({
   prefix,
   suffix,
 }: InputFieldProps) {
-  const isGlobalCurrencyInput = type === 'number' && prefix === '₹';
+  const rupeeLabelPattern = /(\(₹\)|\(₹\s*per|₹\s*per|\(₹)/i;
+  const isGlobalCurrencyInput = type === 'number' && (prefix === '₹' || rupeeLabelPattern.test(label));
 
   return (
     <div className="mb-4">

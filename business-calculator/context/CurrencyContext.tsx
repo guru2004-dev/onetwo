@@ -1,47 +1,93 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-
-type ExchangeRates = Record<string, number>;
+import {
+  CURRENCY_NAMES,
+  ExchangeRates,
+  SUPPORTED_CURRENCIES,
+  SupportedCurrency,
+  convertFromINR,
+  convertToINR,
+  formatAmountInCurrency,
+  getCurrencySymbol,
+  getInitialSupportedRates,
+  isSupportedCurrency,
+  normalizeSupportedRates,
+  setGlobalCurrencyState,
+} from '@/lib/currency';
 
 interface CurrencyContextType {
   baseCurrency: 'INR';
-  selectedInputCurrency: string;
-  setSelectedInputCurrency: (currency: string) => void;
+  selectedInputCurrency: SupportedCurrency;
+  setSelectedInputCurrency: (currency: SupportedCurrency) => void;
   exchangeRates: ExchangeRates;
-  availableCurrencies: string[];
+  availableCurrencies: SupportedCurrency[];
+  currencyNames: Record<SupportedCurrency, string>;
   loading: boolean;
   error: string | null;
   lastUpdated: number | null;
+  lastUpdatedTime: number | null;
   updateRates: () => Promise<void>;
+  updateCurrencyRates: () => Promise<void>;
   convertToINR: (amount: number, currency: string) => number;
+  convertFromINR: (amountINR: number, currency: string) => number;
+  formatInSelectedCurrency: (amountINR: number) => string;
   getCurrencySymbol: (currency: string) => string;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-const API_URL = 'https://open.er-api.com/v6/latest/INR';
+const API_URLS = [
+  'https://open.er-api.com/v6/latest/INR',
+  'https://api.frankfurter.app/latest?from=INR',
+  'https://api.exchangerate-api.com/v4/latest/INR',
+];
 
-const getCurrencySymbol = (currency: string): string => {
-  try {
-    const parts = new Intl.NumberFormat('en', {
-      style: 'currency',
-      currency,
-      currencyDisplay: 'narrowSymbol',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).formatToParts(0);
-
-    const currencyPart = parts.find((part) => part.type === 'currency');
-    return currencyPart?.value || currency;
-  } catch {
-    return currency;
+function extractRatesFromResponse(data: unknown): Record<string, unknown> | null {
+  if (!data || typeof data !== 'object') {
+    return null;
   }
-};
+
+  const parsed = data as Record<string, unknown>;
+
+  if (parsed.rates && typeof parsed.rates === 'object') {
+    return parsed.rates as Record<string, unknown>;
+  }
+
+  return null;
+}
+
+async function fetchRatesFromAnyApi(): Promise<Record<string, unknown>> {
+  const errors: string[] = [];
+
+  for (const apiUrl of API_URLS) {
+    try {
+      const response = await fetch(apiUrl, { cache: 'no-store' });
+
+      if (!response.ok) {
+        errors.push(`${apiUrl} (${response.status})`);
+        continue;
+      }
+
+      const data = await response.json();
+      const rates = extractRatesFromResponse(data);
+
+      if (rates) {
+        return rates;
+      }
+
+      errors.push(`${apiUrl} (invalid format)`);
+    } catch {
+      errors.push(`${apiUrl} (request failed)`);
+    }
+  }
+
+  throw new Error(`Failed to fetch exchange rates from all providers: ${errors.join(', ')}`);
+}
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({ INR: 1 });
-  const [selectedInputCurrency, setSelectedInputCurrency] = useState<string>('INR');
+  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>(getInitialSupportedRates());
+  const [selectedInputCurrency, setSelectedInputCurrency] = useState<SupportedCurrency>('INR');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
@@ -51,28 +97,8 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     setError(null);
 
     try {
-      const response = await fetch(API_URL, { cache: 'no-store' });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch exchange rates (${response.status})`);
-      }
-
-      const data = await response.json();
-
-      if (!data || data.result !== 'success' || !data.rates || typeof data.rates !== 'object') {
-        throw new Error('Invalid exchange rate response');
-      }
-
-      const normalizedRates: ExchangeRates = { INR: 1 };
-
-      Object.entries(data.rates).forEach(([currency, rate]) => {
-        const numericRate = Number(rate);
-        if (!Number.isNaN(numericRate) && Number.isFinite(numericRate) && numericRate > 0) {
-          normalizedRates[currency] = numericRate;
-        }
-      });
-
-      setExchangeRates(normalizedRates);
+      const latestRates = await fetchRatesFromAnyApi();
+      setExchangeRates((previousRates) => normalizeSupportedRates(latestRates, previousRates));
       setLastUpdated(Date.now());
       setError(null);
     } catch (err) {
@@ -86,34 +112,32 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     updateRates();
   }, [updateRates]);
 
-  const availableCurrencies = useMemo(() => {
-    const currencies = Object.keys(exchangeRates);
-    return currencies.sort((a, b) => {
-      if (a === 'INR') return -1;
-      if (b === 'INR') return 1;
-      return a.localeCompare(b);
-    });
-  }, [exchangeRates]);
+  const availableCurrencies = useMemo<SupportedCurrency[]>(() => [...SUPPORTED_CURRENCIES], []);
 
   useEffect(() => {
-    if (!availableCurrencies.includes(selectedInputCurrency)) {
+    if (!isSupportedCurrency(selectedInputCurrency)) {
       setSelectedInputCurrency('INR');
     }
   }, [availableCurrencies, selectedInputCurrency]);
 
-  const convertToINR = useCallback(
-    (amount: number, currency: string): number => {
-      const numericAmount = Number(amount);
-      if (!Number.isFinite(numericAmount) || Number.isNaN(numericAmount)) return 0;
+  useEffect(() => {
+    setGlobalCurrencyState({ selectedInputCurrency, exchangeRates });
+  }, [selectedInputCurrency, exchangeRates]);
 
-      if (!currency || currency === 'INR') return numericAmount;
-
-      const rate = exchangeRates[currency];
-      if (!rate || !Number.isFinite(rate) || rate <= 0) return 0;
-
-      return numericAmount / rate;
-    },
+  const convertToINRValue = useCallback(
+    (amount: number, currency: string): number => convertToINR(amount, currency, exchangeRates),
     [exchangeRates]
+  );
+
+  const convertFromINRValue = useCallback(
+    (amountINR: number, currency: string): number => convertFromINR(amountINR, currency, exchangeRates),
+    [exchangeRates]
+  );
+
+  const formatInSelectedCurrency = useCallback(
+    (amountINR: number): string =>
+      formatAmountInCurrency(amountINR, selectedInputCurrency, exchangeRates),
+    [selectedInputCurrency, exchangeRates]
   );
 
   const value: CurrencyContextType = {
@@ -122,11 +146,16 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     setSelectedInputCurrency,
     exchangeRates,
     availableCurrencies,
+    currencyNames: CURRENCY_NAMES,
     loading,
     error,
     lastUpdated,
+    lastUpdatedTime: lastUpdated,
     updateRates,
-    convertToINR,
+    updateCurrencyRates: updateRates,
+    convertToINR: convertToINRValue,
+    convertFromINR: convertFromINRValue,
+    formatInSelectedCurrency,
     getCurrencySymbol,
   };
 

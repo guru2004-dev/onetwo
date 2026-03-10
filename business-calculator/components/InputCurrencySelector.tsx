@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { SUPPORTED_CURRENCIES, isSupportedCurrency } from '@/lib/currency';
 
 interface InputCurrencySelectorProps {
   amount: number | string;
@@ -35,6 +36,8 @@ export default function InputCurrencySelector({
   } = useCurrency();
 
   const [displayAmount, setDisplayAmount] = useState<string>(String(amount ?? ''));
+  const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
+  const safeSelectedCurrency = isSupportedCurrency(selectedInputCurrency) ? selectedInputCurrency : 'INR';
 
   useEffect(() => {
     if (amount === '' || amount === null || amount === undefined) {
@@ -43,15 +46,15 @@ export default function InputCurrencySelector({
   }, [amount]);
 
   const options = useMemo(() => {
-    if (availableCurrencies.length === 0) {
+    if (safeAvailableCurrencies.length === 0) {
       return [{ code: 'INR', label: 'INR' }];
     }
 
-    return availableCurrencies.map((currencyCode) => ({
+    return safeAvailableCurrencies.map((currencyCode) => ({
       code: currencyCode,
       label: `${currencyCode} (${getCurrencySymbol(currencyCode)})`,
     }));
-  }, [availableCurrencies, getCurrencySymbol]);
+  }, [safeAvailableCurrencies, getCurrencySymbol]);
 
   const convertAndPush = (rawInput: string, currencyCode: string) => {
     if (rawInput.trim() === '') {
@@ -71,23 +74,27 @@ export default function InputCurrencySelector({
 
   const handleAmountChange = (value: string) => {
     setDisplayAmount(value);
-    convertAndPush(value, selectedInputCurrency);
+    convertAndPush(value, safeSelectedCurrency);
   };
 
   const handleCurrencyChange = (currencyCode: string) => {
+    if (!isSupportedCurrency(currencyCode)) {
+      return;
+    }
+
     setSelectedInputCurrency(currencyCode);
     convertAndPush(displayAmount, currencyCode);
   };
 
   useEffect(() => {
-    convertAndPush(displayAmount, selectedInputCurrency);
-  }, [selectedInputCurrency]);
+    convertAndPush(displayAmount, safeSelectedCurrency);
+  }, [safeSelectedCurrency]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
       {showCurrencyDropdown && (
         <select
-          value={selectedInputCurrency}
+          value={safeSelectedCurrency}
           onChange={(event) => handleCurrencyChange(event.target.value)}
           disabled={loading}
           className="sm:w-52 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"

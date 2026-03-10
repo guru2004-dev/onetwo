@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { calculateDiscount, formatCurrency } from '@/lib/utils';
 
 export default function DiscountCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [originalPrice, setOriginalPrice] = useState('1000');
   const [discountPercent, setDiscountPercent] = useState('20');
   
@@ -16,7 +18,7 @@ export default function DiscountCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [originalPrice, discountPercent]);
+  }, [originalPrice, discountPercent, lastUpdatedTime]);
 
   const calculate = () => {
     const price = parseFloat(originalPrice) || 0;

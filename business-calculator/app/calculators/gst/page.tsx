@@ -5,9 +5,11 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { calculateGST, formatCurrency } from '@/lib/utils';
 
 export default function GSTCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [amount, setAmount] = useState('10000');
   const [gstRate, setGstRate] = useState('18');
   const [calculationType, setCalculationType] = useState('exclusive');
@@ -20,7 +22,7 @@ export default function GSTCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [amount, gstRate, calculationType]);
+  }, [amount, gstRate, calculationType, lastUpdatedTime]);
 
   const calculate = () => {
     const amt = parseFloat(amount) || 0;

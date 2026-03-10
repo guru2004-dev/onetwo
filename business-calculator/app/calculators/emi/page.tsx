@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { calculateEMI, formatCurrency, formatNumber } from '@/lib/utils';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function EMICalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [principal, setPrincipal] = useState('1000000');
   const [rate, setRate] = useState('10');
   const [tenure, setTenure] = useState('120');
@@ -21,7 +23,7 @@ export default function EMICalculator() {
 
   useEffect(() => {
     calculate();
-  }, [principal, rate, tenure, tenureType]);
+  }, [principal, rate, tenure, tenureType, lastUpdatedTime]);
 
   const calculate = () => {
     const p = parseFloat(principal) || 0;
