@@ -55,7 +55,7 @@ export default function InputField({
           max={max}
           step={step}
           required={required}
-          showCurrencyDropdown={false}
+          showCurrencyDropdown
         />
       ) : (
         <div className="relative">

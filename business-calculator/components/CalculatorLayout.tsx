@@ -3,8 +3,8 @@
 import React, { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import CurrencyChanger from '@/components/CurrencyChanger';
 import UpdateCurrencyButton from '@/components/UpdateCurrencyButton';
+import CurrencyChanger from '@/components/CurrencyChanger';
 
 interface CalculatorLayoutProps {
   title: string;
@@ -52,7 +52,6 @@ export default function CalculatorLayout({
           {/* Input Section */}
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Input</h2>
-            <CurrencyChanger variant="input" />
             {children}
           </div>
 

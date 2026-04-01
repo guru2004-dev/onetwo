@@ -30,20 +30,43 @@ export default function InputCurrencySelector({
     setSelectedInputCurrency,
     availableCurrencies,
     convertToINR,
+    convertFromINR,
     loading,
     error,
     getCurrencySymbol,
   } = useCurrency();
 
-  const [displayAmount, setDisplayAmount] = useState<string>(String(amount ?? ''));
+  const [displayAmount, setDisplayAmount] = useState<string>('');
   const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
   const safeSelectedCurrency = isSupportedCurrency(selectedInputCurrency) ? selectedInputCurrency : 'INR';
+
+  const formatForInput = (value: number): string => {
+    if (!Number.isFinite(value)) {
+      return '';
+    }
+
+    if (Number.isInteger(value)) {
+      return String(value);
+    }
+
+    return value.toFixed(6).replace(/\.?0+$/, '');
+  };
 
   useEffect(() => {
     if (amount === '' || amount === null || amount === undefined) {
       setDisplayAmount('');
+      return;
     }
-  }, [amount]);
+
+    const amountInINR = Number(amount);
+    if (!Number.isFinite(amountInINR)) {
+      setDisplayAmount('');
+      return;
+    }
+
+    const convertedDisplayAmount = convertFromINR(amountInINR, safeSelectedCurrency);
+    setDisplayAmount(formatForInput(convertedDisplayAmount));
+  }, [amount, safeSelectedCurrency, convertFromINR]);
 
   const options = useMemo(() => {
     if (safeAvailableCurrencies.length === 0) {
@@ -83,12 +106,7 @@ export default function InputCurrencySelector({
     }
 
     setSelectedInputCurrency(currencyCode);
-    convertAndPush(displayAmount, currencyCode);
   };
-
-  useEffect(() => {
-    convertAndPush(displayAmount, safeSelectedCurrency);
-  }, [safeSelectedCurrency]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">

@@ -138,6 +138,7 @@ export function formatAmountInCurrency(
 
 type GlobalCurrencyState = {
   selectedInputCurrency: string;
+  selectedResultCurrency: string;
   exchangeRates: ExchangeRates;
 };
 
@@ -162,6 +163,7 @@ export function getGlobalCurrencyState(): GlobalCurrencyState {
   const safeWindow = getSafeWindow();
   const defaultState: GlobalCurrencyState = {
     selectedInputCurrency: 'INR',
+    selectedResultCurrency: 'INR',
     exchangeRates: getInitialSupportedRates(),
   };
 
@@ -180,6 +182,9 @@ export function getGlobalCurrencyState(): GlobalCurrencyState {
   return {
     selectedInputCurrency: isSupportedCurrency(rawState.selectedInputCurrency)
       ? rawState.selectedInputCurrency
+      : 'INR',
+    selectedResultCurrency: isSupportedCurrency(rawState.selectedResultCurrency)
+      ? rawState.selectedResultCurrency
       : 'INR',
     exchangeRates: {
       ...defaultState.exchangeRates,

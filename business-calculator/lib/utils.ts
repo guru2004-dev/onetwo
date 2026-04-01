@@ -16,7 +16,7 @@ export const formatCurrency = (amount: number, currency: string = '₹'): string
     ...globalCurrency.exchangeRates,
   };
 
-  return formatAmountInCurrency(amount, globalCurrency.selectedInputCurrency, rates);
+  return formatAmountInCurrency(amount, globalCurrency.selectedResultCurrency, rates);
 };
 
 export const formatPercentage = (value: number, decimals: number = 2): string => {

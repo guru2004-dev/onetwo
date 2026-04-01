@@ -12,6 +12,8 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
   const {
     selectedInputCurrency,
     setSelectedInputCurrency,
+    selectedResultCurrency,
+    setSelectedResultCurrency,
     availableCurrencies,
     currencyNames,
     loading,
@@ -24,8 +26,11 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
 
   const safeCurrencyNames = currencyNames ?? CURRENCY_NAMES;
   const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
-  const activeCurrency = selectedInputCurrency && isSupportedCurrency(selectedInputCurrency)
+  const activeInputCurrency = selectedInputCurrency && isSupportedCurrency(selectedInputCurrency)
     ? selectedInputCurrency
+    : 'INR';
+  const activeResultCurrency = selectedResultCurrency && isSupportedCurrency(selectedResultCurrency)
+    ? selectedResultCurrency
     : 'INR';
 
   const options = useMemo(() => {
@@ -82,7 +87,7 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
           Amount in Your Currency
         </label>
         <select
-          value={activeCurrency}
+          value={activeInputCurrency}
           onChange={(event) => {
             const nextCurrency = event.target.value;
             if (isSupportedCurrency(nextCurrency)) {
@@ -112,13 +117,13 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
       </label>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
-          const active = activeCurrency === option.code;
+          const active = activeResultCurrency === option.code;
 
           return (
             <button
               key={option.code}
               type="button"
-              onClick={() => setSelectedInputCurrency(option.code)}
+              onClick={() => setSelectedResultCurrency(option.code)}
               disabled={loading}
               className={`px-3 py-1.5 text-xs sm:text-sm rounded-full border transition-colors ${
                 active

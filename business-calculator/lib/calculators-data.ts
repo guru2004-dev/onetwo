@@ -11,6 +11,7 @@ const IMPLEMENTED_CALCULATOR_IDS = new Set([
   'jewellery',
   'lumpsum',
   'markup-margin',
+  'npv',
   'percentage',
   'roi',
   'simple-interest',

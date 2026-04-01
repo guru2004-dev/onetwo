@@ -20,6 +20,8 @@ interface CurrencyContextType {
   baseCurrency: 'INR';
   selectedInputCurrency: SupportedCurrency;
   setSelectedInputCurrency: (currency: SupportedCurrency) => void;
+  selectedResultCurrency: SupportedCurrency;
+  setSelectedResultCurrency: (currency: SupportedCurrency) => void;
   exchangeRates: ExchangeRates;
   availableCurrencies: SupportedCurrency[];
   currencyNames: Record<SupportedCurrency, string>;
@@ -88,6 +90,7 @@ async function fetchRatesFromAnyApi(): Promise<Record<string, unknown>> {
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>(getInitialSupportedRates());
   const [selectedInputCurrency, setSelectedInputCurrency] = useState<SupportedCurrency>('INR');
+  const [selectedResultCurrency, setSelectedResultCurrency] = useState<SupportedCurrency>('INR');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
@@ -121,8 +124,18 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   }, [availableCurrencies, selectedInputCurrency]);
 
   useEffect(() => {
-    setGlobalCurrencyState({ selectedInputCurrency, exchangeRates });
-  }, [selectedInputCurrency, exchangeRates]);
+    if (!isSupportedCurrency(selectedResultCurrency)) {
+      setSelectedResultCurrency('INR');
+    }
+  }, [availableCurrencies, selectedResultCurrency]);
+
+  useEffect(() => {
+    setGlobalCurrencyState({
+      selectedInputCurrency,
+      selectedResultCurrency,
+      exchangeRates,
+    });
+  }, [selectedInputCurrency, selectedResultCurrency, exchangeRates]);
 
   const convertToINRValue = useCallback(
     (amount: number, currency: string): number => convertToINR(amount, currency, exchangeRates),
@@ -136,14 +149,16 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
   const formatInSelectedCurrency = useCallback(
     (amountINR: number): string =>
-      formatAmountInCurrency(amountINR, selectedInputCurrency, exchangeRates),
-    [selectedInputCurrency, exchangeRates]
+      formatAmountInCurrency(amountINR, selectedResultCurrency, exchangeRates),
+    [selectedResultCurrency, exchangeRates]
   );
 
   const value: CurrencyContextType = {
     baseCurrency: 'INR',
     selectedInputCurrency,
     setSelectedInputCurrency,
+    selectedResultCurrency,
+    setSelectedResultCurrency,
     exchangeRates,
     availableCurrencies,
     currencyNames: CURRENCY_NAMES,
