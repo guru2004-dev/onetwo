@@ -5,9 +5,11 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency } from '@/lib/utils';
 
 export default function JewelleryCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [metalType, setMetalType] = useState('Gold');
   const [purity, setPurity] = useState('22K');
   const [weight, setWeight] = useState('10');
@@ -25,7 +27,7 @@ export default function JewelleryCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [weight, ratePerGram, makingChargeType, makingChargeValue, stoneCharges, gstPercentage]);
+  }, [weight, ratePerGram, makingChargeType, makingChargeValue, stoneCharges, gstPercentage, lastUpdatedTime]);
 
   const calculate = () => {
     const wt = parseFloat(weight) || 0;

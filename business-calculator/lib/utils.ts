@@ -1,10 +1,22 @@
 // Utility functions for formatting and calculations
 
+import { formatAmountInCurrency, getGlobalCurrencyState, getInitialSupportedRates } from '@/lib/currency';
+
 export const formatCurrency = (amount: number, currency: string = '₹'): string => {
-  return `${currency}${amount.toLocaleString('en-IN', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
+  if (currency !== '₹') {
+    return `${currency}${amount.toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
+
+  const globalCurrency = getGlobalCurrencyState();
+  const rates = {
+    ...getInitialSupportedRates(),
+    ...globalCurrency.exchangeRates,
+  };
+
+  return formatAmountInCurrency(amount, globalCurrency.selectedResultCurrency, rates);
 };
 
 export const formatPercentage = (value: number, decimals: number = 2): string => {

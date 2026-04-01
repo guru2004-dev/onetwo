@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency, formatNumber } from '@/lib/utils';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function LumpsumCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [investment, setInvestment] = useState('100000');
   const [rate, setRate] = useState('12');
   const [tenure, setTenure] = useState('10');
@@ -20,7 +22,7 @@ export default function LumpsumCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [investment, rate, tenure, tenureType]);
+  }, [investment, rate, tenure, tenureType, lastUpdatedTime]);
 
   const calculate = () => {
     const p = parseFloat(investment) || 0;

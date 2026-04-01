@@ -5,9 +5,11 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency, formatPercentage } from '@/lib/utils';
 
 export default function MarkupMarginCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [calculationType, setCalculationType] = useState('markup-to-margin');
   const [cost, setCost] = useState('100');
   const [markup, setMarkup] = useState('50');
@@ -21,7 +23,7 @@ export default function MarkupMarginCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [calculationType, cost, markup, margin, sellingPrice]);
+  }, [calculationType, cost, markup, margin, sellingPrice, lastUpdatedTime]);
 
   const calculate = () => {
     const costValue = parseFloat(cost) || 0;

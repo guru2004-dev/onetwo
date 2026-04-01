@@ -3,6 +3,7 @@
 import React, { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
+import UpdateCurrencyButton from '@/components/UpdateCurrencyButton';
 import CurrencyChanger from '@/components/CurrencyChanger';
 
 interface CalculatorLayoutProps {
@@ -56,8 +57,11 @@ export default function CalculatorLayout({
 
           {/* Results Section */}
           <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Results</h2>
-            <CurrencyChanger />
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">Result</h2>
+              <UpdateCurrencyButton />
+            </div>
+            <CurrencyChanger variant="result" />
             {results || (
               <div className="text-gray-500 text-center py-8">
                 Enter values to see results

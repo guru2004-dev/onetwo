@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { calculateCompoundInterest, formatCurrency } from '@/lib/utils';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function CompoundInterestCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [principal, setPrincipal] = useState('100000');
   const [rate, setRate] = useState('8');
   const [time, setTime] = useState('5');
@@ -20,7 +22,7 @@ export default function CompoundInterestCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [principal, rate, time, frequency]);
+  }, [principal, rate, time, frequency, lastUpdatedTime]);
 
   const calculate = () => {
     const p = parseFloat(principal) || 0;

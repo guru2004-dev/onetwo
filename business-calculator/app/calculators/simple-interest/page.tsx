@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency, formatNumber } from '@/lib/utils';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function SimpleInterestCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [principal, setPrincipal] = useState('10000');
   const [rate, setRate] = useState('8');
   const [time, setTime] = useState('5');
@@ -19,7 +21,7 @@ export default function SimpleInterestCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [principal, rate, time, timeUnit]);
+  }, [principal, rate, time, timeUnit, lastUpdatedTime]);
 
   const calculate = () => {
     const p = parseFloat(principal) || 0;

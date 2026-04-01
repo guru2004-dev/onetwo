@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency, formatNumber } from '@/lib/utils';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function BreakEvenCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [fixedCosts, setFixedCosts] = useState('100000');
   const [variableCostPerUnit, setVariableCostPerUnit] = useState('50');
   const [sellingPricePerUnit, setSellingPricePerUnit] = useState('100');
@@ -20,7 +22,7 @@ export default function BreakEvenCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [fixedCosts, variableCostPerUnit, sellingPricePerUnit]);
+  }, [fixedCosts, variableCostPerUnit, sellingPricePerUnit, lastUpdatedTime]);
 
   const calculate = () => {
     const fc = parseFloat(fixedCosts) || 0;

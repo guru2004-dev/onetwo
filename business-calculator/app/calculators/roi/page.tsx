@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { formatCurrency, formatPercentage } from '@/lib/utils';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 export default function ROICalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [calculationType, setCalculationType] = useState('basic');
   const [initialInvestment, setInitialInvestment] = useState('50000');
   const [finalValue, setFinalValue] = useState('75000');
@@ -22,7 +24,7 @@ export default function ROICalculator() {
 
   useEffect(() => {
     calculate();
-  }, [calculationType, initialInvestment, finalValue, additionalCosts, revenue, timePeriod]);
+  }, [calculationType, initialInvestment, finalValue, additionalCosts, revenue, timePeriod, lastUpdatedTime]);
 
   const calculate = () => {
     const initial = parseFloat(initialInvestment) || 0;

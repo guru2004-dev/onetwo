@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { SUPPORTED_CURRENCIES, isSupportedCurrency } from '@/lib/currency';
 
 interface InputCurrencySelectorProps {
   amount: number | string;
@@ -29,29 +30,54 @@ export default function InputCurrencySelector({
     setSelectedInputCurrency,
     availableCurrencies,
     convertToINR,
+    convertFromINR,
     loading,
     error,
     getCurrencySymbol,
   } = useCurrency();
 
-  const [displayAmount, setDisplayAmount] = useState<string>(String(amount ?? ''));
+  const [displayAmount, setDisplayAmount] = useState<string>('');
+  const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
+  const safeSelectedCurrency = isSupportedCurrency(selectedInputCurrency) ? selectedInputCurrency : 'INR';
+
+  const formatForInput = (value: number): string => {
+    if (!Number.isFinite(value)) {
+      return '';
+    }
+
+    if (Number.isInteger(value)) {
+      return String(value);
+    }
+
+    return value.toFixed(6).replace(/\.?0+$/, '');
+  };
 
   useEffect(() => {
     if (amount === '' || amount === null || amount === undefined) {
       setDisplayAmount('');
+      return;
     }
-  }, [amount]);
+
+    const amountInINR = Number(amount);
+    if (!Number.isFinite(amountInINR)) {
+      setDisplayAmount('');
+      return;
+    }
+
+    const convertedDisplayAmount = convertFromINR(amountInINR, safeSelectedCurrency);
+    setDisplayAmount(formatForInput(convertedDisplayAmount));
+  }, [amount, safeSelectedCurrency, convertFromINR]);
 
   const options = useMemo(() => {
-    if (availableCurrencies.length === 0) {
+    if (safeAvailableCurrencies.length === 0) {
       return [{ code: 'INR', label: 'INR' }];
     }
 
-    return availableCurrencies.map((currencyCode) => ({
+    return safeAvailableCurrencies.map((currencyCode) => ({
       code: currencyCode,
       label: `${currencyCode} (${getCurrencySymbol(currencyCode)})`,
     }));
-  }, [availableCurrencies, getCurrencySymbol]);
+  }, [safeAvailableCurrencies, getCurrencySymbol]);
 
   const convertAndPush = (rawInput: string, currencyCode: string) => {
     if (rawInput.trim() === '') {
@@ -71,23 +97,22 @@ export default function InputCurrencySelector({
 
   const handleAmountChange = (value: string) => {
     setDisplayAmount(value);
-    convertAndPush(value, selectedInputCurrency);
+    convertAndPush(value, safeSelectedCurrency);
   };
 
   const handleCurrencyChange = (currencyCode: string) => {
-    setSelectedInputCurrency(currencyCode);
-    convertAndPush(displayAmount, currencyCode);
-  };
+    if (!isSupportedCurrency(currencyCode)) {
+      return;
+    }
 
-  useEffect(() => {
-    convertAndPush(displayAmount, selectedInputCurrency);
-  }, [selectedInputCurrency]);
+    setSelectedInputCurrency(currencyCode);
+  };
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
       {showCurrencyDropdown && (
         <select
-          value={selectedInputCurrency}
+          value={safeSelectedCurrency}
           onChange={(event) => handleCurrencyChange(event.target.value)}
           disabled={loading}
           className="sm:w-52 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"

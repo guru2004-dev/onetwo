@@ -5,10 +5,12 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
+import { useCurrency } from '@/context/CurrencyContext';
 import { calculateSIP, formatCurrency } from '@/lib/utils';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default function SIPCalculator() {
+  const { lastUpdatedTime } = useCurrency();
   const [monthlyInvestment, setMonthlyInvestment] = useState('5000');
   const [expectedReturn, setExpectedReturn] = useState('12');
   const [timePeriod, setTimePeriod] = useState('10');
@@ -21,7 +23,7 @@ export default function SIPCalculator() {
 
   useEffect(() => {
     calculate();
-  }, [monthlyInvestment, expectedReturn, timePeriod, timePeriodType]);
+  }, [monthlyInvestment, expectedReturn, timePeriod, timePeriodType, lastUpdatedTime]);
 
   const calculate = () => {
     const monthly = parseFloat(monthlyInvestment) || 0;
