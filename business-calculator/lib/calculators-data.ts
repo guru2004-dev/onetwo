@@ -9,6 +9,7 @@ const IMPLEMENTED_CALCULATOR_IDS = new Set([
   'emi',
   'gst',
   'jewellery',
+  'loan-comparison',
   'loan-eligibility',
   'lumpsum',
   'markup-margin',
