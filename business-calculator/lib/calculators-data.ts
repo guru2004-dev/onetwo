@@ -69,13 +69,7 @@ export const calculatorCategories: CalculatorCategory[] = [
         category: 'financial',
         path: '/calculators/loan-eligibility',
       },
-      {
-        id: 'loan-tenure',
-        name: 'Loan Tenure Calculator',
-        description: 'Calculate loan repayment period',
-        category: 'financial',
-        path: '/calculators/loan-tenure',
-      },
+
       {
         id: 'loan-comparison',
         name: 'Loan Comparison Calculator',
