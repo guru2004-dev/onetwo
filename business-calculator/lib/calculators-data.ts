@@ -18,6 +18,15 @@ const IMPLEMENTED_CALCULATOR_IDS = new Set([
   'roi',
   'simple-interest',
   'sip',
+  'cash-flow',
+  'irr',
+  'cagr',
+  'scenario-comparison',
+  'import-export-duty',
+  'forward-exchange',
+  'remittance-fee',
+  'commission',
+  'salary'
 ]);
 
 export const calculatorCategories: CalculatorCategory[] = [
@@ -240,6 +249,13 @@ export const calculatorCategories: CalculatorCategory[] = [
         description: 'Calculate employee payroll',
         category: 'accounting',
         path: '/calculators/payroll',
+      },
+      {
+        id: 'salary',
+        name: 'Salary Calculator',
+        description: 'Calculate net take-home salary',
+        category: 'accounting',
+        path: '/calculators/salary',
       },
       {
         id: 'inventory-cost',

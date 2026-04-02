@@ -1,257 +1,175 @@
 'use client';
-
-import React, { useEffect, useMemo, useState } from 'react';
-import CalculatorLayout from '@/components/CalculatorLayout';
-import InputField from '@/components/InputField';
-import ResultCard from '@/components/ResultCard';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { RefreshCw, RotateCcw, Plus, Trash2, Sparkles, Info } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
-import { formatCurrency, formatNumber } from '@/lib/utils';
 
-type NpvDecision = 'profitable' | 'not-profitable' | 'neutral';
+function fmtAmt(n: number, s: string) { if (!isFinite(n)) return `${s}0.00`; return `${s}${n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
+function fmtShort(n: number, s: string) { if (!isFinite(n)) return `${s}0`; const a = Math.abs(n); if (a >= 1e7) return `${s}${(a / 1e7).toFixed(2)} Cr`; if (a >= 1e5) return `${s}${(a / 1e5).toFixed(2)} L`; if (a >= 1e3) return `${s}${(a / 1e3).toFixed(1)} K`; return `${s}${a.toFixed(2)}`; }
 
-const DEFAULT_YEARS = 5;
-const MIN_YEARS = 1;
-const MAX_YEARS = 20;
+interface CFEntry { id: string; amount: string; }
+const mkCF = (): CFEntry => ({ id: `${Date.now()}-${Math.random()}`, amount: '' });
 
-function getInitialCashFlows(years: number): string[] {
-  return Array.from({ length: years }, () => '30000');
-}
+interface NPVRow { year: number; cf: number; pv: number; df: number; }
 
 export default function NPVCalculator() {
-  const { lastUpdatedTime } = useCurrency();
+  const { selectedInputCurrency, setSelectedInputCurrency, selectedResultCurrency, setSelectedResultCurrency, availableCurrencies, loading: rL, updateCurrencyRates, lastUpdatedTime, getCurrencySymbol, convertToINR, convertFromINR } = useCurrency();
+  const [investRaw, setInvestRaw] = useState('1000000');
+  const [rateRaw, setRateRaw] = useState('10');
+  const [cashFlows, setCashFlows] = useState<CFEntry[]>([mkCF(), mkCF(), mkCF()]);
+  const [rows, setRows] = useState<NPVRow[]>([]);
+  const [npv, setNPV] = useState<number | null>(null);
+  const [sumPV, setSumPV] = useState(0);
+  const [error, setError] = useState('');
+  const [tick, setTick] = useState(0);
+  useEffect(() => { const id = setInterval(() => setTick(t => t + 1), 30000); return () => clearInterval(id); }, []);
+  const relTime = useMemo(() => { void tick; if (!lastUpdatedTime) return 'never'; const s = Math.max(1, Math.floor((Date.now() - lastUpdatedTime) / 1000)); if (s < 60) return `${s}s ago`; const m = Math.floor(s / 60); return m < 60 ? `${m}m ago` : `${Math.floor(m / 60)}h ago`; }, [lastUpdatedTime, tick]);
 
-  const [initialInvestment, setInitialInvestment] = useState('100000');
-  const [discountRate, setDiscountRate] = useState('10');
-  const [years, setYears] = useState(String(DEFAULT_YEARS));
-  const [cashFlows, setCashFlows] = useState<string[]>(getInitialCashFlows(DEFAULT_YEARS));
-
-  const [totalPresentValue, setTotalPresentValue] = useState(0);
-  const [npv, setNpv] = useState(0);
-  const [decision, setDecision] = useState<NpvDecision>('neutral');
-  const [error, setError] = useState<string>('');
-
-  const parsedYears = useMemo(() => {
-    const value = Math.floor(Number(years));
-    if (!Number.isFinite(value)) {
-      return MIN_YEARS;
-    }
-
-    return Math.min(MAX_YEARS, Math.max(MIN_YEARS, value));
-  }, [years]);
-
-  useEffect(() => {
-    setCashFlows((previous) => {
-      if (previous.length === parsedYears) {
-        return previous;
-      }
-
-      if (previous.length > parsedYears) {
-        return previous.slice(0, parsedYears);
-      }
-
-      return [...previous, ...Array.from({ length: parsedYears - previous.length }, () => '')];
-    });
-  }, [parsedYears]);
-
-  useEffect(() => {
-    const investment = Number(initialInvestment);
-    const ratePercent = Number(discountRate);
-
-    if (!Number.isFinite(investment) || investment <= 0) {
-      setError('Initial investment must be greater than 0.');
-      setTotalPresentValue(0);
-      setNpv(0);
-      setDecision('neutral');
-      return;
-    }
-
-    if (!Number.isFinite(ratePercent) || ratePercent < 0) {
-      setError('Discount rate must be 0 or greater.');
-      setTotalPresentValue(0);
-      setNpv(0);
-      setDecision('neutral');
-      return;
-    }
-
-    const rate = ratePercent / 100;
-
-    let pvSum = 0;
-
-    for (let yearIndex = 0; yearIndex < parsedYears; yearIndex += 1) {
-      const flow = Number(cashFlows[yearIndex] ?? 0);
-
-      if (!Number.isFinite(flow)) {
-        setError(`Year ${yearIndex + 1} cash flow is invalid.`);
-        setTotalPresentValue(0);
-        setNpv(0);
-        setDecision('neutral');
-        return;
-      }
-
-      const presentValue = flow / Math.pow(1 + rate, yearIndex + 1);
-      pvSum += presentValue;
-    }
-
-    const npvValue = pvSum - investment;
-
-    setTotalPresentValue(pvSum);
-    setNpv(npvValue);
+  const calculate = useCallback(() => {
     setError('');
-
-    if (npvValue > 0) {
-      setDecision('profitable');
-    } else if (npvValue < 0) {
-      setDecision('not-profitable');
-    } else {
-      setDecision('neutral');
-    }
-  }, [initialInvestment, discountRate, parsedYears, cashFlows, lastUpdatedTime]);
-
-  const updateCashFlow = (index: number, value: string) => {
-    setCashFlows((previous) => {
-      const next = [...previous];
-      next[index] = value;
-      return next;
+    const invest = Number(investRaw); const rate = Number(rateRaw);
+    if (!investRaw || isNaN(invest) || invest <= 0) { setError('Enter a valid initial investment.'); setNPV(null); return; }
+    if (isNaN(rate) || rate < 0) { setError('Enter a valid discount rate.'); setNPV(null); return; }
+    const r = rate / 100;
+    const investINR = convertToINR(invest, selectedInputCurrency);
+    let totalPV = 0;
+    const newRows: NPVRow[] = [];
+    cashFlows.forEach((cf, idx) => {
+      const cfVal = Number(cf.amount) || 0;
+      const cfINR = convertToINR(cfVal, selectedInputCurrency);
+      const t = idx + 1;
+      const df = 1 / Math.pow(1 + r, t);
+      const pv = cfINR * df;
+      totalPV += pv;
+      newRows.push({ year: t, cf: cfINR, pv, df });
     });
-  };
+    setRows(newRows);
+    setSumPV(totalPV);
+    setNPV(totalPV - investINR);
+  }, [investRaw, rateRaw, cashFlows, selectedInputCurrency, convertToINR]);
 
-  const resetCalculator = () => {
-    setInitialInvestment('100000');
-    setDiscountRate('10');
-    setYears(String(DEFAULT_YEARS));
-    setCashFlows(getInitialCashFlows(DEFAULT_YEARS));
-    setError('');
-  };
+  useEffect(() => { calculate(); }, [calculate, lastUpdatedTime]);
 
-  const decisionText =
-    decision === 'profitable'
-      ? 'Project is Profitable'
-      : decision === 'not-profitable'
-        ? 'Project is Not Profitable'
-        : 'Project is Break-even';
+  const currSym = getCurrencySymbol(selectedResultCurrency);
+  const inputSym = getCurrencySymbol(selectedInputCurrency);
+  const disp = (n: number) => fmtAmt(convertFromINR(n, selectedResultCurrency), currSym);
+  const dispS = (n: number) => fmtShort(convertFromINR(Math.abs(n), selectedResultCurrency), currSym);
 
-  const decisionClass =
-    decision === 'profitable'
-      ? 'text-emerald-600 bg-emerald-50 border-emerald-200'
-      : decision === 'not-profitable'
-        ? 'text-red-600 bg-red-50 border-red-200'
-        : 'text-amber-700 bg-amber-50 border-amber-200';
-
-  const results = (
-    <div className="space-y-4">
-      <ResultCard label="Net Present Value (NPV)" value={formatCurrency(npv)} highlighted />
-      <ResultCard label="Total Present Value of Cash Flows" value={formatCurrency(totalPresentValue)} />
-
-      <div className={`p-4 rounded-lg border ${decisionClass}`}>
-        <p className="text-sm font-medium">Investment Decision</p>
-        <p className="text-xl font-bold mt-1">{decisionText}</p>
-      </div>
-
-      <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-        <div className="flex justify-between text-sm">
-          <span className="text-slate-600">Discount Rate</span>
-          <span className="font-semibold text-slate-900">{formatNumber(Number(discountRate) || 0)}%</span>
-        </div>
-        <div className="flex justify-between text-sm mt-2">
-          <span className="text-slate-600">Years</span>
-          <span className="font-semibold text-slate-900">{parsedYears}</span>
-        </div>
-      </div>
-
-      {error && (
-        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
-          {error}
-        </div>
-      )}
-    </div>
-  );
-
-  const explanation = (
-    <div className="space-y-3 text-gray-700">
-      <p>
-        Net Present Value (NPV) estimates how much value a project adds today by discounting future cash flows.
-      </p>
-      <div className="bg-gray-100 p-3 rounded text-sm font-mono">
-        NPV = Sigma(Cash Flow / (1 + r)^t) - Initial Investment
-      </div>
-      <ul className="list-disc list-inside text-sm space-y-1">
-        <li>Positive NPV indicates value creation.</li>
-        <li>Negative NPV indicates the project may destroy value.</li>
-        <li>Discount rate reflects required return or cost of capital.</li>
-      </ul>
-    </div>
-  );
+  const maxCF = Math.max(...rows.map(r => Math.abs(r.cf)), 1);
+  const insight = useMemo(() => {
+    if (npv === null) return null;
+    if (npv > 0 && npv / convertToINR(Number(investRaw) || 1, selectedInputCurrency) > 0.5) return { text: 'This investment has very strong potential. Highly recommended! 🚀', type: 'success' };
+    if (npv > 0) return { text: 'NPV is positive — investment is profitable. Accept the project.', type: 'success' };
+    return { text: 'NPV is negative. Consider reducing costs or increasing projected returns.', type: 'warning' };
+  }, [npv, investRaw, selectedInputCurrency, convertToINR]);
 
   return (
-    <CalculatorLayout
-      title="Net Present Value (NPV) Calculator"
-      description="Evaluate investment profitability by discounting future cash flows"
-      results={results}
-      explanation={explanation}
-    >
-      <div className="space-y-4">
-        <InputField
-          label="Initial Investment"
-          type="number"
-          value={initialInvestment}
-          onChange={setInitialInvestment}
-          placeholder="Enter initial investment"
-          prefix="₹"
-          min="0"
-          step="100"
-          required
-        />
-
-        <InputField
-          label="Discount Rate (%)"
-          type="number"
-          value={discountRate}
-          onChange={setDiscountRate}
-          placeholder="Enter discount rate"
-          suffix="%"
-          min="0"
-          step="0.1"
-          required
-        />
-
-        <InputField
-          label="Number of Years"
-          type="number"
-          value={years}
-          onChange={setYears}
-          placeholder="Enter number of years"
-          min={String(MIN_YEARS)}
-          max={String(MAX_YEARS)}
-          step="1"
-          required
-        />
-
-        <div className="pt-2">
-          <h3 className="text-sm font-semibold text-gray-900 mb-2">Cash Flows</h3>
-          <div className="space-y-3 max-h-72 overflow-auto pr-1">
-            {Array.from({ length: parsedYears }).map((_, index) => (
-              <InputField
-                key={`cash-flow-${index + 1}`}
-                label={`Year ${index + 1} Cash Flow`}
-                type="number"
-                value={cashFlows[index] ?? ''}
-                onChange={(value) => updateCashFlow(index, value)}
-                placeholder={`Enter year ${index + 1} cash flow`}
-                prefix="₹"
-                step="100"
-              />
-            ))}
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={resetCalculator}
-          className="w-full mt-2 px-4 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors"
-        >
-          Reset
-        </button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+      <div className="max-w-6xl mx-auto mb-8 text-center">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-4">
+          <Info className="w-4 h-4" /> Investment Analysis
+        </motion.div>
+        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl font-extrabold text-white tracking-tight mb-2">NPV <span className="text-indigo-400">Calculator</span></motion.h1>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-400 text-lg">Evaluate investment profitability using discounted cash flow analysis.</motion.p>
       </div>
-    </CalculatorLayout>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* INPUTS */}
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-4">
+          <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-white">Inputs</h2><p className="text-slate-400 text-sm">Enter investment details</p></div>
+            <button onClick={() => { setInvestRaw('1000000'); setRateRaw('10'); setCashFlows([mkCF(), mkCF(), mkCF()]); }} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>
+          </div>
+          <div><label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }} disabled={rL} className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+              {availableCurrencies.map(c => <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>)}
+            </select>
+          </div>
+          <div><label className="block text-sm font-semibold text-slate-300 mb-1.5">Initial Investment</label>
+            <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{inputSym}</span>
+              <input type="number" value={investRaw} onChange={e => setInvestRaw(e.target.value)} min={0} className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" /></div>
+          </div>
+          <div><label className="block text-sm font-semibold text-slate-300 mb-1.5">Discount Rate (% per year)</label>
+            <div className="relative"><input type="number" value={rateRaw} onChange={e => setRateRaw(e.target.value)} min={0} max={100} step="0.1" className="w-full pl-4 pr-10 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" /><span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">%</span></div>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-2"><label className="text-sm font-semibold text-slate-300">Yearly Cash Flows</label>
+              <button onClick={() => setCashFlows(p => [...p, mkCF()])} className="flex items-center gap-1 px-2.5 py-1 text-xs bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/30 text-indigo-300 rounded-lg transition-all"><Plus className="w-3 h-3" /> Add Year</button>
+            </div>
+            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+              <AnimatePresence>
+                {cashFlows.map((cf, idx) => (
+                  <motion.div key={cf.id} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500 w-12 shrink-0">Year {idx + 1}</span>
+                    <div className="relative flex-1"><span className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">{inputSym}</span>
+                      <input type="number" value={cf.amount} onChange={e => setCashFlows(p => p.map(x => x.id === cf.id ? { ...x, amount: e.target.value } : x))} placeholder="0" className="w-full pl-6 pr-2 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" /></div>
+                    {cashFlows.length > 1 && <button onClick={() => setCashFlows(p => p.filter(x => x.id !== cf.id))} className="p-1.5 text-slate-500 hover:text-red-400 transition-all"><Trash2 className="w-3.5 h-3.5" /></button>}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+          {error && <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-sm"><Info className="w-4 h-4 shrink-0" /> {error}</div>}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-3"><p className="text-xs font-mono text-slate-400">NPV = Σ[CF/(1+r)ᵗ] − Initial Investment</p></div>
+        </motion.div>
+
+        {/* RESULTS */}
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col gap-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-5"><div><h2 className="text-lg font-bold text-white">Results</h2><p className="text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p></div>
+              <button onClick={() => updateCurrencyRates()} disabled={rL} className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-all"><RefreshCw className={`w-4 h-4 ${rL ? 'animate-spin' : ''}`} /> Update</button>
+            </div>
+            <div className="mb-5"><p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p><div className="flex flex-wrap gap-2">{availableCurrencies.map(c => <button key={c} onClick={() => setSelectedResultCurrency(c as never)} className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:border-indigo-400'}`}>{c}</button>)}</div></div>
+            {npv !== null ? (
+              <div className="flex flex-col gap-3">
+                <div className={`${npv >= 0 ? 'bg-emerald-500/20 border-emerald-500/30' : 'bg-red-500/20 border-red-500/30'} border rounded-xl p-4 text-center`}>
+                  <p className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Net Present Value</p>
+                  <p className={`text-3xl font-extrabold ${npv >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>{npv >= 0 ? '+' : '-'}{dispS(npv)}</p>
+                  <p className={`text-xs mt-1 font-semibold ${npv >= 0 ? 'text-emerald-300' : 'text-red-300'}`}>{npv >= 0 ? '✅ Profitable — Accept Project' : '❌ Not Profitable — Reject Project'}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total PV of CFs</p><p className="text-xl font-bold text-indigo-300">{dispS(sumPV)}</p></div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Initial Investment</p><p className="text-xl font-bold text-slate-300">{dispS(convertToINR(Number(investRaw) || 0, selectedInputCurrency))}</p></div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Cash Flow Bars</p>
+                  {rows.map((r, i) => (
+                    <div key={r.year} className="mb-2">
+                      <div className="flex justify-between text-xs mb-1"><span className="text-slate-400">Year {r.year}</span><span className="text-indigo-300">{disp(r.cf)}</span></div>
+                      <div className="h-2.5 bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${Math.abs(r.cf) / maxCF * 100}%` }} transition={{ duration: 0.7, delay: i * 0.05 }} className="h-full bg-indigo-500 rounded-full" /></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : <div className="flex flex-col items-center justify-center py-14 text-slate-500 gap-3"><p className="text-sm">Enter values to calculate NPV</p></div>}
+          </div>
+          {insight && npv !== null && (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex items-start gap-3 px-5 py-4 rounded-2xl border-l-4 ${insight.type === 'success' ? 'bg-emerald-50/5 border-emerald-400 text-emerald-200' : 'bg-red-50/5 border-red-400 text-red-200'}`}>
+              <Sparkles className="w-5 h-5 mt-0.5 shrink-0" /><div><p className="font-semibold text-sm">Smart Insight</p><p className="text-sm mt-0.5 opacity-90">{insight.text}</p></div>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+
+      {/* NPV Table */}
+      {rows.length > 0 && (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="max-w-6xl mx-auto mt-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+          <h3 className="text-base font-bold text-white mb-4">NPV Breakdown Table</h3>
+          <div className="overflow-x-auto rounded-xl border border-white/10">
+            <table className="w-full text-sm">
+              <thead><tr className="bg-white/5 text-slate-400 font-semibold"><th className="px-4 py-3 text-left">Year</th><th className="px-4 py-3 text-right">Cash Flow</th><th className="px-4 py-3 text-right">Discount Factor</th><th className="px-4 py-3 text-right">Present Value</th></tr></thead>
+              <tbody>
+                {rows.map((r, i) => <tr key={r.year} className={`border-t border-white/5 hover:bg-white/5 transition-colors ${i % 2 === 0 ? '' : 'bg-white/[0.02]'}`}>
+                  <td className="px-4 py-3 text-slate-300 font-medium">Year {r.year}</td>
+                  <td className="px-4 py-3 text-right text-white font-semibold">{disp(r.cf)}</td>
+                  <td className="px-4 py-3 text-right text-slate-400">{r.df.toFixed(4)}</td>
+                  <td className="px-4 py-3 text-right text-indigo-300 font-semibold">{disp(r.pv)}</td>
+                </tr>)}
+                <tr className="border-t-2 border-white/20 bg-white/5"><td colSpan={3} className="px-4 py-3 font-bold text-white">Total PV</td><td className="px-4 py-3 text-right font-extrabold text-indigo-400">{disp(sumPV)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 }
