@@ -1,222 +1,294 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import CalculatorLayout from '@/components/CalculatorLayout';
-import InputField from '@/components/InputField';
-import SelectField from '@/components/SelectField';
-import ResultCard from '@/components/ResultCard';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { RefreshCw, RotateCcw, TrendingUp, Sparkles, Info, PiggyBank } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
-import { calculateSIP, formatCurrency } from '@/lib/utils';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+
+function fmtAmt(n: number, symbol: string): string {
+  if (!isFinite(n) || n < 0) return `${symbol}0.00`;
+  return `${symbol}${n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+function fmtShort(n: number, symbol: string): string {
+  if (!isFinite(n)) return `${symbol}0`;
+  if (n >= 1_00_00_000) return `${symbol}${(n / 1_00_00_000).toFixed(2)} Cr`;
+  if (n >= 1_00_000) return `${symbol}${(n / 1_00_000).toFixed(2)} L`;
+  if (n >= 1_000) return `${symbol}${(n / 1_000).toFixed(1)} K`;
+  return `${symbol}${n.toFixed(2)}`;
+}
+
+interface SIPResult {
+  futureValue: number;
+  totalInvested: number;
+  estimatedReturns: number;
+}
+
+function calcSIP(monthly: number, annualRate: number, months: number): SIPResult {
+  if (monthly <= 0 || months <= 0) return { futureValue: 0, totalInvested: 0, estimatedReturns: 0 };
+  const totalInvested = monthly * months;
+  if (annualRate === 0) return { futureValue: totalInvested, totalInvested, estimatedReturns: 0 };
+  const r = annualRate / 12 / 100;
+  const fv = monthly * (((Math.pow(1 + r, months) - 1) / r) * (1 + r));
+  return { futureValue: fv, totalInvested, estimatedReturns: fv - totalInvested };
+}
 
 export default function SIPCalculator() {
-  const { lastUpdatedTime } = useCurrency();
-  const [monthlyInvestment, setMonthlyInvestment] = useState('5000');
-  const [expectedReturn, setExpectedReturn] = useState('12');
-  const [timePeriod, setTimePeriod] = useState('10');
-  const [timePeriodType, setTimePeriodType] = useState('years');
-  
-  const [maturityAmount, setMaturityAmount] = useState(0);
-  const [investedAmount, setInvestedAmount] = useState(0);
-  const [estimatedReturns, setEstimatedReturns] = useState(0);
-  const [chartData, setChartData] = useState<any[]>([]);
+  const {
+    selectedInputCurrency, setSelectedInputCurrency,
+    selectedResultCurrency, setSelectedResultCurrency,
+    availableCurrencies, loading: ratesLoading,
+    updateCurrencyRates, lastUpdatedTime,
+    getCurrencySymbol, convertToINR, convertFromINR,
+  } = useCurrency();
+
+  const [monthlyRaw, setMonthlyRaw] = useState('10000');
+  const [rateRaw, setRateRaw] = useState('12');
+  const [durationRaw, setDurationRaw] = useState('10');
+  const [durationUnit, setDurationUnit] = useState<'years' | 'months'>('years');
+  const [result, setResult] = useState<SIPResult | null>(null);
+  const [error, setError] = useState('');
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    calculate();
-  }, [monthlyInvestment, expectedReturn, timePeriod, timePeriodType, lastUpdatedTime]);
+    const id = setInterval(() => setTick(t => t + 1), 30000);
+    return () => clearInterval(id);
+  }, []);
 
-  const calculate = () => {
-    const monthly = parseFloat(monthlyInvestment) || 0;
-    const rate = parseFloat(expectedReturn) || 0;
-    let period = parseInt(timePeriod) || 0;
-    
-    if (timePeriodType === 'years') {
-      period = period * 12;
-    }
+  const relTime = useMemo(() => {
+    void tick;
+    if (!lastUpdatedTime) return 'never';
+    const s = Math.max(1, Math.floor((Date.now() - lastUpdatedTime) / 1000));
+    if (s < 60) return `${s}s ago`;
+    const m = Math.floor(s / 60);
+    if (m < 60) return `${m}m ago`;
+    return `${Math.floor(m / 60)}h ago`;
+  }, [lastUpdatedTime, tick]);
 
-    if (monthly > 0 && rate > 0 && period > 0) {
-      const result = calculateSIP(monthly, rate, period);
-      
-      setMaturityAmount(result.maturityAmount);
-      setInvestedAmount(result.invested);
-      setEstimatedReturns(result.gains);
+  const calculate = useCallback(() => {
+    setError('');
+    const monthly = Number(monthlyRaw);
+    const rate = Number(rateRaw);
+    const duration = Number(durationRaw);
+    if (!monthlyRaw || isNaN(monthly) || monthly <= 0) { setError('Enter a valid monthly investment amount.'); setResult(null); return; }
+    if (isNaN(rate) || rate < 0) { setError('Enter a valid annual return rate.'); setResult(null); return; }
+    if (!durationRaw || isNaN(duration) || duration <= 0) { setError('Enter a valid investment duration.'); setResult(null); return; }
+    const months = durationUnit === 'years' ? Math.round(duration * 12) : Math.round(duration);
+    const monthlyINR = convertToINR(monthly, selectedInputCurrency);
+    setResult(calcSIP(monthlyINR, rate, months));
+  }, [monthlyRaw, rateRaw, durationRaw, durationUnit, selectedInputCurrency, convertToINR]);
 
-      // Generate chart data for growth over time
-      const data = [];
-      const monthlyRate = rate / 12 / 100;
-      
-      for (let i = 1; i <= period; i++) {
-        if (i % Math.ceil(period / 20) === 0 || i === 1 || i === period) {
-          const invested = monthly * i;
-          const maturity = monthly * ((Math.pow(1 + monthlyRate, i) - 1) / monthlyRate) * (1 + monthlyRate);
-          const returns = maturity - invested;
-          
-          data.push({
-            period: timePeriodType === 'years' ? `Y${Math.ceil(i / 12)}` : `M${i}`,
-            invested: Math.round(invested),
-            returns: Math.round(returns),
-            total: Math.round(maturity),
-          });
-        }
-      }
-      setChartData(data);
-    } else {
-      setMaturityAmount(0);
-      setInvestedAmount(0);
-      setEstimatedReturns(0);
-      setChartData([]);
-    }
-  };
+  useEffect(() => { calculate(); }, [calculate, lastUpdatedTime]);
 
-  const pieData = [
-    { name: 'Invested Amount', value: Math.round(investedAmount) },
-    { name: 'Estimated Returns', value: Math.round(estimatedReturns) },
-  ];
+  const handleReset = () => { setMonthlyRaw('10000'); setRateRaw('12'); setDurationRaw('10'); setDurationUnit('years'); setResult(null); setError(''); };
 
-  const COLORS = ['#4f46e5', '#10b981'];
+  const currSym = getCurrencySymbol(selectedResultCurrency);
+  const inputSym = getCurrencySymbol(selectedInputCurrency);
+  const disp = (inr: number) => fmtAmt(convertFromINR(inr, selectedResultCurrency), currSym);
+  const dispShort = (inr: number) => fmtShort(convertFromINR(inr, selectedResultCurrency), currSym);
 
-  const results = maturityAmount > 0 && (
-    <div className="space-y-4">
-      <ResultCard label="Maturity Amount" value={formatCurrency(maturityAmount)} highlighted />
-      <ResultCard label="Invested Amount" value={formatCurrency(investedAmount)} />
-      <ResultCard label="Estimated Returns" value={formatCurrency(estimatedReturns)} />
-      <div className="mt-4 p-4 bg-green-50 rounded-lg">
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-700">Return Rate</span>
-          <span className="font-semibold text-green-600">
-            {investedAmount > 0 ? ((estimatedReturns / investedAmount) * 100).toFixed(2) : 0}%
-          </span>
-        </div>
-      </div>
-    </div>
-  );
+  const investedPct = result && result.futureValue > 0 ? (result.totalInvested / result.futureValue) * 100 : 0;
+  const returnPct = 100 - investedPct;
 
-  const chart = chartData.length > 0 && (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Investment Growth Over Time</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="period" />
-            <YAxis />
-            <Tooltip formatter={(value: number | string) => formatCurrency(Number(value))} />
-            <Legend />
-            <Line type="monotone" dataKey="invested" stroke="#4f46e5" name="Invested" strokeWidth={2} />
-            <Line type="monotone" dataKey="returns" stroke="#10b981" name="Returns" strokeWidth={2} />
-            <Line type="monotone" dataKey="total" stroke="#f59e0b" name="Total Value" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Investment Breakdown</h3>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={pieData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, percent }: { name: string; percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-            >
-              {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip formatter={(value: number | string) => formatCurrency(Number(value))} />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-
-  const explanation = (
-    <div className="space-y-4 text-gray-700">
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">What is SIP?</h3>
-        <p>
-          SIP (Systematic Investment Plan) is a method of investing a fixed sum regularly in mutual funds. 
-          SIP allows investors to invest in a disciplined manner without worrying about market volatility and timing the market.
-        </p>
-      </div>
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">Formula</h3>
-        <div className="bg-gray-100 p-4 rounded-lg font-mono text-sm">
-          M = P × ((1 + r)^n - 1) / r × (1 + r)
-          <br />
-          <br />
-          Where:
-          <br />
-          M = Maturity Amount
-          <br />
-          P = Monthly investment amount
-          <br />
-          r = Expected monthly return rate (annual rate / 12 / 100)
-          <br />
-          n = Total number of months
-        </div>
-      </div>
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">Benefits of SIP</h3>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Disciplined investing habit</li>
-          <li>Rupee cost averaging</li>
-          <li>Power of compounding</li>
-          <li>Flexibility to increase or pause investments</li>
-          <li>Suitable for all income levels</li>
-        </ul>
-      </div>
-    </div>
-  );
+  const insight = useMemo(() => {
+    if (!result) return null;
+    const ratio = result.estimatedReturns / result.totalInvested;
+    if (ratio < 0.3) return { text: 'Increase duration or investment amount to get better returns.', type: 'warning' };
+    if (ratio > 1) return { text: 'Your investment plan shows exceptional long-term growth potential! 🚀', type: 'success' };
+    return { text: 'Your investment plan shows strong growth potential. Stay consistent!', type: 'success' };
+  }, [result]);
 
   return (
-    <CalculatorLayout
-      title="SIP Calculator"
-      description="Calculate returns from Systematic Investment Plan"
-      results={results}
-      chart={chart}
-      explanation={explanation}
-    >
-      <div className="space-y-4">
-        <InputField
-          label="Monthly Investment Amount"
-          value={monthlyInvestment}
-          onChange={setMonthlyInvestment}
-          placeholder="Enter monthly amount"
-          prefix="₹"
-          required
-        />
-        <InputField
-          label="Expected Annual Return Rate"
-          value={expectedReturn}
-          onChange={setExpectedReturn}
-          placeholder="Enter expected return"
-          suffix="%"
-          step="0.1"
-          required
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <InputField
-            label="Time Period"
-            value={timePeriod}
-            onChange={setTimePeriod}
-            placeholder="Enter time period"
-            required
-          />
-          <SelectField
-            label="Period Type"
-            value={timePeriodType}
-            onChange={setTimePeriodType}
-            options={[
-              { label: 'Years', value: 'years' },
-              { label: 'Months', value: 'months' },
-            ]}
-          />
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+      <div className="max-w-6xl mx-auto mb-8 text-center">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-sm font-medium mb-4">
+          <PiggyBank className="w-4 h-4" /> Systematic Investment Plan
+        </motion.div>
+        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className="text-4xl font-extrabold text-white tracking-tight mb-2">
+          SIP <span className="text-emerald-400">Calculator</span>
+        </motion.h1>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-400 text-lg">
+          Estimate your wealth from monthly investments with compounding power.
+        </motion.p>
       </div>
-    </CalculatorLayout>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* LEFT — INPUTS */}
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-white">Inputs</h2>
+              <p className="text-slate-400 text-sm">Enter your SIP details</p>
+            </div>
+            <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all">
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
+            </button>
+          </div>
+
+          {/* Input Currency */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }}
+              disabled={ratesLoading} className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
+              {availableCurrencies.map(c => <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>)}
+            </select>
+          </div>
+
+          {/* Monthly Investment */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-300 mb-1.5">Monthly Investment</label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+              <input type="number" value={monthlyRaw} onChange={e => setMonthlyRaw(e.target.value)} placeholder="e.g. 10000" min={0}
+                className="w-full pl-8 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+            </div>
+            <input type="range" min={500} max={500000} step={500} value={Number(monthlyRaw) || 0} onChange={e => setMonthlyRaw(e.target.value)}
+              className="w-full mt-2 accent-emerald-500" />
+          </div>
+
+          {/* Rate */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-300 mb-1.5">Expected Annual Return (%)</label>
+            <div className="relative">
+              <input type="number" value={rateRaw} onChange={e => setRateRaw(e.target.value)} placeholder="e.g. 12" min={0} max={50} step="0.1"
+                className="w-full pl-4 pr-10 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm pointer-events-none">%</span>
+            </div>
+          </div>
+
+          {/* Duration */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-sm font-semibold text-slate-300">Investment Duration</label>
+              <div className="flex items-center gap-0.5 bg-white/5 border border-white/10 rounded-lg p-0.5">
+                {(['years', 'months'] as const).map(u => (
+                  <button key={u} onClick={() => setDurationUnit(u)}
+                    className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${durationUnit === u ? 'bg-emerald-600 text-white' : 'text-slate-500 hover:text-white'}`}>
+                    {u.charAt(0).toUpperCase() + u.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <input type="number" value={durationRaw} onChange={e => setDurationRaw(e.target.value)}
+                placeholder={durationUnit === 'years' ? 'e.g. 10' : 'e.g. 120'} min={1}
+                className="w-full pl-4 pr-16 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs pointer-events-none capitalize">{durationUnit}</span>
+            </div>
+          </div>
+
+          {error && (
+            <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-sm">
+              <Info className="w-4 h-4 shrink-0" /> {error}
+            </div>
+          )}
+
+          {/* Formula Reference */}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-auto">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Formula</p>
+            <p className="text-xs font-mono text-slate-400">FV = P × [((1+r)ⁿ − 1) / r] × (1+r)</p>
+            <p className="text-xs text-slate-500 mt-1">r = Annual Rate / 12 / 100 &nbsp;|&nbsp; n = Months</p>
+          </div>
+        </motion.div>
+
+        {/* RIGHT — RESULTS */}
+        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col gap-6">
+
+          {/* Results Card */}
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-white">Results</h2>
+                <p className="text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
+              </div>
+              <button onClick={() => updateCurrencyRates()} disabled={ratesLoading}
+                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-all">
+                <RefreshCw className={`w-4 h-4 ${ratesLoading ? 'animate-spin' : ''}`} /> Update
+              </button>
+            </div>
+
+            {/* Display Currency */}
+            <div className="mb-5">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <div className="flex flex-wrap gap-2">
+                {availableCurrencies.map(c => (
+                  <button key={c} onClick={() => setSelectedResultCurrency(c as never)}
+                    className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-emerald-600 border-emerald-500 text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:border-emerald-400 hover:text-slate-200'}`}>
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {result ? (
+              <div className="grid grid-cols-1 gap-3">
+                <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-1">Future Value</p>
+                  <p className="text-3xl font-extrabold text-white">{dispShort(result.futureValue)}</p>
+                  <p className="text-xs text-slate-400 mt-1">{disp(result.futureValue)}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Invested</p>
+                    <p className="text-xl font-bold text-blue-300">{dispShort(result.totalInvested)}</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Est. Returns</p>
+                    <p className="text-xl font-bold text-emerald-300">{dispShort(result.estimatedReturns)}</p>
+                  </div>
+                </div>
+
+                {/* Visual Breakdown */}
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Breakdown</p>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-blue-300 font-semibold">Invested Amount</span>
+                        <span className="text-slate-300">{investedPct.toFixed(1)}%</span>
+                      </div>
+                      <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${investedPct}%` }} transition={{ duration: 0.8, ease: 'easeOut' }}
+                          className="h-full bg-blue-500 rounded-full" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-emerald-300 font-semibold">Returns Earned</span>
+                        <span className="text-slate-300">{returnPct.toFixed(1)}%</span>
+                      </div>
+                      <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${returnPct}%` }} transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+                          className="h-full bg-emerald-500 rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-14 text-slate-500 gap-3">
+                <TrendingUp className="w-12 h-12 opacity-20" />
+                <p className="text-sm">Enter values to see your SIP projection</p>
+              </div>
+            )}
+          </div>
+
+          {/* Smart Insight */}
+          {insight && result && (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              className={`flex items-start gap-3 px-5 py-4 rounded-2xl border-l-4 ${insight.type === 'success' ? 'bg-emerald-50/5 border-emerald-400 text-emerald-200' : 'bg-amber-50/5 border-amber-400 text-amber-200'}`}>
+              <Sparkles className="w-5 h-5 mt-0.5 shrink-0" />
+              <div>
+                <p className="font-semibold text-sm">Smart Insight</p>
+                <p className="text-sm mt-0.5 opacity-90">{insight.text}</p>
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </div>
   );
 }

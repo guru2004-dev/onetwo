@@ -406,13 +406,7 @@ export const calculatorCategories: CalculatorCategory[] = [
         category: 'analytical',
         path: '/calculators/irr',
       },
-      {
-        id: 'xirr',
-        name: 'XIRR Calculator',
-        description: 'Calculate Extended Internal Rate of Return',
-        category: 'analytical',
-        path: '/calculators/xirr',
-      },
+
       {
         id: 'cagr',
         name: 'CAGR Calculator',
