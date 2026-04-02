@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { RefreshCw, RotateCcw, TrendingUp, DollarSign, Percent, AlertTriangle, CheckCircle, Info } from 'lucide-react';
+import {
+  RefreshCw,
+  RotateCcw,
+  TrendingUp,
+  DollarSign,
+  Percent,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+} from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 
 // ─────────────────────────────────────────────
@@ -57,14 +66,12 @@ export default function MarkupMarginCalculator() {
     selectedResultCurrency,
     setSelectedResultCurrency,
     availableCurrencies,
-    exchangeRates,
     loading: ratesLoading,
     updateCurrencyRates,
     lastUpdatedTime,
     getCurrencySymbol,
     convertToINR,
     convertFromINR,
-    formatInSelectedCurrency,
   } = useCurrency();
 
   // ── State ────────────────────────────────────
@@ -88,9 +95,7 @@ export default function MarkupMarginCalculator() {
       return;
     }
 
-    // Convert CP from display currency → INR for internal math
     const cp = convertToINR(cpDisplay, selectedInputCurrency);
-
     let sp = 0;
 
     if (mode === 'cp-sp') {
@@ -115,7 +120,6 @@ export default function MarkupMarginCalculator() {
       }
       sp = cp * (1 + markup / 100);
     } else {
-      // cp-margin
       const margin = Number(marginRaw);
       if (isNaN(margin) || margin <= 0 || margin >= 100) {
         setError('Margin % must be between 0 and 100 (exclusive).');
@@ -171,7 +175,9 @@ export default function MarkupMarginCalculator() {
     const id = setInterval(() => setTick((t) => t + 1), 30000);
     return () => clearInterval(id);
   }, []);
+
   const relativeTime = (() => {
+    void tick;
     if (!lastUpdatedTime) return 'never';
     const sec = Math.max(1, Math.floor((Date.now() - lastUpdatedTime) / 1000));
     if (sec < 60) return `${sec}s ago`;
@@ -179,13 +185,13 @@ export default function MarkupMarginCalculator() {
     if (min < 60) return `${min}m ago`;
     return `${Math.floor(min / 60)}h ago`;
   })();
-  void tick;
 
   // ─────────────────────────────────────────────
   // Render
   // ─────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-10 px-4">
+
       {/* ── Page Title ── */}
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-4">
@@ -284,7 +290,6 @@ export default function MarkupMarginCalculator() {
               min={0.01}
             />
 
-            {/* SP – cp-sp mode */}
             {mode === 'cp-sp' && (
               <NumberInput
                 label="Selling Price (SP)"
@@ -296,7 +301,6 @@ export default function MarkupMarginCalculator() {
               />
             )}
 
-            {/* Markup – cp-markup mode */}
             {mode === 'cp-markup' && (
               <NumberInput
                 label="Markup (%)"
@@ -308,7 +312,6 @@ export default function MarkupMarginCalculator() {
               />
             )}
 
-            {/* Margin – cp-margin mode */}
             {mode === 'cp-margin' && (
               <NumberInput
                 label="Margin (%)"
@@ -498,7 +501,6 @@ export default function MarkupMarginCalculator() {
                 />
               </div>
 
-              {/* Note */}
               <p className="mt-3 text-[11px] text-slate-500 italic">
                 * Markup is always higher than Margin for the same profit. e.g. 50% Markup = 33.33% Margin.
               </p>
@@ -518,7 +520,7 @@ export default function MarkupMarginCalculator() {
             </div>
           )}
 
-          {/* Breakdown Summary */}
+          {/* Price Breakdown */}
           {results && (
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
               <h3 className="text-base font-bold text-white mb-4">Price Breakdown</h3>
@@ -644,7 +646,9 @@ function BarCompare({ label, value, max, color, textColor }: BarCompareProps) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className={`text-xs font-extrabold w-14 text-right ${textColor}`}>{isFinite(value) ? `${value.toFixed(2)}%` : '—'}</span>
+      <span className={`text-xs font-extrabold w-14 text-right ${textColor}`}>
+        {isFinite(value) ? `${value.toFixed(2)}%` : '—'}
+      </span>
     </div>
   );
 }
