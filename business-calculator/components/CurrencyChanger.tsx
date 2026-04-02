@@ -35,7 +35,7 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
 
   const options = useMemo(() => {
     if (safeAvailableCurrencies.length === 0) {
-      return [{ code: 'INR', label: 'INR' }];
+      return [{ code: 'INR', label: 'INR', symbol: '₹' }];
     }
 
     return safeAvailableCurrencies.map((currencyCode) => ({
@@ -123,7 +123,7 @@ export default function CurrencyChanger({ variant = 'result' }: CurrencyChangerP
             <button
               key={option.code}
               type="button"
-              onClick={() => setSelectedResultCurrency(option.code)}
+              onClick={() => { if (isSupportedCurrency(option.code)) setSelectedResultCurrency(option.code); }}
               disabled={loading}
               className={`px-3 py-1.5 text-xs sm:text-sm rounded-full border transition-colors ${
                 active

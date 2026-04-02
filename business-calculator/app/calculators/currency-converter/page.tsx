@@ -6,12 +6,13 @@ import InputField from '@/components/InputField';
 import SelectField from '@/components/SelectField';
 import ResultCard from '@/components/ResultCard';
 import { useCurrency } from '@/context/CurrencyContext';
+import { SupportedCurrency, isSupportedCurrency } from '@/lib/currency';
 
 export default function CurrencyConverter() {
   const { exchangeRates, availableCurrencies, loading, error } = useCurrency();
   const [amount, setAmount] = useState('100');
-  const [fromCurrency, setFromCurrency] = useState('INR');
-  const [toCurrency, setToCurrency] = useState('INR');
+  const [fromCurrency, setFromCurrency] = useState<SupportedCurrency>('INR');
+  const [toCurrency, setToCurrency] = useState<SupportedCurrency>('USD');
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [exchangeRate, setExchangeRate] = useState(0);
 
@@ -48,11 +49,11 @@ export default function CurrencyConverter() {
   useEffect(() => {
     if (availableCurrencies.length === 0) return;
 
-    if (!availableCurrencies.includes(fromCurrency)) {
+    if (!isSupportedCurrency(fromCurrency)) {
       setFromCurrency('INR');
     }
 
-    if (!availableCurrencies.includes(toCurrency)) {
+    if (!isSupportedCurrency(toCurrency)) {
       setToCurrency('INR');
     }
   }, [availableCurrencies, fromCurrency, toCurrency]);
@@ -145,13 +146,13 @@ export default function CurrencyConverter() {
       <SelectField
         label="From Currency"
         value={fromCurrency}
-        onChange={setFromCurrency}
+        onChange={(v) => { if (isSupportedCurrency(v)) setFromCurrency(v); }}
         options={availableCurrencies.map(curr => ({ value: curr, label: curr }))}
       />
       <SelectField
         label="To Currency"
         value={toCurrency}
-        onChange={setToCurrency}
+        onChange={(v) => { if (isSupportedCurrency(v)) setToCurrency(v); }}
         options={availableCurrencies.map(curr => ({ value: curr, label: curr }))}
       />
       {loading && <p className="text-sm text-gray-500">Loading latest exchange rates...</p>}

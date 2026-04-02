@@ -84,14 +84,14 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white shadow-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <div className="bg-black/20 backdrop-blur-md border border-white/10 rounded-full shadow-2xl">
+          <div className="flex items-center justify-between h-16 px-4 sm:px-6">
             {/* Hamburger Menu Button - Left Side */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
                 aria-label="View all calculators"
                 title="View all calculators"
               >
@@ -100,15 +100,28 @@ export default function Header() {
 
               {/* Logo */}
               <Link href="/" className="flex items-center space-x-2">
-                <Calculator className="w-8 h-8 text-indigo-600" />
-                <span className="text-xl font-bold text-gray-900 hidden sm:inline">Business Calculator</span>
+                <Calculator className="w-8 h-8 text-white" />
+                <span className="text-xl font-bold text-white hidden sm:inline tracking-tight">BusinessCalc</span>
               </Link>
             </div>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:block flex-1 max-w-md mx-8 relative">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          {/* Navigation - Desktop */}
+          <nav className="hidden md:flex items-center space-x-6 mx-4">
+            <Link href="/" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+              Home
+            </Link>
+            <Link href="/categories" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+              All Calculators
+            </Link>
+            <Link href="/about" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+              About
+            </Link>
+          </nav>
+
+          {/* Right Side: Search and CTA - Desktop */}
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
@@ -117,84 +130,98 @@ export default function Header() {
                   setShowSearchResults(true);
                 }}
                 onFocus={() => setShowSearchResults(true)}
-                placeholder="Search calculators..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                placeholder="Search..."
+                className="w-48 lg:w-64 pl-9 pr-4 py-1.5 bg-white/5 border border-white/10 rounded-full focus:ring-2 focus:ring-white/20 focus:border-transparent outline-none text-sm text-white placeholder-gray-400 transition-all hover:bg-white/10"
               />
             </div>
-
+            
             {/* Search Results Dropdown */}
             {showSearchResults && searchQuery && (
-              <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
+              <div className="absolute top-12 right-0 w-80 bg-[#121212] border border-white/10 rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50">
                 {filteredCalculators.length > 0 ? (
                   filteredCalculators.map((calc) => (
                     <button
                       key={calc.id}
                       onClick={() => handleSearchSelect(calc.path)}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                      className="w-full text-left px-4 py-3 hover:bg-white/5 border-b border-white/5 last:border-b-0 transition-colors"
                     >
-                      <p className="font-medium text-gray-900">{calc.name}</p>
-                      <p className="text-sm text-gray-600">{calc.description}</p>
+                      <p className="font-medium text-white text-sm">{calc.name}</p>
+                      <p className="text-xs text-gray-400 mt-1">{calc.description}</p>
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-gray-500 text-center">
+                  <div className="px-4 py-3 text-gray-500 text-center text-sm">
                     No calculators found
                   </div>
                 )}
               </div>
             )}
+            
+            <button className="px-5 py-2 text-sm font-medium text-black bg-white rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              Get Started
+            </button>
           </div>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-gray-700 hover:text-indigo-600 font-medium">
-              Home
-            </Link>
-            <Link href="/categories" className="text-gray-700 hover:text-indigo-600 font-medium">
-              All Calculators
-            </Link>
-            <Link href="/about" className="text-gray-700 hover:text-indigo-600 font-medium">
-              About
-            </Link>
-          </nav>
-
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-700"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="md:hidden flex items-center space-x-2">
+            <button className="p-2 text-white hover:bg-white/10 rounded-full">
+              <Search className="w-5 h-5" onClick={() => setIsMenuOpen(!isMenuOpen)} />
+            </button>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <div className="mb-4">
+          <div className="md:hidden mt-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="p-4 border-b border-white/10">
               <input
                 type="text"
                 placeholder="Search calculators..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSearchResults(true);
+                }}
+                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-white/20 outline-none text-white text-sm"
               />
+               {/* Search Results Mobile */}
+              {showSearchResults && searchQuery && (
+                <div className="mt-2 bg-[#121212] border border-white/10 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {filteredCalculators.map((calc) => (
+                      <button
+                        key={calc.id}
+                        onClick={() => handleSearchSelect(calc.path)}
+                        className="w-full text-left px-4 py-3 hover:bg-white/5 border-b border-white/5"
+                      >
+                        <p className="font-medium text-white text-sm">{calc.name}</p>
+                      </button>
+                    ))}
+                </div>
+              )}
             </div>
-            <nav className="space-y-2">
+            <nav className="flex flex-col">
               <Link
                 href="/"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded"
+                className="px-6 py-4 text-gray-300 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href="/categories"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded"
+                className="px-6 py-4 text-gray-300 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5"
                 onClick={() => setIsMenuOpen(false)}
               >
                 All Calculators
               </Link>
               <Link
                 href="/about"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded"
+                className="px-6 py-4 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
@@ -202,7 +229,7 @@ export default function Header() {
             </nav>
           </div>
         )}
-      </div>
+        </div>
 
       {/* Overlay for search results */}
       {showSearchResults && searchQuery && (
@@ -211,7 +238,7 @@ export default function Header() {
           onClick={() => setShowSearchResults(false)}
         />
       )}
-    </header>
+      </header>
 
       {/* Side Drawer Overlay - Click to Close */}
       {isDrawerOpen && (
