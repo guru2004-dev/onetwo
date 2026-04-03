@@ -51,7 +51,8 @@ const IMPLEMENTED_CALCULATOR_IDS = new Set([
   'goal-savings',
   'debt-to-income',
   'net-worth',
-  'credit-score'
+  'credit-score',
+  'electricity'
 ]);
 
 export const calculatorCategories: CalculatorCategory[] = [
@@ -81,6 +82,13 @@ export const calculatorCategories: CalculatorCategory[] = [
         description: 'Compare markup and margin — understand the real difference',
         category: 'basic',
         path: '/calculators/markup-margin',
+      },
+      {
+        id: 'electricity',
+        name: 'Electricity Bill Calculator',
+        description: 'Calculate power consumption and estimated electricity costs',
+        category: 'basic',
+        path: '/calculators/electricity',
       },
     ],
   },
