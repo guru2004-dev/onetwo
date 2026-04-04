@@ -91,7 +91,7 @@ export default function Header() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                 aria-label="View all calculators"
                 title="View all calculators"
               >
@@ -156,10 +156,6 @@ export default function Header() {
                 )}
               </div>
             )}
-            
-            <button className="px-5 py-2 text-sm font-medium text-black bg-white rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-              Get Started
-            </button>
           </div>
 
           {/* Mobile Menu Button */}

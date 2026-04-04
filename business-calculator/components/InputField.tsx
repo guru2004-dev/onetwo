@@ -2,6 +2,7 @@
 
 import React from 'react';
 import InputCurrencySelector from '@/components/InputCurrencySelector';
+import PremiumCurrencyInput from '@/components/PremiumCurrencyInput';
 
 interface InputFieldProps {
   label: string;
@@ -36,12 +37,12 @@ export default function InputField({
   const isGlobalCurrencyInput = type === 'number' && (prefix === '₹' || rupeeLabelPattern.test(label));
 
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+    <div className="mb-4 text-left">
+      <label className="block text-sm font-medium text-gray-300 mb-2 drop-shadow-sm flex items-center">
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-rose-500 ml-1">*</span>}
         {tooltip && (
-          <span className="ml-2 text-gray-400 text-xs" title={tooltip}>
+          <span className="ml-2 text-gray-500 text-xs cursor-help" title={tooltip}>
             ⓘ
           </span>
         )}
@@ -57,10 +58,22 @@ export default function InputField({
           required={required}
           showCurrencyDropdown
         />
+      ) : type === 'number' ? (
+        <PremiumCurrencyInput
+          value={value}
+          onAmountChange={onChange}
+          placeholder={placeholder}
+          min={min}
+          max={max}
+          step={step}
+          required={required}
+          prefix={prefix}
+          suffix={suffix}
+        />
       ) : (
         <div className="relative">
           {prefix && (
-            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-400 font-medium z-10 pointer-events-none">
               {prefix}
             </span>
           )}
@@ -72,12 +85,15 @@ export default function InputField({
             min={min}
             max={max}
             step={step}
-            className={`w-full py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none ${
-              prefix ? 'pl-10 pr-4' : 'px-4'
-            } ${suffix ? 'pr-14' : ''}`}
+            required={required}
+            className={`w-full py-3 px-4 bg-gray-900 border border-gray-700 rounded-xl text-white outline-none 
+              transition-all duration-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 
+              hover:border-gray-600 shadow-inner font-medium tracking-wide placeholder-gray-500
+              ${prefix ? 'pl-10 text-right' : 'text-left'} 
+              ${suffix ? 'pr-14 text-right' : ''}`}
           />
           {suffix && (
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium z-10 pointer-events-none">
               {suffix}
             </span>
           )}
