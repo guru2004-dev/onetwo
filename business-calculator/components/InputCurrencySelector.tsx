@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { SUPPORTED_CURRENCIES, isSupportedCurrency } from '@/lib/currency';
+import PremiumCurrencyInput from './PremiumCurrencyInput';
 
 interface InputCurrencySelectorProps {
   amount: number | string;
@@ -115,29 +116,30 @@ export default function InputCurrencySelector({
           value={safeSelectedCurrency}
           onChange={(event) => handleCurrencyChange(event.target.value)}
           disabled={loading}
-          className="sm:w-52 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+          className="sm:w-32 w-full px-3 py-3 bg-gray-900 border border-gray-700 rounded-xl text-white outline-none 
+              transition-all duration-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 
+              hover:border-gray-600 shadow-inner font-medium tracking-wide cursor-pointer"
           aria-label="Input currency"
         >
           {loading && <option value="INR">Loading currencies...</option>}
           {!loading && options.map((option) => (
-            <option key={option.code} value={option.code}>
+            <option key={option.code} value={option.code} className="bg-gray-800 text-white">
               {option.label}
             </option>
           ))}
         </select>
       )}
 
-      <input
-        type="number"
+      <PremiumCurrencyInput
         value={displayAmount}
-        onChange={(event) => handleAmountChange(event.target.value)}
+        onAmountChange={(value) => handleAmountChange(value)}
         placeholder={placeholder}
         min={min}
         max={max}
         step={step}
         required={required}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
         aria-invalid={Boolean(error)}
+        className="flex-1"
       />
     </div>
   );

@@ -1,163 +1,224 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import CalculatorLayout from '@/components/CalculatorLayout';
-import InputField from '@/components/InputField';
-import ResultCard from '@/components/ResultCard';
-import { formatPercentage, formatNumber } from '@/lib/utils';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  RotateCcw,
+  Percent,
+  AlertTriangle,
+  Info,
+  Layers,
+  BarChart3
+} from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell
+} from 'recharts';
 
 export default function PercentageCalculator() {
+  // Inputs
   const [value, setValue] = useState('50');
   const [total, setTotal] = useState('200');
   const [percentage, setPercentage] = useState('25');
   
-  const [result1, setResult1] = useState(0);  // X is what % of Y
-  const [result2, setResult2] = useState(0);  // What is X% of Y
-  const [result3, setResult3] = useState(0);  // X is Y% of what
+  // New/Old for percentage change
+  const [oldValue, setOldValue] = useState('100');
+  const [newValue, setNewValue] = useState('120');
 
-  useEffect(() => {
-    calculate();
-  }, [value, total, percentage]);
+  // Results
+  const [results, setResults] = useState<{
+    result1: number; // X is what % of Y
+    result2: number; // What is X% of Y
+    result3: number; // X is Y% of what
+    percentChange: number; // change from old to new
+  } | null>(null);
 
-  const calculate = () => {
+  const calculate = useCallback(() => {
     const val = parseFloat(value) || 0;
     const tot = parseFloat(total) || 0;
     const pct = parseFloat(percentage) || 0;
 
-    // X is what % of Y
-    if (tot !== 0) {
-      setResult1((val / tot) * 100);
-    } else {
-      setResult1(0);
+    const oldV = parseFloat(oldValue) || 0;
+    const newV = parseFloat(newValue) || 0;
+
+    let r1 = 0, r2 = 0, r3 = 0, change = 0;
+
+    if (tot !== 0) r1 = (val / tot) * 100;
+    r2 = (pct / 100) * tot;
+    if (pct !== 0) r3 = (val / pct) * 100;
+
+    if (oldV !== 0) {
+      change = ((newV - oldV) / oldV) * 100;
     }
 
-    // What is X% of Y
-    setResult2((pct / 100) * tot);
+    setResults({
+      result1: r1,
+      result2: r2,
+      result3: r3,
+      percentChange: change
+    });
+  }, [value, total, percentage, oldValue, newValue]);
 
-    // X is Y% of what
-    if (pct !== 0) {
-      setResult3((val / pct) * 100);
-    } else {
-      setResult3(0);
-    }
+  useEffect(() => {
+    calculate();
+  }, [calculate]);
+
+  const handleReset = () => {
+    setValue('50');
+    setTotal('200');
+    setPercentage('25');
+    setOldValue('100');
+    setNewValue('120');
   };
 
-  const results = (
-    <div className="space-y-4">
-      <div className="p-4 bg-indigo-50 rounded-lg border-2 border-indigo-500">
-        <p className="text-sm text-gray-700 mb-2">{value} is what % of {total}?</p>
-        <p className="text-3xl font-bold text-indigo-600">{formatPercentage(result1)}</p>
-      </div>
-      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-sm text-gray-700 mb-2">What is {percentage}% of {total}?</p>
-        <p className="text-2xl font-bold text-gray-900">{formatNumber(result2)}</p>
-      </div>
-      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-sm text-gray-700 mb-2">{value} is {percentage}% of what number?</p>
-        <p className="text-2xl font-bold text-gray-900">{formatNumber(result3)}</p>
-      </div>
-    </div>
-  );
+  const getFormat = (n: number, isPct = false) => {
+    if (!isFinite(n) || isNaN(n)) return '0.00';
+    if (isPct) {
+      return `${n.toFixed(2)}%`;
+    }
+    return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  };
 
-  const explanation = (
-    <div className="space-y-4 text-gray-700">
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">Understanding Percentages</h3>
-        <p>
-          A percentage is a number or ratio expressed as a fraction of 100. The word "percent" means "per hundred."
-          Percentages are used to express how large or small one quantity is relative to another.
-        </p>
-      </div>
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">Common Percentage Formulas</h3>
-        <div className="bg-gray-100 p-4 rounded-lg space-y-3 font-mono text-sm">
-          <div>
-            <strong>1. X is what % of Y?</strong>
-            <br />
-            Percentage = (X / Y) × 100
-            <br />
-            Example: 50 is what % of 200? = (50/200) × 100 = 25%
-          </div>
-          <div className="pt-3 border-t border-gray-300">
-            <strong>2. What is X% of Y?</strong>
-            <br />
-            Result = (X / 100) × Y
-            <br />
-            Example: What is 25% of 200? = (25/100) × 200 = 50
-          </div>
-          <div className="pt-3 border-t border-gray-300">
-            <strong>3. X is Y% of what?</strong>
-            <br />
-            Result = (X / Y) × 100
-            <br />
-            Example: 50 is 25% of what? = (50/25) × 100 = 200
-          </div>
-          <div className="pt-3 border-t border-gray-300">
-            <strong>4. Percentage Change</strong>
-            <br />
-            % Change = ((New - Old) / Old) × 100
-          </div>
-        </div>
-      </div>
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-2">Real-World Applications</h3>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Calculating discounts and sales prices</li>
-          <li>Computing tax amounts</li>
-          <li>Determining profit margins</li>
-          <li>Analyzing grade percentages</li>
-          <li>Measuring growth rates</li>
-          <li>Understanding interest rates</li>
-        </ul>
-      </div>
-    </div>
-  );
+  const barData = results ? [
+    { name: 'X', value: Number(value) },
+    { name: 'Y', value: Number(total) },
+    { name: 'Z %', value: Number(percentage) }
+  ] : [];
 
   return (
-    <CalculatorLayout
-      title="Percentage Calculator"
-      description="Calculate percentages and percentage changes"
-      results={results}
-      explanation={explanation}
-    >
-      <div className="space-y-6">
-        <div className="p-4 bg-blue-50 rounded-lg">
-          <h3 className="font-semibold text-gray-900 mb-3">Basic Values</h3>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+      <div className="max-w-6xl mx-auto mb-8 text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm font-medium mb-4">
+          <Percent className="w-4 h-4" />
+          Proportional Logic
+        </div>
+        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+          Percentage <span className="text-blue-400">Calculator</span>
+        </h1>
+        <p className="text-slate-400 text-lg">
+          Calculate multi-directional percentage formulations simultaneously.
+        </p>
+      </div>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {/* LEFT — INPUTS */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <h2 className="text-lg font-bold text-white">Basic Operations</h2>
+            </div>
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+            >
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
+            </button>
+          </div>
+
           <div className="space-y-4">
-            <InputField
-              label="Value (X)"
-              value={value}
-              onChange={setValue}
-              placeholder="Enter value"
-              required
-            />
-            <InputField
-              label="Total (Y)"
-              value={total}
-              onChange={setTotal}
-              placeholder="Enter total"
-              required
-            />
-            <InputField
-              label="Percentage (%)"
-              value={percentage}
-              onChange={setPercentage}
-              placeholder="Enter percentage"
-              suffix="%"
-              step="0.1"
-              required
-            />
+            <h3 className="text-sm font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+              <Layers className="w-4 h-4"/> Ratio Values Setup
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-[13px] text-slate-300 mb-1">Value (X)</label>
+                <div className="relative">
+                  <input type="number" step="any" value={value} onChange={e => setValue(e.target.value)} className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-semibold" />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-[13px] text-slate-300 mb-1">Total (Y)</label>
+                <div className="relative">
+                  <input type="number" step="any" value={total} onChange={e => setTotal(e.target.value)} className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-semibold" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[13px] text-slate-300 mb-1">Percentage (Z)</label>
+                <div className="relative">
+                  <input type="number" step="any" value={percentage} onChange={e => setPercentage(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-semibold" />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">%</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-[11px] text-slate-400">Edit X, Y, or Z to update all interconnected answers on the right instantly.</p>
+          </div>
+
+          <div className="space-y-4 pt-2 border-t border-white/10">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+              <BarChart3 className="w-4 h-4"/> Percentage Change
+            </h3>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[13px] text-slate-300 mb-1">Old Value</label>
+                <div className="relative">
+                  <input type="number" step="any" value={oldValue} onChange={e => setOldValue(e.target.value)} className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-[13px] text-slate-300 mb-1">New Value</label>
+                <div className="relative">
+                  <input type="number" step="any" value={newValue} onChange={e => setNewValue(e.target.value)} className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto bg-slate-900/40 border border-white/5 rounded-xl p-4 text-xs text-slate-400 flex items-start gap-3">
+             <Info className="w-4 h-4 shrink-0 text-blue-400" />
+             <p>A percentage is a number or ratio expressed as a fraction of 100. Useful for calculating discounts, tax amounts, profit margins, and growth metrics.</p>
+          </div>
+
+        </div>
+
+        {/* RIGHT — RESULTS */}
+        <div className="flex flex-col gap-6">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 h-full flex flex-col justify-center gap-4">
+            
+            {results && (
+              <>
+                <div className="border border-white/10 bg-gradient-to-r from-blue-900/30 to-indigo-900/30 rounded-xl p-5 shadow-inner">
+                  <p className="text-sm text-slate-400 mb-1"><span className="text-white font-bold">{value}</span> is what % of <span className="text-white font-bold">{total}</span>?</p>
+                  <p className="text-4xl font-extrabold text-blue-400">{getFormat(results.result1, true)}</p>
+                </div>
+
+                <div className="border border-white/10 bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-5 shadow-inner">
+                  <p className="text-sm text-slate-400 mb-1">What is <span className="text-white font-bold">{percentage}%</span> of <span className="text-white font-bold">{total}</span>?</p>
+                  <p className="text-4xl font-extrabold text-white">{getFormat(results.result2)}</p>
+                </div>
+
+                <div className="border border-white/10 bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-5 shadow-inner">
+                  <p className="text-sm text-slate-400 mb-1"><span className="text-white font-bold">{value}</span> is <span className="text-white font-bold">{percentage}%</span> of what number?</p>
+                  <p className="text-4xl font-extrabold text-white">{getFormat(results.result3)}</p>
+                </div>
+
+                <div className={`border ${results.percentChange >= 0 ? 'border-emerald-500/30 bg-emerald-900/10' : 'border-rose-500/30 bg-rose-900/10'} rounded-xl p-5 shadow-inner mt-2`}>
+                   <p className="text-sm text-slate-400 mb-1">Percentage Change (From <span className="text-white font-bold">{oldValue}</span> to <span className="text-white font-bold">{newValue}</span>):</p>
+                   <div className="flex items-center gap-2">
+                     <p className={`text-4xl font-extrabold ${results.percentChange >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                       {results.percentChange >= 0 ? '+' : ''}{getFormat(results.percentChange, true)}
+                     </p>
+                     <span className={`text-sm font-semibold px-2 py-0.5 rounded-full ${results.percentChange >= 0 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
+                       {results.percentChange >= 0 ? 'Increase' : 'Decrease'}
+                     </span>
+                   </div>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
-        <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg">
-          <p className="font-semibold mb-2">Quick Guide:</p>
-          <ul className="space-y-1">
-            <li>• Enter any two values to see all percentage calculations</li>
-            <li>• Results update automatically as you type</li>
-            <li>• All calculations are shown simultaneously</li>
-          </ul>
-        </div>
+
       </div>
-    </CalculatorLayout>
+
+    </div>
   );
 }
