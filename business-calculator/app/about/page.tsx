@@ -346,11 +346,13 @@ export default function AboutPage() {
 
     let balance = pINR;
     let totalInterest = 0;
+    const schedule: {month: number; principal: number; interest: number; balance: number}[] = [];
     for (let month = 1; month <= months; month++) {
       const interest = balance * monthlyRate;
       const principalPaid = Math.max(0, Math.min(balance, emiINR - interest));
       balance = Math.max(0, balance - principalPaid);
       totalInterest += interest;
+      schedule.push({month, principal: principalPaid, interest, balance});
       if (balance <= 0) break;
     }
 
@@ -359,6 +361,7 @@ export default function AboutPage() {
       principal: convertFromINRSafe(pINR),
       totalInterest: convertFromINRSafe(totalInterest),
       totalPayment: convertFromINRSafe(pINR + totalInterest),
+      schedule,
     };
   }, [loanAmount, loanRate, loanTenure, loanTenureUnit, customEmi, convertToINRSafe, convertFromINRSafe]);
 
@@ -370,15 +373,23 @@ export default function AboutPage() {
 
     let annualDep = 0;
     let bookValue = cost;
+    const schedule: {year: number; depreciation: number; bookValue: number}[] = [];
 
     if (depreciationMethod === 'straight-line') {
       annualDep = Math.max(0, (cost - salvage) / life);
+      let currentBook = cost;
+      for (let year = 1; year <= life; year++) {
+        const dep = annualDep;
+        currentBook = Math.max(salvage, currentBook - dep);
+        schedule.push({year, depreciation: dep, bookValue: currentBook});
+      }
       bookValue = Math.max(salvage, cost - annualDep * life);
     } else {
       let current = cost;
       for (let year = 1; year <= life; year++) {
         const dep = current * (rate / 100);
         current = Math.max(salvage, current - dep);
+        schedule.push({year, depreciation: dep, bookValue: current});
       }
       annualDep = cost * (rate / 100);
       bookValue = current;
@@ -388,6 +399,7 @@ export default function AboutPage() {
       annualDep: convertFromINRSafe(annualDep),
       bookValue: convertFromINRSafe(bookValue),
       totalDep: convertFromINRSafe(Math.min(cost - salvage, cost - bookValue)),
+      schedule,
     };
   }, [assetCost, salvageValue, usefulLife, depreciationMethod, depreciationRate, convertToINRSafe, convertFromINRSafe]);
 
@@ -554,7 +566,7 @@ export default function AboutPage() {
                     <PremiumSelect 
                       label={activeCalc === 'loan' ? "Tenure Unit" : "Compounding"} 
                       value={activeCalc === 'loan' ? loanTenureUnit : compoundingFrequency} 
-                      onChange={(e: any) => { if(activeCalc === 'loan') setLoanTenureUnit(e.target.value); else setCompoundingFrequency(Number(e.target.value)); triggerCalculation(); }} 
+                      onChange={(e: any) => { if(activeCalc === 'loan') setLoanTenureUnit(e.target.value); else setCompoundingFrequency(Number(e.target.value) as CompoundingFrequency); triggerCalculation(); }} 
                       options={activeCalc === 'loan' ? [{value:'years', label:'Years'}, {value:'months', label:'Months'}] : [{value:1, label:'Annually'}, {value:2, label:'Semi-Annually'}, {value:4, label:'Quarterly'}, {value:12, label:'Monthly'}]} 
                     />
                   )}
@@ -749,7 +761,7 @@ export default function AboutPage() {
                               <td className="px-4 py-3 text-slate-700 dark:text-gray-300">{item.month}</td>
                               <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 text-right">{formatInSelectedCurrency(item.principal)}</td>
                               <td className="px-4 py-3 text-amber-500 dark:text-amber-400 text-right">{formatInSelectedCurrency(item.interest)}</td>
-                              <td className="px-4 py-3 text-slate-900 dark:text-gray-300 text-right font-medium">{formatInSelectedCurrency(item.remaining)}</td>
+                              <td className="px-4 py-3 text-slate-900 dark:text-gray-300 text-right font-medium">{formatInSelectedCurrency(item.balance)}</td>
                             </tr>
                           ))}
                         </tbody>
