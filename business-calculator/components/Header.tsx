@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Calculator, Menu, X, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 import { getAllCalculators, calculatorCategories } from '@/lib/calculators-data';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -85,13 +86,13 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <div className="bg-black/20 backdrop-blur-md border border-white/10 rounded-full shadow-2xl">
+        <div className="bg-white/80 dark:bg-black/20 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-full shadow-lg dark:shadow-2xl transition-colors duration-300">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6">
             {/* Hamburger Menu Button - Left Side */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsDrawerOpen(true)}
-                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="p-2 text-slate-700 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                 aria-label="View all calculators"
                 title="View all calculators"
               >
@@ -100,20 +101,20 @@ export default function Header() {
 
               {/* Logo */}
               <Link href="/" className="flex items-center space-x-2">
-                <Calculator className="w-8 h-8 text-white" />
-                <span className="text-xl font-bold text-white hidden sm:inline tracking-tight">BusinessCalc</span>
+                <Calculator className="w-8 h-8 text-indigo-600 dark:text-white" />
+                <span className="text-xl font-bold text-slate-900 dark:text-white hidden sm:inline tracking-tight">BusinessCalc</span>
               </Link>
             </div>
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-6 mx-4">
-            <Link href="/" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+            <Link href="/" className="text-slate-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white text-sm font-medium transition-colors">
               Home
             </Link>
-            <Link href="/categories" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+            <Link href="/categories" className="text-slate-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white text-sm font-medium transition-colors">
               All Calculators
             </Link>
-            <Link href="/about" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
+            <Link href="/about" className="text-slate-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-white text-sm font-medium transition-colors">
               About
             </Link>
           </nav>
@@ -121,7 +122,7 @@ export default function Header() {
           {/* Right Side: Search and CTA - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative group">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
               <input
                 type="text"
                 value={searchQuery}
@@ -131,39 +132,42 @@ export default function Header() {
                 }}
                 onFocus={() => setShowSearchResults(true)}
                 placeholder="Search..."
-                className="w-48 lg:w-64 pl-9 pr-4 py-1.5 bg-white/5 border border-white/10 rounded-full focus:ring-2 focus:ring-white/20 focus:border-transparent outline-none text-sm text-white placeholder-gray-400 transition-all hover:bg-white/10"
+                className="w-48 lg:w-64 pl-9 pr-4 py-1.5 bg-black/5 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-white/20 focus:border-transparent outline-none text-sm text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all hover:bg-black/5 dark:hover:bg-white/10"
               />
             </div>
             
             {/* Search Results Dropdown */}
             {showSearchResults && searchQuery && (
-              <div className="absolute top-12 right-0 w-80 bg-[#121212] border border-white/10 rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50">
+              <div className="absolute top-12 right-0 w-80 bg-white dark:bg-[#121212] border border-gray-200 dark:border-white/10 rounded-xl shadow-2xl max-h-96 overflow-y-auto z-50">
                 {filteredCalculators.length > 0 ? (
                   filteredCalculators.map((calc) => (
                     <button
                       key={calc.id}
                       onClick={() => handleSearchSelect(calc.path)}
-                      className="w-full text-left px-4 py-3 hover:bg-white/5 border-b border-white/5 last:border-b-0 transition-colors"
+                      className="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 border-b border-gray-100 dark:border-white/5 last:border-b-0 transition-colors"
                     >
-                      <p className="font-medium text-white text-sm">{calc.name}</p>
-                      <p className="text-xs text-gray-400 mt-1">{calc.description}</p>
+                      <p className="font-medium text-slate-900 dark:text-white text-sm">{calc.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">{calc.description}</p>
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-gray-500 text-center text-sm">
+                  <div className="px-4 py-3 text-slate-500 dark:text-gray-500 text-center text-sm">
                     No calculators found
                   </div>
                 )}
               </div>
             )}
             
-            <button className="px-5 py-2 text-sm font-medium text-black bg-white rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+            <ThemeToggle />
+            
+            <button className="px-5 py-2 text-sm font-medium text-white dark:text-black bg-indigo-600 dark:bg-white rounded-full hover:bg-indigo-700 dark:hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(79,70,229,0.3)] dark:shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Get Started
             </button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button className="p-2 text-white hover:bg-white/10 rounded-full">
               <Search className="w-5 h-5" onClick={() => setIsMenuOpen(!isMenuOpen)} />
             </button>

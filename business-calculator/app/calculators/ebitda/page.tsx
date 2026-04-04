@@ -442,7 +442,7 @@ export default function EBITDACalculator() {
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
+          <div className="bg-white/5 backdrop-blur-xl cd business-calculatorborder border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
             <h3 className="text-base font-bold text-white mb-2">EBITDA to Revenue</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">

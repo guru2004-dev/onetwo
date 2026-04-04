@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] overflow-hidden selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] overflow-hidden selection:bg-indigo-500/30">
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Background Video */}
@@ -27,7 +27,7 @@ export default function Home() {
         
         {/* Overlays */}
         <div className="absolute inset-0 bg-black/70 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 dark:to-[#0a0a0a] z-10 transition-colors" />
         
         {/* Animated Glow Blobs */}
         <motion.div 
@@ -90,7 +90,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-t border-white/5">
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-t border-gray-200 dark:border-white/5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-8">
           {[
             { icon: Zap, title: 'Fast & Accurate', desc: 'Get instant results with precision calculations tailored for enterprise use.' },
@@ -105,26 +105,26 @@ export default function Home() {
                transition={{ duration: 0.5, delay: idx * 0.2 }}
                className="flex flex-col items-center text-center group"
              >
-               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 mb-6 group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all duration-500">
-                 <feature.icon className="w-8 h-8 text-gray-300 group-hover:text-purple-400 transition-colors" />
+               <div className="p-4 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 mb-6 group-hover:border-indigo-400 dark:group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] dark:group-hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all duration-500 shadow-sm dark:shadow-none">
+                 <feature.icon className="w-8 h-8 text-slate-400 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-purple-400 transition-colors" />
                </div>
-               <h3 className="text-xl font-bold text-white mb-3 tracking-wide">{feature.title}</h3>
-               <p className="text-gray-400 leading-relaxed max-w-xs">{feature.desc}</p>
+               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 tracking-wide">{feature.title}</h3>
+               <p className="text-slate-600 dark:text-gray-400 leading-relaxed max-w-xs">{feature.desc}</p>
              </motion.div>
           ))}
         </div>
       </section>
 
       {/* Calculator Categories - Expandable Section */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-t border-white/5">
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-t border-gray-200 dark:border-white/5">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">Calculator Categories</h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">Calculator Categories</h2>
+          <p className="text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto font-light">
             Browse and explore all our sophisticated tools by category
           </p>
         </motion.div>
@@ -151,49 +151,49 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-20 bg-[#050505] border-t border-white/10 text-gray-300 py-16">
+      <footer className="relative z-20 bg-gray-100 dark:bg-[#050505] border-t border-gray-200 dark:border-white/10 text-slate-600 dark:text-gray-300 py-16 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
               <div className="flex items-center space-x-2 mb-6">
-                <CalcIcon className="w-6 h-6 text-white" />
-                <span className="text-lg font-bold text-white tracking-tight">BusinessCalc</span>
+                <CalcIcon className="w-6 h-6 text-indigo-600 dark:text-white" />
+                <span className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">BusinessCalc</span>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed pr-4">
+              <p className="text-slate-500 dark:text-gray-500 text-sm leading-relaxed pr-4">
                 Your one-stop enterprise solution for all business, financial, and analytical calculations.
               </p>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Quick Links</h4>
-              <ul className="space-y-3 text-sm text-gray-500">
-                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-                <li><Link href="/categories" className="hover:text-white transition-colors">All Calculators</Link></li>
-                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+              <h4 className="text-slate-900 dark:text-white font-semibold mb-6 tracking-wide text-sm uppercase">Quick Links</h4>
+              <ul className="space-y-3 text-sm text-slate-500 dark:text-gray-500">
+                <li><Link href="/" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/categories" className="hover:text-indigo-600 dark:hover:text-white transition-colors">All Calculators</Link></li>
+                <li><Link href="/about" className="hover:text-indigo-600 dark:hover:text-white transition-colors">About</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Popular Tools</h4>
-              <ul className="space-y-3 text-sm text-gray-500">
-                <li><Link href="/category/financial" className="hover:text-white transition-colors">Financial</Link></li>
-                <li><Link href="/category/banking" className="hover:text-white transition-colors">Banking</Link></li>
-                <li><Link href="/category/tax" className="hover:text-white transition-colors">Tax</Link></li>
+              <h4 className="text-slate-900 dark:text-white font-semibold mb-6 tracking-wide text-sm uppercase">Popular Tools</h4>
+              <ul className="space-y-3 text-sm text-slate-500 dark:text-gray-500">
+                <li><Link href="/category/financial" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Financial</Link></li>
+                <li><Link href="/category/banking" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Banking</Link></li>
+                <li><Link href="/category/tax" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Tax</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Contact</h4>
-              <p className="text-sm text-gray-500 leading-relaxed mb-6">
+              <h4 className="text-slate-900 dark:text-white font-semibold mb-6 tracking-wide text-sm uppercase">Contact</h4>
+              <p className="text-sm text-slate-500 dark:text-gray-500 leading-relaxed mb-6">
                 Have questions or need enterprise integration? Reach out to us.
               </p>
-              <button className="px-5 py-2 rounded-full border border-white/20 text-sm text-white hover:bg-white hover:text-black transition-all">
+              <button className="px-5 py-2 rounded-full border border-gray-300 dark:border-white/20 text-sm text-slate-800 dark:text-white hover:bg-slate-200 dark:hover:bg-white dark:hover:text-black transition-all font-medium">
                 Get in Touch
               </button>
             </div>
           </div>
-          <div className="border-t border-white/10 mt-16 pt-8 text-center text-sm text-gray-600 flex flex-col md:flex-row items-center justify-between">
+          <div className="border-t border-gray-300 dark:border-white/10 mt-16 pt-8 text-center text-sm text-slate-500 dark:text-gray-600 flex flex-col md:flex-row items-center justify-between">
             <p>© 2026 BusinessCalc AI. All rights reserved.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-               <a href="#" className="hover:text-white transition-colors">Privacy</a>
-               <a href="#" className="hover:text-white transition-colors">Terms</a>
+               <a href="#" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Privacy</a>
+               <a href="#" className="hover:text-indigo-600 dark:hover:text-white transition-colors">Terms</a>
             </div>
           </div>
         </div>
