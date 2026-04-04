@@ -835,3 +835,4 @@ function MetricCard({ label, value, color, full = false }: { label: string, valu
     </motion.div>
   );
 }
+ //
