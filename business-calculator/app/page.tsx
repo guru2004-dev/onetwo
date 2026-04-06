@@ -55,7 +55,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight mb-8 drop-shadow-2xl">
-              Advanced <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">AI Business</span> Intelligence
+              Advanced <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">AI Business</span> Intelligence Calculator
             </h1>
           </motion.div>
           
