@@ -49,3 +49,6 @@ export default function CalculatorCard({ id, name, description, path, icon: Icon
     </Link>
   );
 }
+
+
+//
