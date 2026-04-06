@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import ChatCalcAI from "@/components/ChatCalcAI";
 import { CurrencyProvider } from "@/context/CurrencyContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Business Calculator - All Business Calculators in One Place",
+  title: "BusinessCalc - Advanced AI Business Intelligence Calculators",
   description: "Comprehensive collection of business, banking, finance, accounting, tax, and analytical calculators. Fast, accurate, and easy to use.",
 };
 
@@ -26,15 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0B0F19] text-gray-100 transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased 
+          bg-[#F8FAFC] dark:bg-[#0B0F19]
+          text-[#0F172A] dark:text-gray-100
+          transition-colors duration-300`}
       >
-        <CurrencyProvider>
-          <Header />
-          {children}
-          <ChatCalcAI />
-        </CurrencyProvider>
+        <ThemeProvider>
+          <CurrencyProvider>
+            <Header />
+            {children}
+            <ChatCalcAI />
+          </CurrencyProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

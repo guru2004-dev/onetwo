@@ -171,16 +171,16 @@ export default function DTICalculator() {
   const PIE_COLORS = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-300 text-sm font-medium mb-4">
           <Scale className="w-4 h-4" />
           Financial Health
         </div>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
           Debt-to-Income <span className="text-orange-400">(DTI) Ratio</span>
         </h1>
-        <p className="text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
           Calculate the most critical metric banks use to determine your borrowing power.
         </p>
       </div>
@@ -188,91 +188,91 @@ export default function DTICalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">Monthly Cashflow</h2>
-              <p className="text-slate-400 text-sm">Input your gross income and debt obligations</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Monthly Cashflow</h2>
+              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Input your gross income and debt obligations</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
-                <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
+                <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
               ))}
             </select>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <Banknote className="w-4 h-4"/> Income Structure
             </h3>
             
             <div>
-              <label className="block text-[13px] text-slate-300 mb-1">Gross Monthly Income (Before Taxes)</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Gross Monthly Income (Before Taxes)</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                <input type="number" min={0} value={grossMonthlyIncome} onChange={e => setGrossMonthlyIncome(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                <input type="number" min={0} value={grossMonthlyIncome} onChange={e => setGrossMonthlyIncome(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
               </div>
             </div>
           </div>
 
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <CreditCard className="w-4 h-4"/> Debt Obligations (Monthly)
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Housing (Rent/Mortgage)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Housing (Rent/Mortgage)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={monthlyHousing} onChange={e => setMonthlyHousing(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={monthlyHousing} onChange={e => setMonthlyHousing(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Auto Loans</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Auto Loans</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={monthlyAutoLoans} onChange={e => setMonthlyAutoLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={monthlyAutoLoans} onChange={e => setMonthlyAutoLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Student Loans</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Student Loans</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={monthlyStudentLoans} onChange={e => setMonthlyStudentLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={monthlyStudentLoans} onChange={e => setMonthlyStudentLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Credit Cards (Min. Payment)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Credit Cards (Min. Payment)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={monthlyCreditCards} onChange={e => setMonthlyCreditCards(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={monthlyCreditCards} onChange={e => setMonthlyCreditCards(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-[13px] text-slate-300 mb-1">Other Debts (Personal, etc.)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other Debts (Personal, etc.)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={otherMonthlyDebt} onChange={e => setOtherMonthlyDebt(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={otherMonthlyDebt} onChange={e => setOtherMonthlyDebt(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
-            <div className="mt-2 bg-slate-900/40 border border-white/5 rounded-xl p-4 text-xs text-slate-400">
+            <div className="mt-2 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">
               * Enter your minimum required payments for credit cards, not your full statement balance unless you pay in full. Include any child support or alimony under 'Other'. Do not include utilities or living expenses like groceries.
             </div>
           </div>
@@ -288,11 +288,11 @@ export default function DTICalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-white">Ratio Dashboard</h2>
-                <p className="text-slate-400 text-sm">Updated: <span className="text-orange-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Ratio Dashboard</h2>
+                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-orange-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -304,7 +304,7 @@ export default function DTICalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -313,7 +313,7 @@ export default function DTICalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-orange-600 border-orange-500 text-white'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:border-orange-400 hover:text-slate-200'
+                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-orange-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -331,7 +331,7 @@ export default function DTICalculator() {
                   <p className={`text-5xl font-extrabold tracking-tight mb-2 ${getStatusColorClass(results.backEndDTI)}`}>
                     {results.backEndDTI.toFixed(1)}%
                   </p>
-                  <div className="w-full bg-slate-900 rounded-full h-2 mt-4 overflow-hidden border border-white/5">
+                  <div className="w-full bg-slate-900/5 dark:bg-slate-900 rounded-full h-2 mt-4 overflow-hidden border border-gray-100 dark:border-gray-100 dark:border-white/5">
                     <div 
                       className={`h-full ${results.backEndDTI <= 35 ? 'bg-emerald-500' : results.backEndDTI <= 43 ? 'bg-blue-500' : results.backEndDTI <= 50 ? 'bg-amber-500' : 'bg-rose-500'}`} 
                       style={{ width: `${Math.min(results.backEndDTI, 100)}%` }} 
@@ -340,32 +340,32 @@ export default function DTICalculator() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 mb-5">
-                  <div className="rounded-xl border bg-slate-800/50 border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Total Income</div>
-                    <p className="font-bold text-base text-white">{disp(results.totalIncome)}</p>
+                  <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Income</div>
+                    <p className="font-bold text-base text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalIncome)}</p>
                   </div>
-                  <div className="rounded-xl border bg-slate-800/50 border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
+                  <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-rose-400">Total Debt Load</div>
-                    <p className="font-bold text-base text-white">{disp(results.totalDebt)}</p>
+                    <p className="font-bold text-base text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalDebt)}</p>
                   </div>
-                  <div className="rounded-xl border bg-slate-800/50 border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
+                  <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Discretionary</div>
-                    <p className="font-bold text-base text-white">{disp(results.disposableIncome)}</p>
+                    <p className="font-bold text-base text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.disposableIncome)}</p>
                   </div>
                 </div>
 
-                <div className="border border-white/5 rounded-xl overflow-hidden mb-5">
+                <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-center">
-                    <thead className="bg-white/5 text-slate-400 font-semibold text-[10px] uppercase border-b border-white/10">
+                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-[10px] uppercase border-b border-gray-200 dark:border-gray-200 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-2">Front-End (Housing Only)</th>
                         <th className="px-4 py-2">Target</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5 text-slate-300 text-sm shadow-inner">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-sm shadow-inner">
                       <tr className="bg-white/[0.02]">
                         <td className={`px-4 py-3 font-bold ${results.frontEndDTI <= 28 ? 'text-emerald-400' : 'text-rose-400'}`}>{results.frontEndDTI.toFixed(1)}%</td>
-                        <td className="px-4 py-3 text-slate-400">{'<= 28%'}</td>
+                        <td className="px-4 py-3 text-slate-600 dark:text-slate-600 dark:text-slate-400">{'<= 28%'}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -382,7 +382,7 @@ export default function DTICalculator() {
                 )}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-slate-900/40 rounded-xl border border-white/5 flex-1">
+              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 rounded-xl border border-gray-100 dark:border-gray-100 dark:border-white/5 flex-1">
                 <Scale className="w-10 h-10 opacity-30" />
                 <p className="text-sm">Input data to map out your credit worthiness.</p>
               </div>
@@ -396,8 +396,8 @@ export default function DTICalculator() {
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-white mb-6">DTI Approval Tiers</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">DTI Approval Tiers</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={[{ name: 'Your DTI', value: results.backEndDTI }]} margin={{ top: 10, right: 30, left: 10, bottom: 20 }}>
@@ -405,7 +405,7 @@ export default function DTICalculator() {
                   <YAxis type="number" domain={[0, 100]} stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(val) => `${val}%`} />
                   <Tooltip
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
                     formatter={(value: number) => [`${value.toFixed(1)}%`, 'DTI Utilization']}
                   />
                   <ReferenceLine y={36} stroke="#10b981" strokeDasharray="3 3" label={{ position: 'top', value: 'Excellent (<36%)', fill: '#10b981', fontSize: 10 }} />
@@ -419,8 +419,8 @@ export default function DTICalculator() {
             </div>
           </div>
           
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-white mb-2">Debt Composition</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Debt Composition</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               {pieData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
@@ -440,7 +440,7 @@ export default function DTICalculator() {
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
+                      contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
                       formatter={(value: number) => [`${currSym}${value.toLocaleString(undefined, {maximumFractionDigits: 2})}`, 'Amount']}
                     />
                     <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#94a3b8' }} />

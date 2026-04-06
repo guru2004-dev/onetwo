@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import { useTheme } from '@/components/ThemeProvider';
 
 interface PremiumCurrencyInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
   value: string | number;
@@ -17,6 +18,8 @@ export default function PremiumCurrencyInput({
   className = '',
   ...props
 }: PremiumCurrencyInputProps) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   const inputRef = useRef<HTMLInputElement>(null);
   const [internalValue, setInternalValue] = useState<string>('');
   const [cursorPos, setCursorPos] = useState<number | null>(null);
@@ -116,7 +119,9 @@ export default function PremiumCurrencyInput({
   return (
     <div className="relative flex items-center w-full">
       {prefix && (
-        <span className="absolute left-4 text-emerald-400 font-medium z-10 pointer-events-none">
+        <span className={`absolute left-4 font-medium z-10 pointer-events-none
+          ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}
+        >
           {prefix}
         </span>
       )}
@@ -126,14 +131,19 @@ export default function PremiumCurrencyInput({
         inputMode="decimal"
         value={internalValue}
         onChange={handleChange}
-        className={`w-full py-3 px-4 bg-gray-900 border border-gray-700 rounded-xl text-white outline-none 
-          transition-all duration-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 
-          hover:border-gray-600 shadow-inner font-medium tracking-wide placeholder-gray-500
-          text-right ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-12' : ''} ${className}`}
+        className={`w-full py-3 px-4 border rounded-xl outline-none 
+          transition-all duration-300 shadow-inner font-medium tracking-wide
+          text-right ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-12' : ''} ${className}
+          ${isDarkMode
+            ? 'bg-gray-900 border-gray-700 text-white placeholder-gray-500 hover:border-gray-600 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500'
+            : 'bg-white border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] hover:border-[#D1DDE6] focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500'
+          }`}
         {...props}
       />
       {suffix && (
-        <span className="absolute right-4 text-gray-400 font-medium z-10 pointer-events-none">
+        <span className={`absolute right-4 font-medium z-10 pointer-events-none
+          ${isDarkMode ? 'text-gray-400' : 'text-[#64748B]'}`}
+        >
           {suffix}
         </span>
       )}

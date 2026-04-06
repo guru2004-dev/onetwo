@@ -21,6 +21,8 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { getAllCalculators, calculatorCategories } from '@/lib/calculators-data';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useTheme } from '@/components/ThemeProvider';
 
 // ─── Category icon + color map ───────────────────────────────────────────────
 const CATEGORY_META: Record<
@@ -115,6 +117,8 @@ const itemVariants: Variants = {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Header() {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
@@ -196,15 +200,27 @@ export default function Header() {
       {/* ── Top Navbar ─────────────────────────────────────────────────────── */}
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div
-          className="bg-black/20 backdrop-blur-md border border-white/10 rounded-full shadow-2xl"
-          style={{ boxShadow: '0 0 30px rgba(139,92,246,0.08)' }}
+          className={`backdrop-blur-xl border rounded-full transition-all duration-300
+            ${isDarkMode
+              ? 'bg-black/20 border-white/10 shadow-lg'
+              : 'bg-white/70 border-[#E2E8F0] shadow-sm'
+            }`}
+          style={{
+            boxShadow: isDarkMode 
+              ? '0 0 30px rgba(139,92,246,0.08)' 
+              : '0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)'
+          }}
         >
           <div className="flex items-center justify-between h-16 px-4 sm:px-6">
             {/* Left: Hamburger + Logo */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="p-2 text-white hover:bg-white/10 rounded-full transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                className={`p-2 rounded-full transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-violet-500/50
+                  ${isDarkMode
+                    ? 'text-white hover:bg-white/10'
+                    : 'text-gray-800 hover:bg-black/10'
+                  }`}
                 aria-label="Open navigation menu"
               >
                 <Menu className="w-6 h-6" />
@@ -214,7 +230,12 @@ export default function Header() {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:shadow-violet-500/40 transition-shadow duration-300">
                   <Calculator className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold hidden sm:inline tracking-tight bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                <span className={`text-xl font-bold hidden sm:inline tracking-tight bg-clip-text text-transparent
+                  ${isDarkMode
+                    ? 'bg-gradient-to-r from-white to-gray-300'
+                    : 'bg-gradient-to-r from-gray-900 to-gray-700'
+                  }`}
+                >
                   BusinessCalc
                 </span>
               </Link>
@@ -230,21 +251,27 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    pathname === item.href
-                      ? 'bg-white/10 text-white'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                    ${pathname === item.href
+                      ? isDarkMode
+                        ? 'bg-white/10 text-white'
+                        : 'bg-black/10 text-gray-900'
+                      : isDarkMode
+                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-black/5'
+                    }`}
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            {/* Right: Search (desktop) */}
+            {/* Right: Search (desktop) + Theme Toggle */}
             <div className="hidden md:flex items-center space-x-3">
               <div ref={searchRef} className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4
+                  ${isDarkMode ? 'text-gray-400' : 'text-[#94A3B8]'}`}
+                />
                 <input
                   type="text"
                   value={searchQuery}
@@ -254,7 +281,11 @@ export default function Header() {
                   }}
                   onFocus={() => setShowSearchResults(true)}
                   placeholder="Search calculators..."
-                  className="w-52 lg:w-64 pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/40 transition-all hover:bg-white/8"
+                  className={`w-52 lg:w-64 pl-9 pr-4 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all
+                    ${isDarkMode
+                      ? 'bg-white/5 border border-white/10 text-white placeholder-gray-500 hover:bg-white/8'
+                      : 'bg-white border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] hover:border-[#CBD5E1]'
+                    }`}
                 />
 
                 {/* Search results dropdown */}
@@ -265,22 +296,43 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -8, scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-12 right-0 w-80 bg-[#0d1021]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden max-h-80 overflow-y-auto z-50"
-                      style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(139,92,246,0.1)' }}
+                      className={`absolute top-12 right-0 w-80 backdrop-blur-xl rounded-2xl shadow-md overflow-hidden max-h-80 overflow-y-auto z-50
+                        ${isDarkMode
+                          ? 'bg-[#0d1021]/95 border border-white/10'
+                          : 'bg-white border border-[#E2E8F0]'
+                        }`}
+                      style={{ boxShadow: isDarkMode ? '0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(139,92,246,0.1)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
                     >
                       {filteredCalculators.length > 0 ? (
                         filteredCalculators.map((calc) => (
                           <button
                             key={calc.id}
                             onClick={() => handleSearchSelect(calc.path)}
-                            className="w-full text-left px-4 py-3 hover:bg-violet-500/10 border-b border-white/5 last:border-0 transition-colors group"
+                            className={`w-full text-left px-4 py-3 border-b transition-colors group
+                              ${isDarkMode
+                                ? 'hover:bg-violet-500/10 border-white/5 last:border-0'
+                                : 'hover:bg-[#F8FAFC] border-[#E2E8F0] last:border-0'
+                              }`}
                           >
-                            <p className="font-medium text-white text-sm group-hover:text-violet-300 transition-colors">{calc.name}</p>
-                            <p className="text-xs text-gray-500 mt-0.5">{calc.description}</p>
+                            <p className={`font-medium text-sm group-hover:transition-colors
+                              ${isDarkMode
+                                ? 'text-white group-hover:text-violet-300'
+                                : 'text-[#0F172A] group-hover:text-purple-600'
+                              }`}
+                            >
+                              {calc.name}
+                            </p>
+                            <p className={`text-xs mt-0.5
+                              ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}
+                            >
+                              {calc.description}
+                            </p>
                           </button>
                         ))
                       ) : (
-                        <div className="px-4 py-6 text-center text-gray-500 text-sm">
+                        <div className={`px-4 py-6 text-center text-sm
+                          ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}
+                        >
                           No calculators found for &ldquo;{searchQuery}&rdquo;
                         </div>
                       )}
@@ -288,13 +340,21 @@ export default function Header() {
                   )}
                 </AnimatePresence>
               </div>
+
+              {/* Theme Toggle Button */}
+              <div className="h-8 w-px bg-gray-300 dark:bg-white/10 mx-1" />
+              <ThemeToggle />
             </div>
 
             {/* Mobile right: search icon + hamburger */}
             <div className="md:hidden flex items-center space-x-1">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+                className={`p-2 rounded-full transition-colors
+                  ${isDarkMode
+                    ? 'text-white hover:bg-white/10'
+                    : 'text-gray-800 hover:bg-black/10'
+                  }`}
               >
                 <Search className="w-5 h-5" />
               </button>

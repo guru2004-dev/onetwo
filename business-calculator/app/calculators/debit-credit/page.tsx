@@ -179,16 +179,16 @@ export default function DebitCreditCalculator() {
   ] : [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium mb-4">
           <Scale className="w-4 h-4" />
           Accounting Editor
         </div>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
           Debit & Credit <span className="text-indigo-400">Validator</span>
         </h1>
-        <p className="text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
           Validate journal entries by ensuring your debits and credits balance perfectly.
         </p>
       </div>
@@ -196,36 +196,36 @@ export default function DebitCreditCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">Journal Entry</h2>
-              <p className="text-slate-400 text-sm">Add accounts and amounts</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Journal Entry</h2>
+              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Add accounts and amounts</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
-                <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
+                <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
               ))}
             </select>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <ArrowRightLeft className="w-4 h-4"/> Debits (Dr.)
             </h3>
             <div className="space-y-3">
@@ -265,7 +265,7 @@ export default function DebitCreditCalculator() {
           </div>
 
           <div className="space-y-4 pt-4">
-            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <ArrowRightLeft className="w-4 h-4"/> Credits (Cr.)
             </h3>
             <div className="space-y-3">
@@ -315,11 +315,11 @@ export default function DebitCreditCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-white">Validation Results</h2>
-                <p className="text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Validation Results</h2>
+                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -331,7 +331,7 @@ export default function DebitCreditCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -340,7 +340,7 @@ export default function DebitCreditCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:border-indigo-400 hover:text-slate-200'
+                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -360,7 +360,7 @@ export default function DebitCreditCalculator() {
                       <p className="text-sm font-bold uppercase tracking-widest text-emerald-300 mb-1">
                         Balanced
                       </p>
-                      <p className="text-3xl font-extrabold text-white tracking-tight">
+                      <p className="text-3xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight">
                         {disp(results.totalDebits)}
                       </p>
                     </>
@@ -372,7 +372,7 @@ export default function DebitCreditCalculator() {
                       <p className="text-sm font-bold uppercase tracking-widest text-red-300 mb-1">
                         Out of Balance
                       </p>
-                      <div className="text-white mb-2">
+                      <div className="text-slate-900 dark:text-slate-900 dark:text-white mb-2">
                         <span className="text-red-300 text-sm mr-2">Difference:</span>
                         <span className="text-2xl font-bold">{disp(results.difference)}</span>
                       </div>
@@ -391,34 +391,34 @@ export default function DebitCreditCalculator() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 rounded-xl overflow-hidden mb-5">
+                <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left line-clamp-none">
-                    <thead className="bg-white/5 text-slate-400 font-semibold text-xs border-b border-white/10">
+                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-xs border-b border-gray-200 dark:border-gray-200 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-2.5">Account</th>
-                        <th className="px-4 py-2.5 text-right w-1/4 border-l border-white/5">Debit</th>
-                        <th className="px-4 py-2.5 text-right w-1/4 border-l border-white/5">Credit</th>
+                        <th className="px-4 py-2.5 text-right w-1/4 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">Debit</th>
+                        <th className="px-4 py-2.5 text-right w-1/4 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">Credit</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5 text-slate-300 text-sm">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-sm">
                       {debits.filter(d => Number(d.amount)>0).map((d, i) => (
-                        <tr key={`res-d-${i}`} className="hover:bg-white/5 bg-emerald-900/5">
+                        <tr key={`res-d-${i}`} className="hover:bg-white dark:bg-white dark:bg-white/5 bg-emerald-900/5">
                           <td className="px-4 py-2.5 text-emerald-100">{d.account || 'Unknown Account'}</td>
-                          <td className="px-4 py-2.5 text-right font-medium text-emerald-200 border-l border-white/5">{disp(convertToINR(Number(d.amount), selectedInputCurrency))}</td>
-                          <td className="px-4 py-2.5 text-right text-slate-600 border-l border-white/5">-</td>
+                          <td className="px-4 py-2.5 text-right font-medium text-emerald-200 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">{disp(convertToINR(Number(d.amount), selectedInputCurrency))}</td>
+                          <td className="px-4 py-2.5 text-right text-slate-600 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">-</td>
                         </tr>
                       ))}
                       {credits.filter(c => Number(c.amount)>0).map((c, i) => (
-                        <tr key={`res-c-${i}`} className="hover:bg-white/5 bg-indigo-900/5">
+                        <tr key={`res-c-${i}`} className="hover:bg-white dark:bg-white dark:bg-white/5 bg-indigo-900/5">
                           <td className="px-4 py-2.5 pl-8 text-indigo-100">{c.account || 'Unknown Account'}</td>
-                          <td className="px-4 py-2.5 text-right text-slate-600 border-l border-white/5">-</td>
-                          <td className="px-4 py-2.5 text-right font-medium text-indigo-200 border-l border-white/5">{disp(convertToINR(Number(c.amount), selectedInputCurrency))}</td>
+                          <td className="px-4 py-2.5 text-right text-slate-600 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">-</td>
+                          <td className="px-4 py-2.5 text-right font-medium text-indigo-200 border-l border-gray-100 dark:border-gray-100 dark:border-white/5">{disp(convertToINR(Number(c.amount), selectedInputCurrency))}</td>
                         </tr>
                       ))}
                       <tr className="font-extrabold bg-white/10 border-t-2 border-white/20">
-                        <td className="px-4 py-3 text-white">TOTALS</td>
-                        <td className={`px-4 py-3 text-right border-l border-white/5 ${!results.isBalanced ? 'text-red-400' : 'text-emerald-400'}`}>{disp(results.totalDebits)}</td>
-                        <td className={`px-4 py-3 text-right border-l border-white/5 ${!results.isBalanced ? 'text-red-400' : 'text-indigo-400'}`}>{disp(results.totalCredits)}</td>
+                        <td className="px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white">TOTALS</td>
+                        <td className={`px-4 py-3 text-right border-l border-gray-100 dark:border-gray-100 dark:border-white/5 ${!results.isBalanced ? 'text-red-400' : 'text-emerald-400'}`}>{disp(results.totalDebits)}</td>
+                        <td className={`px-4 py-3 text-right border-l border-gray-100 dark:border-gray-100 dark:border-white/5 ${!results.isBalanced ? 'text-red-400' : 'text-indigo-400'}`}>{disp(results.totalCredits)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -435,7 +435,7 @@ export default function DebitCreditCalculator() {
                 )}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-slate-900/40 rounded-xl border border-white/5 flex-1">
+              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 rounded-xl border border-gray-100 dark:border-gray-100 dark:border-white/5 flex-1">
                 <Scale className="w-10 h-10 opacity-30" />
                 <p className="text-sm">Input journal entries to validate balance.</p>
               </div>
@@ -448,8 +448,8 @@ export default function DebitCreditCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-white mb-6">Debit vs Credit Comparison</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Debit vs Credit Comparison</h3>
             <div className="h-[250px] w-full max-w-lg mx-auto">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -457,7 +457,7 @@ export default function DebitCreditCalculator() {
                   <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${value >= 1000 ? (value/1000).toFixed(0)+'k' : value}`} />
                   <Tooltip
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
                     formatter={(value: number) => [`${currSym}${value.toLocaleString()}`, 'Amount']}
                   />
                   <Bar dataKey="value" radius={[4, 4, 0, 0]}>

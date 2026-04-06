@@ -131,11 +131,11 @@ function PieChart({ principal, interest }: { principal: number; interest: number
       <div className="flex gap-5 text-xs">
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-sm bg-indigo-500 inline-block" />
-          <span className="text-slate-400">Principal</span>
+          <span className="text-slate-600 dark:text-slate-600 dark:text-slate-400">Principal</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-sm bg-amber-500 inline-block" />
-          <span className="text-slate-400">Interest</span>
+          <span className="text-slate-600 dark:text-slate-600 dark:text-slate-400">Interest</span>
         </div>
       </div>
     </div>
@@ -260,7 +260,7 @@ export default function EMICalculator() {
   // Render
   // ─────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
 
       {/* Title */}
       <div className="max-w-6xl mx-auto mb-8 text-center">
@@ -268,10 +268,10 @@ export default function EMICalculator() {
           <TrendingUp className="w-4 h-4" />
           Loan Calculator
         </div>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
           EMI <span className="text-indigo-400">Calculator</span>
         </h1>
-        <p className="text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
           Plan your loan repayment — know your monthly installment instantly.
         </p>
       </div>
@@ -279,17 +279,17 @@ export default function EMICalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* ══ LEFT — INPUTS ══ */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
 
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">Loan Details</h2>
-              <p className="text-slate-400 text-sm">Enter your loan parameters</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Loan Details</h2>
+              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your loan parameters</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
@@ -297,15 +297,15 @@ export default function EMICalculator() {
 
           {/* Input Currency */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
             >
               {availableCurrencies.map(c => (
-                <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
+                <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
               ))}
             </select>
           </div>
@@ -313,13 +313,13 @@ export default function EMICalculator() {
           {/* Loan Amount + Slider */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-slate-300">Loan Amount</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Loan Amount</label>
               <span className="text-indigo-300 font-bold text-sm">
                 {inputSym}{Number(principal || 0).toLocaleString('en-IN')}
               </span>
             </div>
             <div className="relative mb-3">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
               <input
                 type="number"
                 value={principal}
@@ -327,7 +327,7 @@ export default function EMICalculator() {
                 placeholder="e.g. 500000"
                 min={0}
                 step="1000"
-                className="w-full pl-9 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full pl-9 pr-4 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               />
             </div>
             <input
@@ -348,7 +348,7 @@ export default function EMICalculator() {
           {/* Interest Rate */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-slate-300">Interest Rate (% p.a.)</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Interest Rate (% p.a.)</label>
               <span className="text-indigo-300 font-bold text-sm">{rate || 0}%</span>
             </div>
             <div className="relative mb-3">
@@ -360,9 +360,9 @@ export default function EMICalculator() {
                 min={0}
                 max={50}
                 step="0.1"
-                className="w-full pl-4 pr-12 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full pl-4 pr-12 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               />
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm pointer-events-none">%</span>
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">%</span>
             </div>
             <input
               type="range"
@@ -381,14 +381,14 @@ export default function EMICalculator() {
           {/* Tenure */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-slate-300">Loan Tenure</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Loan Tenure</label>
               {/* Toggle */}
-              <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-lg p-0.5">
+              <div className="flex items-center gap-1 bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg p-0.5">
                 {(['months', 'years'] as const).map(u => (
                   <button
                     key={u}
                     onClick={() => setTenureUnit(u)}
-                    className={`px-3 py-1 text-xs rounded-md font-semibold transition-all ${tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-3 py-1 text-xs rounded-md font-semibold transition-all ${tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-900 dark:text-white'}`}
                   >
                     {u.charAt(0).toUpperCase() + u.slice(1)}
                   </button>
@@ -403,9 +403,9 @@ export default function EMICalculator() {
                 placeholder={tenureUnit === 'years' ? 'e.g. 5' : 'e.g. 60'}
                 min={1}
                 step={1}
-                className="w-full pl-4 pr-20 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full pl-4 pr-20 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               />
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm pointer-events-none capitalize">{tenureUnit}</span>
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none capitalize">{tenureUnit}</span>
             </div>
             <input
               type="range"
@@ -433,15 +433,15 @@ export default function EMICalculator() {
           {/* Calculate Button */}
           <button
             onClick={calculate}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all active:scale-[0.98]"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all active:scale-[0.98]"
           >
             Calculate EMI
           </button>
 
           {/* Formula box */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">EMI Formula</p>
-            <p className="font-mono text-xs text-slate-300 leading-relaxed">
+          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
+            <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">EMI Formula</p>
+            <p className="font-mono text-xs text-slate-700 dark:text-slate-700 dark:text-slate-300 leading-relaxed">
               EMI = [P × R × (1+R)<sup>N</sup>] ÷ [(1+R)<sup>N</sup> − 1]
             </p>
             <ul className="mt-2 space-y-0.5 text-[11px] text-slate-500">
@@ -456,11 +456,11 @@ export default function EMICalculator() {
         <div className="flex flex-col gap-6">
 
           {/* Results card */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-white">Results</h2>
-                <p className="text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results</h2>
+                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -474,7 +474,7 @@ export default function EMICalculator() {
 
             {/* Display Currency */}
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -483,7 +483,7 @@ export default function EMICalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:border-indigo-400 hover:text-slate-200'
+                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -497,8 +497,8 @@ export default function EMICalculator() {
                 {/* Hero EMI */}
                 <div className="bg-gradient-to-r from-indigo-600/20 to-violet-600/20 border border-indigo-500/30 rounded-2xl p-5 mb-4 text-center">
                   <p className="text-xs font-semibold text-indigo-300 uppercase tracking-widest mb-1">Monthly EMI</p>
-                  <p className="text-5xl font-extrabold text-white tracking-tight">{disp(results.emi)}</p>
-                  <p className="text-slate-400 text-sm mt-1">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight">{disp(results.emi)}</p>
+                  <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm mt-1">
                     for {results.months} months
                   </p>
                 </div>
@@ -531,8 +531,8 @@ export default function EMICalculator() {
 
           {/* Breakdown + Pie */}
           {results && (
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-white mb-4">Payment Breakdown</h3>
+            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4">Payment Breakdown</h3>
               <div className="flex flex-col sm:flex-row gap-6 items-center">
                 <PieChart
                   principal={results.principalINR}
@@ -553,9 +553,9 @@ export default function EMICalculator() {
                     color="bg-amber-500"
                     textColor="text-amber-300"
                   />
-                  <div className="border-t border-white/10 pt-3 flex justify-between text-sm">
-                    <span className="text-slate-400 font-medium">Total Payable</span>
-                    <span className="text-white font-extrabold text-base">{disp(results.totalPayment)}</span>
+                  <div className="border-t border-gray-200 dark:border-gray-200 dark:border-white/10 pt-3 flex justify-between text-sm">
+                    <span className="text-slate-600 dark:text-slate-600 dark:text-slate-400 font-medium">Total Payable</span>
+                    <span className="text-slate-900 dark:text-slate-900 dark:text-white font-extrabold text-base">{disp(results.totalPayment)}</span>
                   </div>
                 </div>
               </div>
@@ -575,23 +575,23 @@ export default function EMICalculator() {
 
           {/* Amortisation Table */}
           {results && amort.length > 0 && (
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
+            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
               <button
                 onClick={() => setShowAmort(v => !v)}
                 className="flex items-center justify-between w-full group"
               >
-                <h3 className="text-base font-bold text-white group-hover:text-indigo-300 transition-colors">
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-indigo-300 transition-colors">
                   Amortisation Schedule
                   <span className="ml-2 text-xs text-slate-500 font-normal">({amort.length} payments)</span>
                 </h3>
-                {showAmort ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                {showAmort ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-600 dark:text-slate-400" />}
               </button>
 
               {showAmort && (
-                <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
+                <div className="mt-4 overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-200 dark:border-white/10">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="bg-white/5 text-slate-400 font-semibold">
+                      <tr className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold">
                         <th className="px-3 py-3 text-left">Month</th>
                         <th className="px-3 py-3 text-right">EMI</th>
                         <th className="px-3 py-3 text-right">Principal</th>
@@ -603,7 +603,7 @@ export default function EMICalculator() {
                       {(showAmort ? amort : amortPreview).map((row, i) => {
                         if (row.month === -1) {
                           return (
-                            <tr key="dots" className="border-t border-white/5">
+                            <tr key="dots" className="border-t border-gray-100 dark:border-gray-100 dark:border-white/5">
                               <td colSpan={5} className="px-3 py-2 text-center text-slate-600 text-xs">⋯ {amort.length - 15} more months ⋯</td>
                             </tr>
                           );
@@ -611,15 +611,15 @@ export default function EMICalculator() {
                         return (
                           <tr
                             key={row.month}
-                            className={`border-t border-white/5 hover:bg-white/5 transition-colors ${
+                            className={`border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white dark:bg-white dark:bg-white/5 transition-colors ${
                               row.month === amort.length ? 'bg-emerald-900/10' : ''
                             }`}
                           >
-                            <td className="px-3 py-2.5 text-slate-400">{row.month}</td>
-                            <td className="px-3 py-2.5 text-right text-slate-300">{disp(row.emi)}</td>
+                            <td className="px-3 py-2.5 text-slate-600 dark:text-slate-600 dark:text-slate-400">{row.month}</td>
+                            <td className="px-3 py-2.5 text-right text-slate-700 dark:text-slate-700 dark:text-slate-300">{disp(row.emi)}</td>
                             <td className="px-3 py-2.5 text-right text-indigo-300">{disp(row.principal)}</td>
                             <td className="px-3 py-2.5 text-right text-amber-300">{disp(row.interest)}</td>
-                            <td className="px-3 py-2.5 text-right text-slate-300">{disp(row.balance)}</td>
+                            <td className="px-3 py-2.5 text-right text-slate-700 dark:text-slate-700 dark:text-slate-300">{disp(row.balance)}</td>
                           </tr>
                         );
                       })}
@@ -669,7 +669,7 @@ function BreakdownBar({ label, value, pct, color, textColor }: {
     <div>
       <div className="flex justify-between text-sm mb-1">
         <span className={`font-semibold ${textColor}`}>{label}</span>
-        <span className="text-slate-300 font-bold">{value}</span>
+        <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-bold">{value}</span>
       </div>
       <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
         <div

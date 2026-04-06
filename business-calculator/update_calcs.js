@@ -50,7 +50,8 @@ files.forEach(file => {
   // Input & Empty state Backgrounds
   content = content.replace(/bg-slate-900\/50/g, 'bg-transparent dark:bg-slate-900/50');
   content = content.replace(/bg-slate-800\/50/g, 'bg-gray-50 dark:bg-slate-800/50');
-  content = content.replace(/bg-slate-800/g, 'bg-white dark:bg-slate-800');
+  content = content.replace(/(^|[^a-zA-Z0-9:-])bg-slate-800(?!\/)/g, '$1bg-slate-50 dark:bg-slate-800');
+  content = content.replace(/(^|[^a-zA-Z0-9:-])bg-slate-900(?!\/)/g, '$1bg-slate-900/5 dark:bg-slate-900');
   content = content.replace(/bg-slate-900\/40/g, 'bg-gray-50 dark:bg-slate-900/40');
   content = content.replace(/bg-black\/20/g, 'bg-gray-100 dark:bg-black/20');
 

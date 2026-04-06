@@ -3,6 +3,7 @@
 import React from 'react';
 import InputCurrencySelector from '@/components/InputCurrencySelector';
 import PremiumCurrencyInput from '@/components/PremiumCurrencyInput';
+import { useTheme } from '@/components/ThemeProvider';
 
 interface InputFieldProps {
   label: string;
@@ -33,16 +34,23 @@ export default function InputField({
   prefix,
   suffix,
 }: InputFieldProps) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   const rupeeLabelPattern = /(\(₹\)|\(₹\s*per|₹\s*per|\(₹)/i;
   const isGlobalCurrencyInput = type === 'number' && (prefix === '₹' || rupeeLabelPattern.test(label));
 
   return (
     <div className="mb-4 text-left">
-      <label className="block text-sm font-medium text-gray-300 mb-2 drop-shadow-sm flex items-center">
+      <label className={`block text-sm font-medium mb-2 drop-shadow-sm flex items-center
+        ${isDarkMode ? 'text-gray-300' : 'text-[#0F172A]'}`}
+      >
         {label}
         {required && <span className="text-rose-500 ml-1">*</span>}
         {tooltip && (
-          <span className="ml-2 text-gray-500 text-xs cursor-help" title={tooltip}>
+          <span className={`ml-2 text-xs cursor-help
+            ${isDarkMode ? 'text-gray-500' : 'text-gray-500'}`}
+            title={tooltip}
+          >
             ⓘ
           </span>
         )}
@@ -73,7 +81,9 @@ export default function InputField({
       ) : (
         <div className="relative">
           {prefix && (
-            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-400 font-medium z-10 pointer-events-none">
+            <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 font-medium z-10 pointer-events-none
+              ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}
+            >
               {prefix}
             </span>
           )}
@@ -86,14 +96,19 @@ export default function InputField({
             max={max}
             step={step}
             required={required}
-            className={`w-full py-3 px-4 bg-gray-900 border border-gray-700 rounded-xl text-white outline-none 
-              transition-all duration-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 
-              hover:border-gray-600 shadow-inner font-medium tracking-wide placeholder-gray-500
+            className={`w-full py-3 px-4 rounded-xl outline-none 
+              transition-all duration-300 shadow-inner font-medium tracking-wide
               ${prefix ? 'pl-10 text-right' : 'text-left'} 
-              ${suffix ? 'pr-14 text-right' : ''}`}
+              ${suffix ? 'pr-14 text-right' : ''}
+              ${isDarkMode
+                ? 'bg-gray-900 border border-gray-700 text-white placeholder-gray-500 hover:border-gray-600 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500'
+                : 'bg-white border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] hover:border-[#D1DDE6] focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500'
+              }`}
           />
           {suffix && (
-            <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium z-10 pointer-events-none">
+            <span className={`absolute right-4 top-1/2 transform -translate-y-1/2 font-medium z-10 pointer-events-none
+              ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}
+            >
               {suffix}
             </span>
           )}

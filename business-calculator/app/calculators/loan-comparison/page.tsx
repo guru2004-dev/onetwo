@@ -280,7 +280,7 @@ export default function LoanComparisonCalculator() {
   // Render
   // ─────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
 
       {/* Title */}
       <div className="max-w-7xl mx-auto mb-8 text-center">
@@ -296,7 +296,7 @@ export default function LoanComparisonCalculator() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-4xl font-extrabold text-white tracking-tight mb-2"
+          className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2"
         >
           Loan <span className="text-indigo-400">Comparison</span> Calculator
         </motion.h1>
@@ -304,7 +304,7 @@ export default function LoanComparisonCalculator() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-slate-400 text-lg"
+          className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg"
         >
           Compare multiple loan offers side-by-side — find the best deal instantly.
         </motion.p>
@@ -317,20 +317,20 @@ export default function LoanComparisonCalculator() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-4 mb-6"
+          className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-4 mb-6"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             {/* Input Currency */}
             <div className="flex items-center gap-3">
-              <label className="text-sm font-semibold text-slate-300 whitespace-nowrap">Input Currency</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 whitespace-nowrap">Input Currency</label>
               <select
                 value={selectedInputCurrency}
                 onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }}
                 disabled={ratesLoading}
-                className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="px-3 py-2 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               >
                 {availableCurrencies.map(c => (
-                  <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
+                  <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
                 ))}
               </select>
             </div>
@@ -339,7 +339,7 @@ export default function LoanComparisonCalculator() {
             <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={handleReset}
-                className="flex items-center gap-1.5 px-4 py-2 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl transition-all"
               >
                 <RotateCcw className="w-3.5 h-3.5" /> Reset
               </button>
@@ -375,13 +375,13 @@ export default function LoanComparisonCalculator() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className={`w-8 h-8 rounded-lg ${color.accent} flex items-center justify-center`}>
-                        <Building2 className="w-4 h-4 text-white" />
+                        <Building2 className="w-4 h-4 text-slate-900 dark:text-slate-900 dark:text-white" />
                       </div>
                       <input
                         type="text"
                         value={loan.name}
                         onChange={e => updateLoan(loan.id, 'name', e.target.value)}
-                        className="bg-transparent border-none text-white font-bold text-lg focus:outline-none focus:ring-0 w-28"
+                        className="bg-transparent border-none text-slate-900 dark:text-slate-900 dark:text-white font-bold text-lg focus:outline-none focus:ring-0 w-28"
                         maxLength={20}
                       />
                     </div>
@@ -398,7 +398,7 @@ export default function LoanComparisonCalculator() {
 
                   {/* Loan Amount */}
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1.5">Loan Amount</label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 mb-1.5">Loan Amount</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-sm pointer-events-none">{inputSym}</span>
                       <input
@@ -407,14 +407,14 @@ export default function LoanComparisonCalculator() {
                         onChange={e => updateLoan(loan.id, 'amount', e.target.value)}
                         placeholder="e.g. 500000"
                         min={0}
-                        className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                        className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
                       />
                     </div>
                   </div>
 
                   {/* Interest Rate */}
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1.5">Interest Rate (% p.a.)</label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 mb-1.5">Interest Rate (% p.a.)</label>
                     <div className="relative">
                       <input
                         type="number"
@@ -424,7 +424,7 @@ export default function LoanComparisonCalculator() {
                         min={0}
                         max={50}
                         step="0.1"
-                        className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                        className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
                       />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-sm pointer-events-none">%</span>
                     </div>
@@ -433,14 +433,14 @@ export default function LoanComparisonCalculator() {
                   {/* Tenure */}
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-semibold text-slate-400">Loan Tenure</label>
-                      <div className="flex items-center gap-0.5 bg-white/5 border border-white/10 rounded-lg p-0.5">
+                      <label className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400">Loan Tenure</label>
+                      <div className="flex items-center gap-0.5 bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg p-0.5">
                         {(['months', 'years'] as const).map(u => (
                           <button
                             key={u}
                             onClick={() => updateLoan(loan.id, 'tenureUnit', u)}
                             className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${
-                              loan.tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-white'
+                              loan.tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-900 dark:text-white'
                             }`}
                           >
                             {u.charAt(0).toUpperCase() + u.slice(1)}
@@ -455,7 +455,7 @@ export default function LoanComparisonCalculator() {
                         onChange={e => updateLoan(loan.id, 'tenure', e.target.value)}
                         placeholder={loan.tenureUnit === 'years' ? 'e.g. 5' : 'e.g. 60'}
                         min={1}
-                        className="w-full pl-4 pr-16 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                        className="w-full pl-4 pr-16 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
                       />
                       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-xs pointer-events-none capitalize">{loan.tenureUnit}</span>
                     </div>
@@ -463,7 +463,7 @@ export default function LoanComparisonCalculator() {
 
                   {/* Processing Fee */}
                   <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1.5">Processing Fee <span className="text-slate-600">(optional)</span></label>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 mb-1.5">Processing Fee <span className="text-slate-600">(optional)</span></label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-sm pointer-events-none">{inputSym}</span>
                       <input
@@ -472,7 +472,7 @@ export default function LoanComparisonCalculator() {
                         onChange={e => updateLoan(loan.id, 'processingFee', e.target.value)}
                         placeholder="0"
                         min={0}
-                        className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                        className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -494,11 +494,11 @@ export default function LoanComparisonCalculator() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className={`bg-white/5 border border-white/10 rounded-xl p-3 space-y-1`}
+                      className={`bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-3 space-y-1`}
                     >
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-500">Monthly EMI</span>
-                        <span className="text-white font-bold">{dispShort(results.find(r => r.id === loan.id)!.emi)}</span>
+                        <span className="text-slate-900 dark:text-slate-900 dark:text-white font-bold">{dispShort(results.find(r => r.id === loan.id)!.emi)}</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-500">Total Interest</span>
@@ -506,7 +506,7 @@ export default function LoanComparisonCalculator() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-500">Total Cost</span>
-                        <span className="text-white font-bold">{dispShort(results.find(r => r.id === loan.id)!.totalCost)}</span>
+                        <span className="text-slate-900 dark:text-slate-900 dark:text-white font-bold">{dispShort(results.find(r => r.id === loan.id)!.totalCost)}</span>
                       </div>
                       {(results.find(r => r.id === loan.id)!.isBestEMI || results.find(r => r.id === loan.id)!.isBestCost) && (
                         <div className="flex gap-1.5 mt-1.5">
@@ -536,9 +536,9 @@ export default function LoanComparisonCalculator() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={addLoan}
-              className="border-2 border-dashed border-white/10 hover:border-indigo-500/50 rounded-2xl p-8 flex flex-col items-center justify-center gap-3 text-slate-500 hover:text-indigo-400 transition-all group min-h-[300px]"
+              className="border-2 border-dashed border-gray-200 dark:border-gray-200 dark:border-white/10 hover:border-indigo-500/50 rounded-2xl p-8 flex flex-col items-center justify-center gap-3 text-slate-500 hover:text-indigo-400 transition-all group min-h-[300px]"
             >
-              <div className="w-14 h-14 rounded-2xl bg-white/5 group-hover:bg-indigo-500/10 flex items-center justify-center transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-white dark:bg-white dark:bg-white/5 group-hover:bg-indigo-500/10 flex items-center justify-center transition-all">
                 <Plus className="w-7 h-7" />
               </div>
               <span className="font-semibold text-sm">Add Another Loan</span>
@@ -553,7 +553,7 @@ export default function LoanComparisonCalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 mb-6"
+            className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 mb-6"
           >
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
@@ -561,8 +561,8 @@ export default function LoanComparisonCalculator() {
                   <TrendingUp className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">Comparison Table</h2>
-                  <p className="text-slate-400 text-sm">Side-by-side analysis</p>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Comparison Table</h2>
+                  <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Side-by-side analysis</p>
                 </div>
               </div>
               {/* Display Currency */}
@@ -576,7 +576,7 @@ export default function LoanComparisonCalculator() {
                       className={`px-2.5 py-1 text-[11px] rounded-full border font-medium transition-all ${
                         selectedResultCurrency === c
                           ? 'bg-indigo-600 border-indigo-500 text-white'
-                          : 'bg-white/5 border-white/10 text-slate-500 hover:border-indigo-400 hover:text-slate-300'
+                          : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-500 hover:border-indigo-400 hover:text-slate-700 dark:text-slate-700 dark:text-slate-300'
                       }`}
                     >
                       {c}
@@ -587,10 +587,10 @@ export default function LoanComparisonCalculator() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-200 dark:border-white/10">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-white/5 text-slate-400 font-semibold">
+                  <tr className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold">
                     <th className="px-4 py-3.5 text-left">Loan</th>
                     <th className="px-4 py-3.5 text-right">Principal</th>
                     <th className="px-4 py-3.5 text-right">Rate</th>
@@ -610,27 +610,27 @@ export default function LoanComparisonCalculator() {
                     return (
                       <tr
                         key={r.id}
-                        className={`border-t border-white/5 hover:bg-white/5 transition-colors ${
+                        className={`border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white dark:bg-white dark:bg-white/5 transition-colors ${
                           isBest ? 'bg-emerald-500/5' : ''
                         }`}
                       >
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2">
                             <div className={`w-3 h-3 rounded-full ${color.accent}`}></div>
-                            <span className="text-white font-semibold">{r.name}</span>
+                            <span className="text-slate-900 dark:text-slate-900 dark:text-white font-semibold">{r.name}</span>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5 text-right text-slate-300">{dispShort(r.principalINR)}</td>
-                        <td className="px-4 py-3.5 text-right text-slate-300">{r.rate}%</td>
-                        <td className="px-4 py-3.5 text-right text-slate-300">{r.months} mo</td>
-                        <td className={`px-4 py-3.5 text-right font-bold ${r.isBestEMI ? 'text-emerald-400' : 'text-white'}`}>
+                        <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-700 dark:text-slate-300">{dispShort(r.principalINR)}</td>
+                        <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-700 dark:text-slate-300">{r.rate}%</td>
+                        <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-700 dark:text-slate-300">{r.months} mo</td>
+                        <td className={`px-4 py-3.5 text-right font-bold ${r.isBestEMI ? 'text-emerald-400' : 'text-slate-900 dark:text-slate-900 dark:text-white'}`}>
                           {disp(r.emi)}
                           {r.isBestEMI && <span className="ml-1.5 text-[10px] text-emerald-400">▼</span>}
                         </td>
                         <td className="px-4 py-3.5 text-right text-amber-300">{disp(r.totalInterest)}</td>
-                        <td className="px-4 py-3.5 text-right text-slate-200 font-medium">{disp(r.totalPayment)}</td>
-                        <td className="px-4 py-3.5 text-right text-slate-400">{r.processingFeeINR > 0 ? disp(r.processingFeeINR) : '—'}</td>
-                        <td className={`px-4 py-3.5 text-right font-bold ${r.isBestCost ? 'text-emerald-400' : 'text-white'}`}>
+                        <td className="px-4 py-3.5 text-right text-slate-800 dark:text-slate-800 dark:text-slate-200 font-medium">{disp(r.totalPayment)}</td>
+                        <td className="px-4 py-3.5 text-right text-slate-600 dark:text-slate-600 dark:text-slate-400">{r.processingFeeINR > 0 ? disp(r.processingFeeINR) : '—'}</td>
+                        <td className={`px-4 py-3.5 text-right font-bold ${r.isBestCost ? 'text-emerald-400' : 'text-slate-900 dark:text-slate-900 dark:text-white'}`}>
                           {disp(r.totalCost)}
                           {r.isBestCost && <span className="ml-1.5 text-[10px] text-emerald-400">▼</span>}
                         </td>
@@ -669,8 +669,8 @@ export default function LoanComparisonCalculator() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"
           >
             {/* EMI Comparison */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
                 EMI Comparison
               </h3>
@@ -683,12 +683,12 @@ export default function LoanComparisonCalculator() {
                     <div key={r.id}>
                       <div className="flex justify-between text-sm mb-1.5">
                         <span className={`font-semibold ${color.text}`}>{r.name}</span>
-                        <span className={`font-bold ${r.isBestEMI ? 'text-emerald-400' : 'text-slate-300'}`}>
+                        <span className={`font-bold ${r.isBestEMI ? 'text-emerald-400' : 'text-slate-700 dark:text-slate-700 dark:text-slate-300'}`}>
                           {disp(r.emi)}/mo
                           {r.isBestEMI && <span className="ml-1 text-emerald-400 text-[10px]">★</span>}
                         </span>
                       </div>
-                      <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${pct}%` }}
@@ -703,8 +703,8 @@ export default function LoanComparisonCalculator() {
             </div>
 
             {/* Total Cost Comparison */}
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                 Total Cost Comparison
               </h3>
@@ -717,12 +717,12 @@ export default function LoanComparisonCalculator() {
                     <div key={r.id}>
                       <div className="flex justify-between text-sm mb-1.5">
                         <span className={`font-semibold ${color.text}`}>{r.name}</span>
-                        <span className={`font-bold ${r.isBestCost ? 'text-emerald-400' : 'text-slate-300'}`}>
+                        <span className={`font-bold ${r.isBestCost ? 'text-emerald-400' : 'text-slate-700 dark:text-slate-700 dark:text-slate-300'}`}>
                           {dispShort(r.totalCost)}
                           {r.isBestCost && <span className="ml-1 text-emerald-400 text-[10px]">★</span>}
                         </span>
                       </div>
-                      <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${pct}%` }}
@@ -744,15 +744,15 @@ export default function LoanComparisonCalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 mb-6"
+            className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 mb-6"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-violet-400" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Smart Insights</h3>
-                <p className="text-slate-400 text-xs">AI-powered analysis of your loan options</p>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white">Smart Insights</h3>
+                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-xs">AI-powered analysis of your loan options</p>
               </div>
             </div>
             <div className="space-y-3">
@@ -762,10 +762,10 @@ export default function LoanComparisonCalculator() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.35 + i * 0.1 }}
-                  className="flex items-start gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/5"
+                  className="flex items-start gap-3 px-4 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-100 dark:border-gray-100 dark:border-white/5"
                 >
                   <Info className="w-4 h-4 text-violet-400 mt-0.5 shrink-0" />
-                  <p className="text-sm text-slate-300 leading-relaxed">{insight}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 leading-relaxed">{insight}</p>
                 </motion.div>
               ))}
             </div>
@@ -797,8 +797,8 @@ export default function LoanComparisonCalculator() {
                       ✨ Best Option
                     </span>
                   </div>
-                  <h3 className="text-2xl font-extrabold text-white mb-1">{winner.name}</h3>
-                  <p className="text-slate-400 text-sm">
+                  <h3 className="text-2xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white mb-1">{winner.name}</h3>
+                  <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">
                     {bestOverall
                       ? 'Lowest EMI and lowest total cost — the clear winner!'
                       : 'Offers the lowest total cost among all options.'}
@@ -807,11 +807,11 @@ export default function LoanComparisonCalculator() {
                 <div className="flex gap-6 text-center">
                   <div>
                     <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">Monthly EMI</p>
-                    <p className="text-2xl font-extrabold text-white">{dispShort(winner.emi)}</p>
+                    <p className="text-2xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{dispShort(winner.emi)}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">Total Cost</p>
-                    <p className="text-2xl font-extrabold text-white">{dispShort(winner.totalCost)}</p>
+                    <p className="text-2xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{dispShort(winner.totalCost)}</p>
                   </div>
                 </div>
               </div>
@@ -824,10 +824,10 @@ export default function LoanComparisonCalculator() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6"
+          className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6"
         >
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">EMI Formula Used</p>
-          <p className="font-mono text-sm text-slate-300 leading-relaxed mb-3">
+          <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">EMI Formula Used</p>
+          <p className="font-mono text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 leading-relaxed mb-3">
             EMI = [P × R × (1+R)<sup>N</sup>] ÷ [(1+R)<sup>N</sup> − 1]
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">

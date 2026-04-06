@@ -212,16 +212,16 @@ export default function CreditScoreSimulator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium mb-4">
           <Activity className="w-4 h-4" />
           Financial Identity
         </div>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
           Credit Score <span className="text-cyan-400">Simulator</span>
         </h1>
-        <p className="text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
           Estimate how different financial decisions impact your creditworthiness.
         </p>
       </div>
@@ -229,15 +229,15 @@ export default function CreditScoreSimulator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-4">
             <div>
-              <h2 className="text-lg font-bold text-white">Current Profile</h2>
-              <p className="text-slate-400 text-sm">Baseline metrics</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Current Profile</h2>
+              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Baseline metrics</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
@@ -245,54 +245,54 @@ export default function CreditScoreSimulator() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[13px] text-slate-300 mb-1">Current Score (300-850)</label>
-              <input type="number" min={300} max={850} value={currentScore} onChange={e => setCurrentScore(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Current Score (300-850)</label>
+              <input type="number" min={300} max={850} value={currentScore} onChange={e => setCurrentScore(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
             </div>
             <div>
-              <label className="block text-[13px] text-slate-300 mb-1">Credit Utilization (%)</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Credit Utilization (%)</label>
               <div className="relative">
-                <input type="number" min={0} max={100} value={creditUtilization} onChange={e => setCreditUtilization(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                <input type="number" min={0} max={100} value={creditUtilization} onChange={e => setCreditUtilization(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
               </div>
             </div>
             <div>
-              <label className="block text-[13px] text-slate-300 mb-1">Avg. Age of Accounts (Yrs)</label>
-              <input type="number" min={0} max={50} value={creditAge} onChange={e => setCreditAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Avg. Age of Accounts (Yrs)</label>
+              <input type="number" min={0} max={50} value={creditAge} onChange={e => setCreditAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
             </div>
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-white/10">
+          <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-200 dark:border-white/10">
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2 pb-2">
               <History className="w-4 h-4"/> Simulation Sandbox
             </h3>
             
-            <div className="space-y-4 bg-slate-900/40 border border-white/5 rounded-xl p-4">
+            <div className="space-y-4 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4">
               
               <div>
-                <label className="text-[13px] text-slate-300 block mb-2">Reduce Credit Utilization By:</label>
+                <label className="text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 block mb-2">Reduce Credit Utilization By:</label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="0" max={creditUtilization} value={simPayDownDebt} onChange={(e) => setSimPayDownDebt(e.target.value)} className="flex-1 accent-cyan-500" />
-                  <span className="text-white font-bold w-12 text-right">{simPayDownDebt}%</span>
+                  <span className="text-slate-900 dark:text-slate-900 dark:text-white font-bold w-12 text-right">{simPayDownDebt}%</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                <span className="text-[13px] text-slate-300">Miss a payment?</span>
-                <button onClick={() => setSimMissPayment(!simMissPayment)} className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${simMissPayment ? 'bg-rose-500 text-white' : 'bg-white/10 text-slate-400 hover:bg-white/20'}`}>
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-100 dark:border-white/5 pt-3">
+                <span className="text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300">Miss a payment?</span>
+                <button onClick={() => setSimMissPayment(!simMissPayment)} className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${simMissPayment ? 'bg-rose-500 text-slate-900 dark:text-slate-900 dark:text-white' : 'bg-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:bg-white/20'}`}>
                   {simMissPayment ? 'Yes' : 'No'}
                 </button>
               </div>
 
-              <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                <span className="text-[13px] text-slate-300">Open a new credit card?</span>
-                <button onClick={() => setSimOpenAccount(!simOpenAccount)} className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${simOpenAccount ? 'bg-amber-500 text-white' : 'bg-white/10 text-slate-400 hover:bg-white/20'}`}>
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-100 dark:border-white/5 pt-3">
+                <span className="text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300">Open a new credit card?</span>
+                <button onClick={() => setSimOpenAccount(!simOpenAccount)} className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${simOpenAccount ? 'bg-amber-500 text-slate-900 dark:text-slate-900 dark:text-white' : 'bg-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:bg-white/20'}`}>
                   {simOpenAccount ? 'Yes' : 'No'}
                 </button>
               </div>
 
-              <div className="flex items-center justify-between border-t border-white/5 pt-3 mb-2">
-                <span className="text-[13px] text-slate-300">Fast forward time without misses:</span>
-                <select value={simAgeIncrease} onChange={e => setSimAgeIncrease(e.target.value)} className="bg-slate-800 text-white border border-white/10 rounded-md px-2 py-1 text-xs outline-none">
+              <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-100 dark:border-white/5 pt-3 mb-2">
+                <span className="text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300">Fast forward time without misses:</span>
+                <select value={simAgeIncrease} onChange={e => setSimAgeIncrease(e.target.value)} className="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-900 dark:text-white border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-md px-2 py-1 text-xs outline-none">
                   <option value="0">0 Years</option>
                   <option value="1">1 Year</option>
                   <option value="3">3 Years</option>
@@ -303,7 +303,7 @@ export default function CreditScoreSimulator() {
             </div>
           </div>
 
-          <div className="mt-auto bg-slate-900/40 border border-white/5 rounded-xl p-4 text-xs text-slate-400">
+          <div className="mt-auto bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">
             * Note: These are rough approximations based on standard FICO scoring logic. Actual scores vary heavily based on specific credit bureau models.
           </div>
 
@@ -318,31 +318,31 @@ export default function CreditScoreSimulator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-white">Projection Engine</h2>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Projection Engine</h2>
               </div>
             </div>
 
             {results ? (
               <div className="flex flex-col flex-1">
-                <div className="border rounded-2xl p-5 mb-5 text-center bg-gradient-to-r from-slate-900 to-slate-800 border-white/10">
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-slate-400">
+                <div className="border rounded-2xl p-5 mb-5 text-center bg-gradient-to-r from-slate-900 to-slate-800 border-gray-200 dark:border-gray-200 dark:border-white/10">
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-slate-600 dark:text-slate-600 dark:text-slate-400">
                     Simulated Score
                   </p>
                   <p className={`text-6xl font-extrabold tracking-tight mb-2 ${getScoreColor(results.newScore)}`}>
                     {results.newScore}
                   </p>
-                  <div className="inline-flex items-center justify-center bg-black/20 rounded-full px-4 py-1.5 text-sm border border-white/5 mt-2">
-                    <span className="text-slate-300 font-semibold mr-2">Impact:</span>
+                  <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1.5 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5 mt-2">
+                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">Impact:</span>
                     <span className={results.scoreChange >= 0 ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
                       {results.scoreChange >= 0 ? '+' : ''}{results.scoreChange} Pts
                     </span>
                   </div>
                   
                   {/* Visual gauge */}
-                  <div className="w-full h-2 bg-slate-900 rounded-full mt-6 flex overflow-hidden border border-white/5">
+                  <div className="w-full h-2 bg-slate-900/5 dark:bg-slate-900 rounded-full mt-6 flex overflow-hidden border border-gray-100 dark:border-gray-100 dark:border-white/5">
                     <div className="h-full bg-rose-500" style={{ width: '28%' }}></div>    {/* 300-579 */}
                     <div className="h-full bg-amber-500" style={{ width: '16%' }}></div>   {/* 580-669 */}
                     <div className="h-full bg-blue-500" style={{ width: '13%' }}></div>    {/* 670-739 */}
@@ -353,15 +353,15 @@ export default function CreditScoreSimulator() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 rounded-xl overflow-hidden mb-5">
+                <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-white/5 text-slate-400 font-semibold text-[10px] uppercase border-b border-white/10">
+                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-[10px] uppercase border-b border-gray-200 dark:border-gray-200 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-2">Action / Factor Impact</th>
                         <th className="px-4 py-2 text-right">Points</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5 text-slate-300 text-sm shadow-inner">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-sm shadow-inner">
                       {results.factors.utilizationImpact !== 0 && (
                         <tr className="bg-white/[0.02]">
                           <td className="px-4 py-3">Paying Down Debt</td>
@@ -407,7 +407,7 @@ export default function CreditScoreSimulator() {
                 )}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-slate-900/40 rounded-xl border border-white/5 flex-1">
+              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 rounded-xl border border-gray-100 dark:border-gray-100 dark:border-white/5 flex-1">
                 <Activity className="w-10 h-10 opacity-30" />
                 <p className="text-sm">Run a simulation to see results.</p>
               </div>
@@ -421,8 +421,8 @@ export default function CreditScoreSimulator() {
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-white mb-6">Before & After Setup</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Before & After Setup</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -430,7 +430,7 @@ export default function CreditScoreSimulator() {
                   <YAxis type="number" domain={[300, 850]} stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                   <Tooltip
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '13px' }}
                   />
                   <ReferenceLine y={670} stroke="#3b82f6" strokeDasharray="3 3" label={{ position: 'top', value: 'Good Threshold (670)', fill: '#3b82f6', fontSize: 10 }} />
                   <Bar dataKey="Score" radius={[4, 4, 0, 0]} maxBarSize={100}>
@@ -443,8 +443,8 @@ export default function CreditScoreSimulator() {
             </div>
           </div>
           
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-white mb-2">FICO Calculation Weights</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">FICO Calculation Weights</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -463,7 +463,7 @@ export default function CreditScoreSimulator() {
                     ))}
                   </Pie>
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
                     formatter={(value: number) => [`${value}%`, 'Weight']}
                   />
                   <Legend verticalAlign="bottom" height={45} iconType="circle" wrapperStyle={{ fontSize: '11px', color: '#94a3b8' }} />

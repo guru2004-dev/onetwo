@@ -210,16 +210,16 @@ export default function IncomeTaxCalculator() {
   const PIE_COLORS = ['#ef4444', '#10b981'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-indigo-100 dark:to-indigo-950 py-10 px-4">
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/20 border border-violet-500/30 text-violet-300 text-sm font-medium mb-4">
           <Receipt className="w-4 h-4" />
           Tax Planning
         </div>
-        <h1 className="text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
           Income Tax <span className="text-violet-400">Calculator</span>
         </h1>
-        <p className="text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
           Estimate your tax liability, effective tax rate, and take-home pay via progressive slabs.
         </p>
       </div>
@@ -227,71 +227,71 @@ export default function IncomeTaxCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-white">Income Details</h2>
-              <p className="text-slate-400 text-sm">Enter annual earnings & deductions</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Income Details</h2>
+              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter annual earnings & deductions</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
-                <option key={c} value={c} className="bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
+                <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
               ))}
             </select>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <Banknote className="w-4 h-4"/> Earnings
             </h3>
             <div>
-              <label className="block text-[13px] text-slate-300 mb-1">Gross Annual Income</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Gross Annual Income</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                <input type="number" min={0} value={grossIncome} onChange={e => setGrossIncome(e.target.value)} className="w-full pl-8 pr-3 py-3 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold text-lg" />
+                <input type="number" min={0} value={grossIncome} onChange={e => setGrossIncome(e.target.value)} className="w-full pl-8 pr-3 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold text-lg" />
               </div>
             </div>
           </div>
 
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
               <MinusCircle className="w-4 h-4"/> Exemptions & Deductions
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Standard Deduction</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Standard Deduction</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={standardDeduction} onChange={e => setStandardDeduction(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={standardDeduction} onChange={e => setStandardDeduction(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-300 mb-1">Other Deductions (80C, etc)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other Deductions (80C, etc)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={otherDeductions} onChange={e => setOtherDeductions(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-slate-900/50 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={otherDeductions} onChange={e => setOtherDeductions(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-2 bg-slate-900/40 border border-white/5 rounded-xl p-4 text-xs text-slate-400">
+          <div className="mt-2 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">
             * Uses a generalized progressive tax slab mapping up to 30% above 15L, along with rebate logic for incomes up to 7L, mimicking standardized New Regime norms.
           </div>
 
@@ -306,11 +306,11 @@ export default function IncomeTaxCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-white">Tax Summary</h2>
-                <p className="text-slate-400 text-sm">Updated: <span className="text-violet-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Tax Summary</h2>
+                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-violet-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -322,7 +322,7 @@ export default function IncomeTaxCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -331,7 +331,7 @@ export default function IncomeTaxCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-violet-600 border-violet-500 text-white'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:border-violet-400 hover:text-slate-200'
+                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-violet-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -346,11 +346,11 @@ export default function IncomeTaxCalculator() {
                   <p className={`text-xs font-semibold uppercase tracking-widest mb-1 ${results.taxLiability > 0 ? 'text-red-300' : 'text-emerald-300'}`}>
                     Total Tax Liability
                   </p>
-                  <p className="text-5xl font-extrabold text-white tracking-tight mb-2">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
                     {disp(results.taxLiability)}
                   </p>
-                  <div className="inline-flex items-center justify-center bg-black/20 rounded-full px-4 py-1 text-sm border border-white/5">
-                    <span className="text-slate-300 font-semibold mr-2">Effective Tax Rate:</span>
+                  <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5">
+                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">Effective Tax Rate:</span>
                     <span className={results.effectiveTaxRate <= 10 ? "text-emerald-400 font-bold" : (results.effectiveTaxRate <= 25 ? "text-amber-400 font-bold" : "text-red-400 font-bold")}>
                       {results.effectiveTaxRate.toFixed(1)}%
                     </span>
@@ -358,9 +358,9 @@ export default function IncomeTaxCalculator() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="rounded-xl border bg-slate-800/50 border-white/5 p-4 flex flex-col gap-1">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Taxable Income</div>
-                    <p className="font-bold text-lg text-white">{disp(results.taxableIncome)}</p>
+                  <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Taxable Income</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.taxableIncome)}</p>
                   </div>
                   <div className="rounded-xl border bg-emerald-900/10 border-emerald-500/20 p-4 flex flex-col gap-1">
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Net Take-Home Yield</div>
@@ -368,19 +368,19 @@ export default function IncomeTaxCalculator() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 rounded-xl overflow-hidden mb-5">
+                <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-white/5 text-slate-400 font-semibold text-xs border-b border-white/10">
+                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-xs border-b border-gray-200 dark:border-gray-200 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-2.5">Slab Limit</th>
                         <th className="px-4 py-2.5 text-center">Rate</th>
                         <th className="px-4 py-2.5 text-right">Tax Due</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5 text-slate-300 text-xs">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-xs">
                       {results.slabBreakdown.map((slab, i) => (
-                        <tr key={i} className="hover:bg-white/5 transition-colors">
-                          <td className="px-4 py-2.5 text-slate-200">{slab.limit}</td>
+                        <tr key={i} className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                          <td className="px-4 py-2.5 text-slate-800 dark:text-slate-800 dark:text-slate-200">{slab.limit}</td>
                           <td className="px-4 py-2.5 text-center font-medium text-amber-200">{slab.rate}</td>
                           <td className="px-4 py-2.5 text-right font-medium text-red-200">{slab.taxForSlab === 0 && slab.rate !== '-100%' ? 'Nil' : disp(slab.taxForSlab)}</td>
                         </tr>
@@ -400,7 +400,7 @@ export default function IncomeTaxCalculator() {
                 )}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-slate-900/40 rounded-xl border border-white/5 flex-1">
+              <div className="flex flex-col items-center justify-center py-12 text-slate-500 gap-3 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 rounded-xl border border-gray-100 dark:border-gray-100 dark:border-white/5 flex-1">
                 <Receipt className="w-10 h-10 opacity-30" />
                 <p className="text-sm">Input income to estimate taxes.</p>
               </div>
@@ -413,8 +413,8 @@ export default function IncomeTaxCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-white mb-6">Income Progression</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Income Progression</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -422,7 +422,7 @@ export default function IncomeTaxCalculator() {
                   <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(value) => `${value >= 1000 ? (value/1000).toFixed(0)+'k' : value}`} />
                   <Tooltip
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
                     formatter={(value: number) => [`${currSym}${value.toLocaleString()}`, 'Amount']}
                   />
                   <Bar dataKey="value" radius={[4, 4, 0, 0]}>
@@ -435,8 +435,8 @@ export default function IncomeTaxCalculator() {
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-white mb-2">Take-Home Split</h3>
+          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Take-Home Split</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -455,7 +455,7 @@ export default function IncomeTaxCalculator() {
                     ))}
                   </Pie>
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
+                    contentStyle={{ backgroundColor: 'rgba(30, 41, 59, 0.95)', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc', fontSize: '12px' }}
                     formatter={(value: number) => [`${currSym}${value.toLocaleString(undefined, {maximumFractionDigits: 2})}`, 'Amount']}
                   />
                   <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#94a3b8' }} />

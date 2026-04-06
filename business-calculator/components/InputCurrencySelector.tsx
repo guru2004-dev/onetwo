@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { useTheme } from '@/components/ThemeProvider';
 import { SUPPORTED_CURRENCIES, isSupportedCurrency } from '@/lib/currency';
 import PremiumCurrencyInput from './PremiumCurrencyInput';
 
@@ -26,6 +27,8 @@ export default function InputCurrencySelector({
   required,
   showCurrencyDropdown = true,
 }: InputCurrencySelectorProps) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   const {
     selectedInputCurrency,
     setSelectedInputCurrency,
@@ -36,6 +39,9 @@ export default function InputCurrencySelector({
     error,
     getCurrencySymbol,
   } = useCurrency();
+
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
   const [displayAmount, setDisplayAmount] = useState<string>('');
   const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
@@ -116,9 +122,11 @@ export default function InputCurrencySelector({
           value={safeSelectedCurrency}
           onChange={(event) => handleCurrencyChange(event.target.value)}
           disabled={loading}
-          className="sm:w-32 w-full px-3 py-3 bg-gray-900 border border-gray-700 rounded-xl text-white outline-none 
-              transition-all duration-300 focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 
-              hover:border-gray-600 shadow-inner font-medium tracking-wide cursor-pointer"
+          className={`sm:w-32 w-full px-3 py-3 rounded-xl outline-none transition-all duration-300 font-medium tracking-wide cursor-pointer
+            ${isDarkMode
+              ? 'bg-gray-900 border border-gray-700 text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 hover:border-gray-600'
+              : 'bg-white border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 hover:border-[#D1DDE6]'
+            }`}
           aria-label="Input currency"
         >
           {loading && <option value="INR">Loading currencies...</option>}

@@ -1,1 +1,125 @@
 @import "tailwindcss";
+
+@layer base {
+  /* Typography */
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&display=swap');
+
+  /* Light Mode (Default) - Premium Apple/Stripe style */
+  html {
+    @apply bg-[#F8FAFC] text-[#0F172A];
+    color-scheme: light;
+  }
+
+  /* Dark Mode - Original design preserved */
+  html.dark {
+    @apply bg-[#0B0F19] text-gray-100;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply transition-colors duration-300;
+    background-color: inherit;
+  }
+
+  /* Smooth transitions on all theme changes */
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}
+
+@layer components {
+  /* ──────────────────────────────────────────────────────────
+     LIGHT MODE UTILITIES (Apple/Stripe Style)
+     ────────────────────────────────────────────────────────── */
+
+  /* Card - Premium light design */
+  .card-light {
+    @apply bg-white border border-[#E2E8F0] rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+
+  /* Input fields - Clean and minimal */
+  .input-light {
+    @apply bg-white border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200;
+  }
+
+  /* Button - Light mode */
+  .btn-light {
+    @apply bg-white border border-[#E2E8F0] text-[#0F172A] hover:bg-[#F8FAFC] rounded-lg transition-colors duration-200;
+  }
+
+  .btn-light-primary {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 rounded-lg transition-all duration-200;
+  }
+
+  /* Glassmorphism navbar - Light mode */
+  .navbar-glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-[#E2E8F0] shadow-sm;
+  }
+
+  /* Text colors - Light mode */
+  .text-light-primary {
+    @apply text-[#0F172A];
+  }
+
+  .text-light-secondary {
+    @apply text-[#64748B];
+  }
+
+  .text-light-muted {
+    @apply text-[#94A3B8];
+  }
+
+  /* Sidebar light */
+  .sidebar-light {
+    @apply bg-white border-r border-[#E2E8F0] text-[#0F172A];
+  }
+
+  .sidebar-light-item-hover {
+    @apply hover:bg-[#F8FAFC] transition-colors duration-200;
+  }
+
+  .sidebar-light-item-active {
+    @apply bg-gradient-to-r from-purple-50 to-blue-50 border-l-2 border-purple-600 text-purple-600;
+  }
+
+  /* Footer light */
+  .footer-light {
+    @apply bg-white border-t border-[#E2E8F0] text-[#64748B];
+  }
+
+  /* ──────────────────────────────────────────────────────────
+     DARK MODE UTILITIES (Keep Unchanged)
+     ────────────────────────────────────────────────────────── */
+
+  .dark .text-contrast {
+    @apply text-white;
+  }
+
+  .dark .card-dark {
+    @apply bg-white/5 border border-white/10;
+  }
+
+  /* ──────────────────────────────────────────────────────────
+     THEME TRANSITIONS
+     ────────────────────────────────────────────────────────── */
+
+  @keyframes fadeRise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-rise {
+    animation: fadeRise 0.8s ease-out forwards;
+  }
+
+  /* Smooth theme transition class */
+  .transition-theme {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}

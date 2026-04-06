@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTheme } from '@/components/ThemeProvider';
 
 interface SelectFieldProps {
   label: string;
@@ -19,13 +20,18 @@ export default function SelectField({
   required = false,
   tooltip,
 }: SelectFieldProps) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className={`block text-sm font-medium mb-2
+        ${isDarkMode ? 'text-gray-300' : 'text-[#0F172A]'}`}
+      >
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-rose-500 ml-1">*</span>}
         {tooltip && (
-          <span className="ml-2 text-gray-400 text-xs" title={tooltip}>
+          <span className={`ml-2 text-xs ${isDarkMode ? 'text-gray-500' : 'text-[#94A3B8]'}`} title={tooltip}>
             ⓘ
           </span>
         )}
@@ -33,7 +39,11 @@ export default function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+        className={`w-full px-4 py-3 rounded-xl focus:ring-2 focus:outline-none transition-colors duration-300
+          ${isDarkMode
+            ? 'bg-gray-900 border border-gray-700 text-white placeholder-gray-500 hover:border-gray-600 focus:ring-indigo-500/50 focus:border-indigo-500'
+            : 'bg-white border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] hover:border-[#CBD5E1] focus:ring-purple-500/50 focus:border-purple-500'
+          }`}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
