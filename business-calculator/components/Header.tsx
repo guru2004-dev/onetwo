@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
   Calculator,
   Menu,
@@ -70,13 +70,13 @@ const CATEGORY_META: Record<
 };
 
 // ─── Framer Motion variants ───────────────────────────────────────────────────
-const overlayVariants = {
+const overlayVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
-const sidebarVariants = {
+const sidebarVariants: Variants = {
   hidden: { x: '-100%', opacity: 0.5 },
   visible: {
     x: 0,
@@ -90,7 +90,7 @@ const sidebarVariants = {
   },
 };
 
-const accordionVariants = {
+const accordionVariants: Variants = {
   hidden: { height: 0, opacity: 0 },
   visible: {
     height: 'auto',
@@ -104,7 +104,7 @@ const accordionVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { x: -10, opacity: 0 },
   visible: (i: number) => ({
     x: 0,
