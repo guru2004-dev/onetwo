@@ -37,7 +37,7 @@ export default function CAGRCalculator() {
   const inputSym = getCurrencySymbol(selectedInputCurrency);
   const disp = (n: number) => fmtAmt(convertFromINR(n, selectedResultCurrency), currSym);
   const dispS = (n: number) => fmtShort(convertFromINR(n, selectedResultCurrency), currSym);
-  const cagrColor = result ? (result.cagr > 15 ? 'text-emerald-400' : result.cagr >= 8 ? 'text-amber-400' : 'text-red-400') : 'text-slate-900 dark:text-slate-900 dark:text-white';
+  const cagrColor = result ? (result.cagr > 15 ? 'text-emerald-400' : result.cagr >= 8 ? 'text-amber-400' : 'text-red-400') : 'text-slate-900 dark:text-white';
   const insight = useMemo(() => {
     if (!result) return null;
     if (result.cagr > 15) return { text: 'Excellent growth rate! Well above benchmark returns. 🚀', type: 'success' };
@@ -49,59 +49,59 @@ export default function CAGRCalculator() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 dark:from-slate-900 via-slate-100 dark:via-slate-800 to-green-100 dark:to-green-950 py-10 px-4">
       <div className="max-w-6xl mx-auto mb-8 text-center">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-300 text-sm font-medium mb-4"><TrendingUp className="w-4 h-4" /> Annual Growth Rate</motion.div>
-        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">CAGR <span className="text-green-400">Calculator</span></motion.h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">Calculate compound annual growth rate of your investment.</motion.p>
+        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">CAGR <span className="text-green-400">Calculator</span></motion.h1>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-400 text-lg">Calculate compound annual growth rate of your investment.</motion.p>
       </div>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
-          <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Inputs</h2><p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter investment values</p></div>
-            <button onClick={() => { setInitialRaw('100000'); setFinalRaw('200000'); setDurationRaw('5'); setDurationUnit('years'); setResult(null); setError(''); }} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
+          <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-slate-900 dark:text-white">Inputs</h2><p className="text-slate-600 dark:text-slate-400 text-sm">Enter investment values</p></div>
+            <button onClick={() => { setInitialRaw('100000'); setFinalRaw('200000'); setDurationRaw('5'); setDurationUnit('years'); setResult(null); setError(''); }} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>
           </div>
-          <div><label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
-            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }} disabled={rL} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition-all">
+          <div><label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }} disabled={rL} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition-all">
               {availableCurrencies.map(c => <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>)}
             </select>
           </div>
           {[{ label: 'Initial Investment Value', val: initialRaw, set: setInitialRaw }, { label: 'Final Investment Value', val: finalRaw, set: setFinalRaw }].map(f => (
-            <div key={f.label}><label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">{f.label}</label>
-              <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">{inputSym}</span>
-                <input type="number" value={f.val} onChange={e => f.set(e.target.value)} min={0} className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all" /></div>
+            <div key={f.label}><label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{f.label}</label>
+              <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 text-sm">{inputSym}</span>
+                <input type="number" value={f.val} onChange={e => f.set(e.target.value)} min={0} className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all" /></div>
               <input type="range" min={1000} max={10000000} step={1000} value={Number(f.val) || 0} onChange={e => f.set(e.target.value)} className="w-full mt-2 accent-green-500" />
             </div>
           ))}
           <div>
-            <div className="flex items-center justify-between mb-1.5"><label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Investment Duration</label>
-              <div className="flex items-center gap-0.5 bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg p-0.5">{(['years', 'months'] as const).map(u => <button key={u} onClick={() => setDurationUnit(u)} className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${durationUnit === u ? 'bg-green-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-900 dark:text-white'}`}>{u.charAt(0).toUpperCase() + u.slice(1)}</button>)}</div>
+            <div className="flex items-center justify-between mb-1.5"><label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Investment Duration</label>
+              <div className="flex items-center gap-0.5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-0.5">{(['years', 'months'] as const).map(u => <button key={u} onClick={() => setDurationUnit(u)} className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${durationUnit === u ? 'bg-green-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}>{u.charAt(0).toUpperCase() + u.slice(1)}</button>)}</div>
             </div>
-            <div className="relative"><input type="number" value={durationRaw} onChange={e => setDurationRaw(e.target.value)} min={1} className="w-full pl-4 pr-16 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all" /><span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 text-xs pointer-events-none capitalize">{durationUnit}</span></div>
+            <div className="relative"><input type="number" value={durationRaw} onChange={e => setDurationRaw(e.target.value)} min={1} className="w-full pl-4 pr-16 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all" /><span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 text-xs pointer-events-none capitalize">{durationUnit}</span></div>
           </div>
           {error && <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-sm"><Info className="w-4 h-4 shrink-0" /> {error}</div>}
-          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-3 mt-auto"><p className="text-xs font-mono text-slate-600 dark:text-slate-600 dark:text-slate-400">CAGR = (Final/Initial)^(1/n) − 1</p></div>
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-3 mt-auto"><p className="text-xs font-mono text-slate-600 dark:text-slate-400">CAGR = (Final/Initial)^(1/n) − 1</p></div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center justify-between mb-5"><div><h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results</h2><p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-green-300">{relTime}</span></p></div>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-5"><div><h2 className="text-lg font-bold text-slate-900 dark:text-white">Results</h2><p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-green-300">{relTime}</span></p></div>
               <button onClick={() => updateCurrencyRates()} disabled={rL} className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-all"><RefreshCw className={`w-4 h-4 ${rL ? 'animate-spin' : ''}`} /> Update</button>
             </div>
-            <div className="mb-5"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p><div className="flex flex-wrap gap-2">{availableCurrencies.map(c => <button key={c} onClick={() => setSelectedResultCurrency(c as never)} className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-green-600 border-green-500 text-white' : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-green-400'}`}>{c}</button>)}</div></div>
+            <div className="mb-5"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p><div className="flex flex-wrap gap-2">{availableCurrencies.map(c => <button key={c} onClick={() => setSelectedResultCurrency(c as never)} className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-green-600 border-green-500 text-white' : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-green-400'}`}>{c}</button>)}</div></div>
             {result ? (
               <div className="flex flex-col gap-3">
                 <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-xl p-4 text-center">
-                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">CAGR</p>
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">CAGR</p>
                   <p className={`text-5xl font-extrabold ${cagrColor}`}>{result.cagr.toFixed(2)}%</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400 mt-1">per year</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">per year</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Total Growth</p><p className="text-xl font-bold text-green-300">{result.totalGrowth.toFixed(2)}%</p></div>
-                  <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Absolute Profit</p><p className="text-xl font-bold text-emerald-300">{dispS(result.profit)}</p></div>
+                  <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Total Growth</p><p className="text-xl font-bold text-green-300">{result.totalGrowth.toFixed(2)}%</p></div>
+                  <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Absolute Profit</p><p className="text-xl font-bold text-emerald-300">{dispS(result.profit)}</p></div>
                 </div>
-                <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Initial vs Final</p>
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Initial vs Final</p>
                   {[{ label: 'Initial Value', val: result.initial, pct: (result.initial / result.final) * 100, color: 'bg-blue-500', text: 'text-blue-300' }, { label: 'Final Value', val: result.final, pct: 100, color: 'bg-green-500', text: 'text-green-300' }].map((bar, i) => (
                     <div key={bar.label} className="mb-2">
-                      <div className="flex justify-between text-xs mb-1"><span className={`font-semibold ${bar.text}`}>{bar.label}</span><span className="text-slate-700 dark:text-slate-700 dark:text-slate-300">{disp(bar.val)}</span></div>
-                      <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${bar.pct}%` }} transition={{ duration: 0.8, delay: i * 0.1 }} className={`h-full ${bar.color} rounded-full`} /></div>
+                      <div className="flex justify-between text-xs mb-1"><span className={`font-semibold ${bar.text}`}>{bar.label}</span><span className="text-slate-700 dark:text-slate-300">{disp(bar.val)}</span></div>
+                      <div className="h-3 bg-white dark:bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${bar.pct}%` }} transition={{ duration: 0.8, delay: i * 0.1 }} className={`h-full ${bar.color} rounded-full`} /></div>
                     </div>
                   ))}
                 </div>

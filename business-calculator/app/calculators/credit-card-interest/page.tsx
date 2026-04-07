@@ -179,10 +179,10 @@ export default function CreditCardInterestCalculator() {
           <CreditCard className="w-4 h-4" />
           Debt Management
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Credit Card <span className="text-rose-400">Interest</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           See exactly how much daily interest your carried balance is costing you.
         </p>
       </div>
@@ -190,27 +190,27 @@ export default function CreditCardInterestCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Statement Data</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your outstanding balances</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Statement Data</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter your outstanding balances</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -219,43 +219,43 @@ export default function CreditCardInterestCalculator() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <Banknote className="w-4 h-4"/> Debt Snapshot
             </h3>
             <div>
-              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Outstanding Balance / Amount Carried</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Outstanding Balance / Amount Carried</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                <input type="number" min={0} value={outstandingBalance} onChange={e => setOutstandingBalance(e.target.value)} className="w-full pl-8 pr-3 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold text-lg" />
+                <input type="number" min={0} value={outstandingBalance} onChange={e => setOutstandingBalance(e.target.value)} className="w-full pl-8 pr-3 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold text-lg" />
               </div>
             </div>
           </div>
 
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <MinusCircle className="w-4 h-4"/> Rates & Penalties
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">APR (Annual % Rate)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">APR (Annual % Rate)</label>
                 <div className="relative">
-                  <input type="number" min={0} max={100} value={apr} onChange={e => setApr(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} max={100} value={apr} onChange={e => setApr(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Days Carried Over</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Days Carried Over</label>
                 <div className="relative">
-                  <input type="number" min={0} value={daysCarried} onChange={e => setDaysCarried(e.target.value)} className="w-full pl-3 pr-12 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={daysCarried} onChange={e => setDaysCarried(e.target.value)} className="w-full pl-3 pr-12 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs text-right">days</span>
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Late Payment Fees (If Applicable)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Late Payment Fees (If Applicable)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={lateFee} onChange={e => setLateFee(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={lateFee} onChange={e => setLateFee(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
@@ -272,11 +272,11 @@ export default function CreditCardInterestCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Interest Exposure</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-rose-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Interest Exposure</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-rose-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -288,7 +288,7 @@ export default function CreditCardInterestCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -297,7 +297,7 @@ export default function CreditCardInterestCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-rose-600 border-rose-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-rose-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-rose-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -312,11 +312,11 @@ export default function CreditCardInterestCalculator() {
                   <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-rose-300">
                     Total Extra Cost (Interest + Fees)
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
                     {disp(results.interest + results.lateFee)}
                   </p>
                   <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5">
-                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">Calculated Daily Rate:</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-semibold mr-2">Calculated Daily Rate:</span>
                     <span className="text-rose-400 font-bold">
                       {results.effectiveDailyRate.toFixed(4)}% / day
                     </span>
@@ -325,8 +325,8 @@ export default function CreditCardInterestCalculator() {
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Principal Balance</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.principal)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Principal Balance</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.principal)}</p>
                   </div>
                   <div className="rounded-xl border bg-rose-900/10 border-rose-500/30 p-4 flex flex-col gap-1">
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-rose-400">Total New Balance</div>
@@ -336,28 +336,28 @@ export default function CreditCardInterestCalculator() {
 
                 <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-xs border-b border-gray-200 dark:border-gray-200 dark:border-white/10">
+                    <thead className="bg-gray-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-semibold text-xs border-b border-gray-200 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">Component</th>
                         <th className="px-4 py-3 text-right">Amount</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-sm">
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-300 text-sm">
+                      <tr className="hover:bg-white/5 transition-colors">
                         <td className="px-4 py-3 text-slate-800 dark:text-slate-800 dark:text-slate-200">Starting Balance</td>
                         <td className="px-4 py-3 text-right font-medium text-slate-800 dark:text-slate-800 dark:text-slate-200">{disp(results.principal)}</td>
                       </tr>
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                      <tr className="hover:bg-white/5 transition-colors">
                         <td className="px-4 py-3 text-rose-300">+ Interest Accrued ({results.effectiveDailyRate.toFixed(4)}% × {daysCarried} days)</td>
                         <td className="px-4 py-3 text-right font-medium text-rose-300">{disp(results.interest)}</td>
                       </tr>
                       {results.lateFee > 0 && (
-                        <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                        <tr className="hover:bg-white/5 transition-colors">
                           <td className="px-4 py-3 text-amber-300">+ Late Penalty Fees</td>
                           <td className="px-4 py-3 text-right font-medium text-amber-300">{disp(results.lateFee)}</td>
                         </tr>
                       )}
-                      <tr className="bg-white dark:bg-white dark:bg-white/5 font-bold border-t-2 border-gray-200 dark:border-gray-200 dark:border-white/10">
+                      <tr className="bg-white dark:bg-white/5 font-bold border-t-2 border-gray-200 dark:border-white/10">
                         <td className="px-4 py-3 text-red-300">Total Due on Next Cycle</td>
                         <td className="px-4 py-3 text-right text-red-300">{disp(results.newBalance)}</td>
                       </tr>
@@ -389,8 +389,8 @@ export default function CreditCardInterestCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Balance Inflation Over Time</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Balance Inflation Over Time</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -411,8 +411,8 @@ export default function CreditCardInterestCalculator() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">New Balance Composition</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">New Balance Composition</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

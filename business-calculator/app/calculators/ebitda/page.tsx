@@ -188,10 +188,10 @@ export default function EBITDACalculator() {
           <BarChart3 className="w-4 h-4" />
           Financial Analysis
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           EBITDA <span className="text-emerald-400">Calculator</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Evaluate core operational profitability by calculating Earnings Before Interest, Taxes, Depreciation, and Amortization.
         </p>
       </div>
@@ -199,27 +199,27 @@ export default function EBITDACalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Financial Statement Data</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your income statement figures</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Financial Statement Data</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter your income statement figures</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -228,59 +228,59 @@ export default function EBITDACalculator() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <Layers className="w-4 h-4"/> Key Top & Bottom Line
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Total Revenue</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Total Revenue</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={totalRevenue} onChange={e => setTotalRevenue(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={totalRevenue} onChange={e => setTotalRevenue(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Net Income</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Net Income</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" step="any" value={netIncome} onChange={e => setNetIncome(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" step="any" value={netIncome} onChange={e => setNetIncome(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
           </div>
 
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <ArrowUpRight className="w-4 h-4"/> Add-backs (ITDA)
             </h3>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Interest Expense</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Interest Expense</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={interestExpense} onChange={e => setInterestExpense(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={interestExpense} onChange={e => setInterestExpense(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Tax Expense</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Tax Expense</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={taxes} onChange={e => setTaxes(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={taxes} onChange={e => setTaxes(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Depreciation</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Depreciation</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={depreciation} onChange={e => setDepreciation(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={depreciation} onChange={e => setDepreciation(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Amortization</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Amortization</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={amortization} onChange={e => setAmortization(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={amortization} onChange={e => setAmortization(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
@@ -297,11 +297,11 @@ export default function EBITDACalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">EBITDA Breakdown</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">EBITDA Breakdown</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -313,7 +313,7 @@ export default function EBITDACalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -322,7 +322,7 @@ export default function EBITDACalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-emerald-600 border-emerald-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -337,11 +337,11 @@ export default function EBITDACalculator() {
                   <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-emerald-300">
                     EBITDA
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
                     {disp(results.ebitda)}
                   </p>
                   <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5">
-                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">EBITDA Margin:</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-semibold mr-2">EBITDA Margin:</span>
                     <span className={results.ebitdaMargin >= 10 ? "text-emerald-400 font-bold" : "text-amber-400 font-bold"}>
                       {results.ebitdaMargin.toFixed(2)}%
                     </span>
@@ -350,45 +350,45 @@ export default function EBITDACalculator() {
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Revenue</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalRevenueInr)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total Revenue</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.totalRevenueInr)}</p>
                   </div>
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">EBIT (Op. Profit)</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.ebit)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">EBIT (Op. Profit)</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.ebit)}</p>
                   </div>
                 </div>
 
                 <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-xs">
+                    <thead className="bg-gray-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-semibold text-xs">
                       <tr>
                         <th className="px-4 py-3">Metric</th>
                         <th className="px-4 py-3 text-right">Amount</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-sm">
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-300 text-sm">
+                      <tr className="hover:bg-white/5">
                         <td className="px-4 py-2.5">Net Income</td>
                         <td className="px-4 py-2.5 text-right font-medium">{disp(results.netIncomeInr)}</td>
                       </tr>
-                      <tr className="text-indigo-300 hover:bg-white dark:bg-white dark:bg-white/5">
+                      <tr className="text-indigo-300 hover:bg-white/5">
                         <td className="px-4 py-2.5 pl-6">+ Interest Expense</td>
                         <td className="px-4 py-2.5 text-right">{disp(convertToINR(Number(interestExpense), selectedInputCurrency))}</td>
                       </tr>
-                      <tr className="text-indigo-300 hover:bg-white dark:bg-white dark:bg-white/5">
+                      <tr className="text-indigo-300 hover:bg-white/5">
                         <td className="px-4 py-2.5 pl-6">+ Taxes</td>
                         <td className="px-4 py-2.5 text-right">{disp(convertToINR(Number(taxes), selectedInputCurrency))}</td>
                       </tr>
-                      <tr className="font-medium bg-white dark:bg-white dark:bg-white/5">
+                      <tr className="font-medium bg-white dark:bg-white/5">
                         <td className="px-4 py-2.5">EBIT</td>
                         <td className="px-4 py-2.5 text-right">{disp(results.ebit)}</td>
                       </tr>
-                      <tr className="text-amber-300 hover:bg-white dark:bg-white dark:bg-white/5">
+                      <tr className="text-amber-300 hover:bg-white/5">
                         <td className="px-4 py-2.5 pl-6">+ Depreciation</td>
                         <td className="px-4 py-2.5 text-right">{disp(convertToINR(Number(depreciation), selectedInputCurrency))}</td>
                       </tr>
-                      <tr className="text-amber-300 hover:bg-white dark:bg-white dark:bg-white/5">
+                      <tr className="text-amber-300 hover:bg-white/5">
                         <td className="px-4 py-2.5 pl-6">+ Amortization</td>
                         <td className="px-4 py-2.5 text-right">{disp(convertToINR(Number(amortization), selectedInputCurrency))}</td>
                       </tr>
@@ -420,8 +420,8 @@ export default function EBITDACalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Income Progression</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Income Progression</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -442,8 +442,8 @@ export default function EBITDACalculator() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl cd business-calculatorborder border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">EBITDA to Revenue</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl cd business-calculatorborder border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">EBITDA to Revenue</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

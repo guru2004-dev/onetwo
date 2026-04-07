@@ -221,10 +221,10 @@ export default function EPFCalculator() {
           <Briefcase className="w-4 h-4" />
           Career & Retirement
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           EPF <span className="text-cyan-400">Calculator</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Project your ultimate Provident Fund corpus by retirement based on corporate matching and hikes.
         </p>
       </div>
@@ -232,27 +232,27 @@ export default function EPFCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Employment Data</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Update your current PF standing</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Employment Data</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Update your current PF standing</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -261,74 +261,74 @@ export default function EPFCalculator() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <Banknote className="w-4 h-4"/> Salary Base
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Monthly Basic + DA</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Monthly Basic + DA</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={basicSalary} onChange={e => setBasicSalary(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={basicSalary} onChange={e => setBasicSalary(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Expected Salary Hike (p.a.)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Expected Salary Hike (p.a.)</label>
                 <div className="relative">
-                  <input type="number" min={0} max={100} value={expectedSalaryHike} onChange={e => setExpectedSalaryHike(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                  <input type="number" min={0} max={100} value={expectedSalaryHike} onChange={e => setExpectedSalaryHike(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
                 </div>
               </div>
             </div>
             <div>
-              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Current EPF Balance (if any)</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Current EPF Balance (if any)</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                <input type="number" min={0} value={currentBalance} onChange={e => setCurrentBalance(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                <input type="number" min={0} value={currentBalance} onChange={e => setCurrentBalance(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
               </div>
             </div>
           </div>
 
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <User className="w-4 h-4"/> Matching & Horizon
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Employee Share</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Employee Share</label>
                 <div className="relative">
-                  <input type="number" min={0} max={100} step={0.1} value={employeeContribution} onChange={e => setEmployeeContribution(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                  <input type="number" min={0} max={100} step={0.1} value={employeeContribution} onChange={e => setEmployeeContribution(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Employer Share (to EPF)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Employer Share (to EPF)</label>
                 <div className="relative">
-                  <input type="number" min={0} max={100} step={0.01} value={employerContribution} onChange={e => setEmployerContribution(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                  <input type="number" min={0} max={100} step={0.01} value={employerContribution} onChange={e => setEmployerContribution(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Current Age</label>
-                <input type="number" min={18} max={80} value={currentAge} onChange={e => setCurrentAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Current Age</label>
+                <input type="number" min={18} max={80} value={currentAge} onChange={e => setCurrentAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Age at Retirement</label>
-                <input type="number" min={18} max={80} value={retirementAge} onChange={e => setRetirementAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Age at Retirement</label>
+                <input type="number" min={18} max={80} value={retirementAge} onChange={e => setRetirementAge(e.target.value)} className="w-full px-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
               </div>
             </div>
             
             <div className="pt-2">
-              <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">EPF Interest Rate (p.a.)</label>
+              <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">EPF Interest Rate (p.a.)</label>
               <div className="relative sm:w-1/2">
-                <input type="number" min={0} max={100} step={0.01} value={rate} onChange={e => setRate(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
+                <input type="number" min={0} max={100} step={0.01} value={rate} onChange={e => setRate(e.target.value)} className="w-full pl-3 pr-8 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all font-semibold" />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">%</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-2 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">
+          <div className="mt-2 bg-gray-50 dark:bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-400">
             * Note: While typical employer PF contribution is 12%, standard divisions apply 8.33% to the EPS (Pension Scheme) up to a limit, leaving exactly 3.67% directed into this compounding EPF corpus.
           </div>
 
@@ -343,11 +343,11 @@ export default function EPFCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Retirement Target Yield</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-cyan-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Retirement Target Yield</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-cyan-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -359,7 +359,7 @@ export default function EPFCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -368,7 +368,7 @@ export default function EPFCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-cyan-600 border-cyan-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-cyan-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-cyan-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -383,11 +383,11 @@ export default function EPFCalculator() {
                   <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-cyan-300">
                     Gross Final EPF Maturity
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
                     {disp(results.maturityCorpus)}
                   </p>
                   <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5">
-                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">Est. Active Years:</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-semibold mr-2">Est. Active Years:</span>
                     <span className="text-emerald-400 font-bold">
                       {Number(retirementAge) - Number(currentAge)} Years
                     </span>
@@ -397,13 +397,13 @@ export default function EPFCalculator() {
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-blue-400 to-indigo-500" />
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total You Invested</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalEmployeeCont)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total You Invested</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.totalEmployeeCont)}</p>
                   </div>
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-purple-400 to-pink-500" />
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Employer Output</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalEmployerCont)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total Employer Output</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.totalEmployerCont)}</p>
                   </div>
                 </div>
 
@@ -437,8 +437,8 @@ export default function EPFCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Stacked Compounding Progress</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Stacked Compounding Progress</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -459,8 +459,8 @@ export default function EPFCalculator() {
             <p className="text-center text-xs text-slate-500 mt-4">* Chart marks intervals of 5 years to show long-term trend</p>
           </div>
 
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Contributions vs Reward</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Contributions vs Reward</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

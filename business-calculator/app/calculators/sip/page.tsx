@@ -106,10 +106,10 @@ export default function SIPCalculator() {
           <PiggyBank className="w-4 h-4" /> Systematic Investment Plan
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+          className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           SIP <span className="text-emerald-400">Calculator</span>
         </motion.h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-400 text-lg">
           Estimate your wealth from monthly investments with compounding power.
         </motion.p>
       </div>
@@ -117,33 +117,33 @@ export default function SIPCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* LEFT — INPUTS */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}
-          className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+          className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Inputs</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your SIP details</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Inputs</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter your SIP details</p>
             </div>
-            <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all">
+            <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all">
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           {/* Input Currency */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }}
-              disabled={ratesLoading} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
+              disabled={ratesLoading} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
               {availableCurrencies.map(c => <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>)}
             </select>
           </div>
 
           {/* Monthly Investment */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Monthly Investment</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Monthly Investment</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
               <input type="number" value={monthlyRaw} onChange={e => setMonthlyRaw(e.target.value)} placeholder="e.g. 10000" min={0}
-                className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+                className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
             </div>
             <input type="range" min={500} max={500000} step={500} value={Number(monthlyRaw) || 0} onChange={e => setMonthlyRaw(e.target.value)}
               className="w-full mt-2 accent-emerald-500" />
@@ -151,22 +151,22 @@ export default function SIPCalculator() {
 
           {/* Rate */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Expected Annual Return (%)</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Expected Annual Return (%)</label>
             <div className="relative">
               <input type="number" value={rateRaw} onChange={e => setRateRaw(e.target.value)} placeholder="e.g. 12" min={0} max={50} step="0.1"
-                className="w-full pl-4 pr-10 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">%</span>
+                className="w-full pl-4 pr-10 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">%</span>
             </div>
           </div>
 
           {/* Duration */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Investment Duration</label>
-              <div className="flex items-center gap-0.5 bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg p-0.5">
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Investment Duration</label>
+              <div className="flex items-center gap-0.5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-0.5">
                 {(['years', 'months'] as const).map(u => (
                   <button key={u} onClick={() => setDurationUnit(u)}
-                    className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${durationUnit === u ? 'bg-emerald-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-900 dark:text-white'}`}>
+                    className={`px-2.5 py-1 text-[11px] rounded-md font-semibold transition-all ${durationUnit === u ? 'bg-emerald-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:text-white'}`}>
                     {u.charAt(0).toUpperCase() + u.slice(1)}
                   </button>
                 ))}
@@ -175,8 +175,8 @@ export default function SIPCalculator() {
             <div className="relative">
               <input type="number" value={durationRaw} onChange={e => setDurationRaw(e.target.value)}
                 placeholder={durationUnit === 'years' ? 'e.g. 10' : 'e.g. 120'} min={1}
-                className="w-full pl-4 pr-16 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs pointer-events-none capitalize">{durationUnit}</span>
+                className="w-full pl-4 pr-16 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs pointer-events-none capitalize">{durationUnit}</span>
             </div>
           </div>
 
@@ -187,9 +187,9 @@ export default function SIPCalculator() {
           )}
 
           {/* Formula Reference */}
-          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4 mt-auto">
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Formula</p>
-            <p className="text-xs font-mono text-slate-600 dark:text-slate-600 dark:text-slate-400">FV = P × [((1+r)ⁿ − 1) / r] × (1+r)</p>
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 mt-auto">
+            <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Formula</p>
+            <p className="text-xs font-mono text-slate-600 dark:text-slate-400">FV = P × [((1+r)ⁿ − 1) / r] × (1+r)</p>
             <p className="text-xs text-slate-500 mt-1">r = Annual Rate / 12 / 100 &nbsp;|&nbsp; n = Months</p>
           </div>
         </motion.div>
@@ -198,11 +198,11 @@ export default function SIPCalculator() {
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col gap-6">
 
           {/* Results Card */}
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Results</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
               </div>
               <button onClick={() => updateCurrencyRates()} disabled={ratesLoading}
                 className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-all">
@@ -212,11 +212,11 @@ export default function SIPCalculator() {
 
             {/* Display Currency */}
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button key={c} onClick={() => setSelectedResultCurrency(c as never)}
-                    className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-emerald-600 border-emerald-500 text-white' : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'}`}>
+                    className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-emerald-600 border-emerald-500 text-white' : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'}`}>
                     {c}
                   </button>
                 ))}
@@ -227,30 +227,30 @@ export default function SIPCalculator() {
               <div className="grid grid-cols-1 gap-3">
                 <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 rounded-xl p-4">
                   <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-1">Future Value</p>
-                  <p className="text-3xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{dispShort(result.futureValue)}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400 mt-1">{disp(result.futureValue)}</p>
+                  <p className="text-3xl font-extrabold text-slate-900 dark:text-white">{dispShort(result.futureValue)}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{disp(result.futureValue)}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-                    <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Total Invested</p>
+                  <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Total Invested</p>
                     <p className="text-xl font-bold text-blue-300">{dispShort(result.totalInvested)}</p>
                   </div>
-                  <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-                    <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Est. Returns</p>
+                  <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+                    <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Est. Returns</p>
                     <p className="text-xl font-bold text-emerald-300">{dispShort(result.estimatedReturns)}</p>
                   </div>
                 </div>
 
                 {/* Visual Breakdown */}
-                <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Breakdown</p>
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Breakdown</p>
                   <div className="space-y-3">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-blue-300 font-semibold">Invested Amount</span>
-                        <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300">{investedPct.toFixed(1)}%</span>
+                        <span className="text-slate-700 dark:text-slate-300">{investedPct.toFixed(1)}%</span>
                       </div>
-                      <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-3 bg-white dark:bg-white/5 rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${investedPct}%` }} transition={{ duration: 0.8, ease: 'easeOut' }}
                           className="h-full bg-blue-500 rounded-full" />
                       </div>
@@ -258,9 +258,9 @@ export default function SIPCalculator() {
                     <div>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-emerald-300 font-semibold">Returns Earned</span>
-                        <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300">{returnPct.toFixed(1)}%</span>
+                        <span className="text-slate-700 dark:text-slate-300">{returnPct.toFixed(1)}%</span>
                       </div>
-                      <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-3 bg-white dark:bg-white/5 rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${returnPct}%` }} transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
                           className="h-full bg-emerald-500 rounded-full" />
                       </div>

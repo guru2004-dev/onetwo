@@ -198,10 +198,10 @@ export default function MarkupMarginCalculator() {
           <TrendingUp className="w-4 h-4" />
           Business Calculator
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Markup <span className="text-indigo-400">vs</span> Margin
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Understand the real difference between Markup &amp; Margin — instantly.
         </p>
       </div>
@@ -211,17 +211,17 @@ export default function MarkupMarginCalculator() {
         {/* ══════════════════════════════════════
             LEFT — INPUT CARD
         ══════════════════════════════════════ */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-6">
 
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Inputs</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Select a mode and enter values</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Inputs</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Select a mode and enter values</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all duration-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all duration-200"
               title="Reset all inputs"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -231,7 +231,7 @@ export default function MarkupMarginCalculator() {
 
           {/* Mode Selector */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Calculation Mode</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Calculation Mode</label>
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
@@ -246,7 +246,7 @@ export default function MarkupMarginCalculator() {
                   className={`flex flex-col items-center px-3 py-3 rounded-xl border text-center transition-all duration-200 ${
                     mode === m.id
                       ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                      : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-500/50 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                      : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-500/50 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                   }`}
                 >
                   <span className="text-xs font-bold leading-tight">{m.label}</span>
@@ -258,7 +258,7 @@ export default function MarkupMarginCalculator() {
 
           {/* Currency Selector for Input */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={(e) => {
@@ -268,7 +268,7 @@ export default function MarkupMarginCalculator() {
                 }
               }}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
             >
               {availableCurrencies.map((c) => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">
@@ -336,19 +336,19 @@ export default function MarkupMarginCalculator() {
           {/* Calculate Button */}
           <button
             onClick={calculate}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all duration-200 active:scale-[0.98]"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-slate-900 dark:text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all duration-200 active:scale-[0.98]"
           >
             Calculate
           </button>
 
           {/* Formulas Reference */}
-          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Formula Reference</p>
-            <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+            <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Formula Reference</p>
+            <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
               <li><span className="text-indigo-400 font-mono">Markup %</span> = (SP − CP) ÷ CP × 100</li>
               <li><span className="text-emerald-400 font-mono">Margin %</span> = (SP − CP) ÷ SP × 100</li>
-              <li><span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-mono">SP (from Markup)</span> = CP × (1 + Markup/100)</li>
-              <li><span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-mono">SP (from Margin)</span> = CP ÷ (1 − Margin/100)</li>
+              <li><span className="text-slate-700 dark:text-slate-300 font-mono">SP (from Markup)</span> = CP × (1 + Markup/100)</li>
+              <li><span className="text-slate-700 dark:text-slate-300 font-mono">SP (from Margin)</span> = CP ÷ (1 − Margin/100)</li>
             </ul>
           </div>
         </div>
@@ -359,11 +359,11 @@ export default function MarkupMarginCalculator() {
         <div className="flex flex-col gap-6">
 
           {/* Results Header */}
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Results</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">
                   Rates updated: <span className="text-indigo-300">{relativeTime}</span>
                 </p>
               </div>
@@ -380,7 +380,7 @@ export default function MarkupMarginCalculator() {
 
             {/* Result Currency Selector */}
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map((c) => (
                   <button
@@ -389,7 +389,7 @@ export default function MarkupMarginCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all duration-200 ${
                       selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -438,20 +438,20 @@ export default function MarkupMarginCalculator() {
 
           {/* Comparison Table */}
           {results && (
-            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4">Markup vs Margin — Side-by-Side</h3>
+            <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">Markup vs Margin — Side-by-Side</h3>
 
-              <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-200 dark:border-white/10">
+              <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-white/10">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-white dark:bg-white dark:bg-white/5">
-                      <th className="text-left px-4 py-3 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold w-1/3">Type</th>
-                      <th className="text-left px-4 py-3 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold w-1/3">Formula</th>
-                      <th className="text-right px-4 py-3 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold w-1/3">Value</th>
+                    <tr className="bg-white dark:bg-white/5">
+                      <th className="text-left px-4 py-3 text-slate-600 dark:text-slate-400 font-semibold w-1/3">Type</th>
+                      <th className="text-left px-4 py-3 text-slate-600 dark:text-slate-400 font-semibold w-1/3">Formula</th>
+                      <th className="text-right px-4 py-3 text-slate-600 dark:text-slate-400 font-semibold w-1/3">Value</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                    <tr className="border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white/5 transition-colors">
                       <td className="px-4 py-4">
                         <span className="inline-flex items-center gap-2 font-bold text-blue-400">
                           <span className="w-2 h-2 rounded-full bg-blue-400 inline-block" />
@@ -465,7 +465,7 @@ export default function MarkupMarginCalculator() {
                         </span>
                       </td>
                     </tr>
-                    <tr className="border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white dark:bg-white dark:bg-white/5 transition-colors">
+                    <tr className="border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white/5 transition-colors">
                       <td className="px-4 py-4">
                         <span className="inline-flex items-center gap-2 font-bold text-emerald-400">
                           <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
@@ -522,13 +522,13 @@ export default function MarkupMarginCalculator() {
 
           {/* Price Breakdown */}
           {results && (
-            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4">Price Breakdown</h3>
+            <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">Price Breakdown</h3>
               <div className="space-y-3 text-sm">
                 <BreakdownRow
                   label="Cost Price"
                   value={displayAmount(convertToINR(Number(cpRaw) || 0, selectedInputCurrency))}
-                  color="text-slate-700 dark:text-slate-700 dark:text-slate-300"
+                  color="text-slate-700 dark:text-slate-300"
                 />
                 <BreakdownRow
                   label="Profit"
@@ -536,7 +536,7 @@ export default function MarkupMarginCalculator() {
                   color="text-emerald-400"
                   positive
                 />
-                <div className="border-t border-gray-200 dark:border-gray-200 dark:border-white/10 pt-3">
+                <div className="border-t border-gray-200 dark:border-white/10 pt-3">
                   <BreakdownRow
                     label="Selling Price"
                     value={displayAmount(results.sellingPrice)}
@@ -571,10 +571,10 @@ interface NumberInputProps {
 function NumberInput({ label, value, onChange, symbol, suffix, placeholder, min, max }: NumberInputProps) {
   return (
     <div>
-      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">{label}</label>
+      <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{label}</label>
       <div className="relative">
         {symbol && (
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
             {symbol}
           </span>
         )}
@@ -586,12 +586,12 @@ function NumberInput({ label, value, onChange, symbol, suffix, placeholder, min,
           min={min}
           max={max}
           step="any"
-          className={`w-full py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 ${
+          className={`w-full py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 ${
             symbol ? 'pl-9 pr-4' : suffix ? 'pl-4 pr-12' : 'px-4'
           }`}
         />
         {suffix && (
-          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
+          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
             {suffix}
           </span>
         )}
@@ -664,7 +664,7 @@ interface BreakdownRowProps {
 function BreakdownRow({ label, value, color, positive, large }: BreakdownRowProps) {
   return (
     <div className="flex justify-between items-center">
-      <span className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">{label}</span>
+      <span className="text-slate-600 dark:text-slate-400 text-sm">{label}</span>
       <span className={`font-bold ${large ? 'text-lg' : 'text-sm'} ${color} flex items-center gap-1`}>
         {positive && <span className="text-emerald-500">+</span>}
         {value}

@@ -113,7 +113,7 @@ function Gauge({ pct, label }: { pct: number; label: string }) {
           {clampedPct.toFixed(0)}%
         </text>
       </svg>
-      <p className="text-[11px] text-slate-600 dark:text-slate-600 dark:text-slate-400">{label}</p>
+      <p className="text-[11px] text-slate-600 dark:text-slate-400">{label}</p>
     </div>
   );
 }
@@ -153,12 +153,12 @@ function SliderInput({
   return (
     <div>
       <div className="flex justify-between items-center mb-1.5">
-        <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">{label}</label>
+        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{label}</label>
         {displayValue && <span className="text-indigo-300 font-bold text-sm">{displayValue}</span>}
       </div>
       <div className="relative mb-3">
         {symbol && (
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
             {symbol}
           </span>
         )}
@@ -170,12 +170,12 @@ function SliderInput({
           min={min}
           max={max}
           step={step}
-          className={`w-full py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600
+          className={`w-full py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600
             focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
             ${symbol ? 'pl-9 pr-4' : suffix ? 'pl-4 pr-12' : 'px-4'}`}
         />
         {suffix && (
-          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
+          <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">
             {suffix}
           </span>
         )}
@@ -235,7 +235,7 @@ function BreakdownRow({ label, value, color, sub }: {
   return (
     <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-100 dark:border-white/5 last:border-0">
       <div>
-        <p className="text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300">{label}</p>
+        <p className="text-sm text-slate-700 dark:text-slate-300">{label}</p>
         {sub && <p className="text-[11px] text-slate-500">{sub}</p>}
       </div>
       <span className={`font-bold text-sm ${color}`}>{value}</span>
@@ -392,10 +392,10 @@ export default function LoanEligibilityCalculator() {
           <ShieldCheck className="w-4 h-4" />
           Loan Planner
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Loan <span className="text-indigo-400">Eligibility</span> Calculator
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Find out how much loan you qualify for based on your income &amp; expenses.
         </p>
       </div>
@@ -403,17 +403,17 @@ export default function LoanEligibilityCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* ══ LEFT — INPUTS ══ */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
 
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Your Financials</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter income, expenses &amp; loan terms</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Your Financials</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter income, expenses &amp; loan terms</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
@@ -421,12 +421,12 @@ export default function LoanEligibilityCalculator() {
 
           {/* Input Currency */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -479,7 +479,7 @@ export default function LoanEligibilityCalculator() {
           {/* Interest Rate */}
           <div>
             <div className="flex justify-between mb-1.5">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Interest Rate (% p.a.)</label>
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Interest Rate (% p.a.)</label>
               <span className="text-indigo-300 font-bold text-sm">{rate || 0}%</span>
             </div>
             <div className="relative mb-3">
@@ -491,9 +491,9 @@ export default function LoanEligibilityCalculator() {
                 min={0}
                 max={50}
                 step={0.1}
-                className="w-full pl-4 pr-12 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full pl-4 pr-12 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               />
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">%</span>
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">%</span>
             </div>
             <input
               type="range" min={1} max={30} step={0.5}
@@ -507,13 +507,13 @@ export default function LoanEligibilityCalculator() {
           {/* Tenure */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">Loan Tenure</label>
-              <div className="flex items-center gap-1 bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg p-0.5">
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Loan Tenure</label>
+              <div className="flex items-center gap-1 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-0.5">
                 {(['months', 'years'] as const).map(u => (
                   <button
                     key={u}
                     onClick={() => setTenureUnit(u)}
-                    className={`px-3 py-1 text-xs rounded-md font-semibold transition-all ${tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-900 dark:text-white'}`}
+                    className={`px-3 py-1 text-xs rounded-md font-semibold transition-all ${tenureUnit === u ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
                   >
                     {u.charAt(0).toUpperCase() + u.slice(1)}
                   </button>
@@ -528,9 +528,9 @@ export default function LoanEligibilityCalculator() {
                 placeholder={tenureUnit === 'years' ? 'e.g. 20' : 'e.g. 240'}
                 min={1}
                 step={1}
-                className="w-full pl-4 pr-20 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full pl-4 pr-20 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               />
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none capitalize">{tenureUnit}</span>
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none capitalize">{tenureUnit}</span>
             </div>
             <input
               type="range" min={1} max={tenureUnit === 'years' ? 30 : 360} step={1}
@@ -547,7 +547,7 @@ export default function LoanEligibilityCalculator() {
           {/* FOIR slider */}
           <div>
             <div className="flex justify-between mb-1.5">
-              <label className="text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300">
+              <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                 EMI-to-Income Ratio (FOIR)
                 <span className="ml-1 text-[11px] text-slate-500 font-normal">Banks usually allow 40–50%</span>
               </label>
@@ -572,15 +572,15 @@ export default function LoanEligibilityCalculator() {
           {/* CTA */}
           <button
             onClick={calculate}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all active:scale-[0.98]"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-slate-900 dark:text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all active:scale-[0.98]"
           >
             Check Eligibility
           </button>
 
           {/* Logic box */}
-          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">How It Works</p>
-            <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-600 dark:text-slate-400">
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+            <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">How It Works</p>
+            <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
               <li><span className="text-indigo-400">①</span> Net Income = Income − Expenses − Existing EMIs</li>
               <li><span className="text-indigo-400">②</span> Eligible EMI = Net Income × FOIR%</li>
               <li><span className="text-indigo-400">③</span> Loan = EMI × [(1+R)^N − 1] ÷ [R × (1+R)^N]</li>
@@ -592,11 +592,11 @@ export default function LoanEligibilityCalculator() {
         <div className="flex flex-col gap-6">
 
           {/* Results card */}
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Eligibility Results</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Eligibility Results</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -610,7 +610,7 @@ export default function LoanEligibilityCalculator() {
 
             {/* Display Currency */}
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -619,7 +619,7 @@ export default function LoanEligibilityCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -635,10 +635,10 @@ export default function LoanEligibilityCalculator() {
                   <p className="text-xs font-semibold text-indigo-300 uppercase tracking-widest mb-1 flex items-center justify-center gap-1">
                     <ArrowUpRight className="w-3.5 h-3.5" /> Eligible Loan Amount
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     {dispShort(results.loanAmount)}
                   </p>
-                  <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm mt-1">{disp(results.loanAmount)}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{disp(results.loanAmount)}</p>
                 </div>
 
                 {/* Metric grid */}
@@ -669,8 +669,8 @@ export default function LoanEligibilityCalculator() {
 
           {/* Gauge + Income Breakdown */}
           {results && (
-            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4">Income Analysis</h3>
+            <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">Income Analysis</h3>
               <div className="flex flex-col sm:flex-row gap-6 items-center">
                 {/* Gauge */}
                 <div className="flex flex-col items-center gap-2">
@@ -704,8 +704,8 @@ export default function LoanEligibilityCalculator() {
                     value={disp(results.netMonthlyIncome)}
                     color={results.netMonthlyIncome > 0 ? 'text-emerald-400' : 'text-red-400'}
                   />
-                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-200 dark:border-white/10 flex justify-between">
-                    <span className="text-sm text-slate-600 dark:text-slate-600 dark:text-slate-400">Eligible EMI <span className="text-violet-400">({foirPct}% of net)</span></span>
+                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-white/10 flex justify-between">
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Eligible EMI <span className="text-violet-400">({foirPct}% of net)</span></span>
                     <span className="font-extrabold text-violet-300">{disp(results.eligibleEMI)}</span>
                   </div>
                 </div>
@@ -726,8 +726,8 @@ export default function LoanEligibilityCalculator() {
 
           {/* Loan Summary Card */}
           {results && results.loanAmount > 0 && (
-            <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-4">Loan Summary</h3>
+            <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4">Loan Summary</h3>
               <div className="grid grid-cols-2 gap-3">
                 <MetricCard
                   icon={<DollarSign className="w-5 h-5 text-indigo-400" />}
@@ -749,7 +749,7 @@ export default function LoanEligibilityCalculator() {
               {/* Tips */}
               <div className="mt-4 bg-indigo-500/5 border border-indigo-500/15 rounded-xl p-4">
                 <p className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Tips to Improve Eligibility</p>
-                <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-600 dark:text-slate-400">
+                <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
                   <li>✦ Pay off existing EMIs to free up disposable income</li>
                   <li>✦ Reduce discretionary expenses (dining, subscriptions)</li>
                   <li>✦ Add a co-applicant to increase combined income</li>

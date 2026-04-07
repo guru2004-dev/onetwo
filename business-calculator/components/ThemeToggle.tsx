@@ -33,7 +33,7 @@ export default function ThemeToggle() {
       aria-label="Toggle Theme"
       title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
     >
-      {isDark ? '☀️' : '🌙'}
+      {isDark ? '🌙' : '☀️'}
     </motion.button>
   );
 }

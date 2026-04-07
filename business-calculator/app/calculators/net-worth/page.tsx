@@ -155,10 +155,10 @@ export default function NetWorthCalculator() {
           <Globe className="w-4 h-4" />
           Financial Snapshot
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Net Worth <span className="text-blue-400">Calculator</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Track the true progress of your personal financial health over time.
         </p>
       </div>
@@ -166,27 +166,27 @@ export default function NetWorthCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-6">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Balance Sheet</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Input your assets and liabilities</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Balance Sheet</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Input your assets and liabilities</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -196,44 +196,44 @@ export default function NetWorthCalculator() {
 
           {/* ASSETS */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <Banknote className="w-4 h-4"/> Assets (What You Own)
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Cash & Equivalents</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Cash & Equivalents</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={cashEquivalents} onChange={e => setCashEquivalents(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={cashEquivalents} onChange={e => setCashEquivalents(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Investments (Stocks, 401k)</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Investments (Stocks, 401k)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={investments} onChange={e => setInvestments(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={investments} onChange={e => setInvestments(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Real Estate Value</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Real Estate Value</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={realEstate} onChange={e => setRealEstate(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={realEstate} onChange={e => setRealEstate(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Vehicles Value</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Vehicles Value</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={vehicles} onChange={e => setVehicles(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={vehicles} onChange={e => setVehicles(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other Personal Property</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Other Personal Property</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={personalProperty} onChange={e => setPersonalProperty(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={personalProperty} onChange={e => setPersonalProperty(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
@@ -241,44 +241,44 @@ export default function NetWorthCalculator() {
 
           {/* LIABILITIES */}
           <div className="space-y-4 pt-2">
-            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+            <h3 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
               <Building className="w-4 h-4"/> Liabilities (What You Owe)
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Mortgage Outstanding</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Mortgage Outstanding</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={mortgage} onChange={e => setMortgage(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={mortgage} onChange={e => setMortgage(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Auto Loans</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Auto Loans</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={autoLoans} onChange={e => setAutoLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={autoLoans} onChange={e => setAutoLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Student Loans</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Student Loans</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={studentLoans} onChange={e => setStudentLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={studentLoans} onChange={e => setStudentLoans(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Credit Card Debts</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Credit Card Debts</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={creditCardDebts} onChange={e => setCreditCardDebts(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={creditCardDebts} onChange={e => setCreditCardDebts(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other Personal Loans/Debts</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Other Personal Loans/Debts</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{inputSym}</span>
-                  <input type="number" min={0} value={otherDebts} onChange={e => setOtherDebts(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
+                  <input type="number" min={0} value={otherDebts} onChange={e => setOtherDebts(e.target.value)} className="w-full pl-8 pr-3 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all font-semibold" />
                 </div>
               </div>
             </div>
@@ -288,11 +288,11 @@ export default function NetWorthCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Net Worth Snapshot</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-blue-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Net Worth Snapshot</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-blue-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -304,7 +304,7 @@ export default function NetWorthCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -313,7 +313,7 @@ export default function NetWorthCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-blue-600 border-blue-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-blue-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-blue-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -328,11 +328,11 @@ export default function NetWorthCalculator() {
                   <p className={`text-xs font-semibold uppercase tracking-widest mb-1 ${results.netWorth >= 0 ? 'text-blue-300' : 'text-rose-300'}`}>
                     Total Net Worth
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
                     {disp(results.netWorth)}
                   </p>
                   <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-4 py-1 text-sm border border-gray-100 dark:border-gray-100 dark:border-white/5">
-                    <span className="text-slate-700 dark:text-slate-700 dark:text-slate-300 font-semibold mr-2">Asset-to-Debt Ratio:</span>
+                    <span className="text-slate-700 dark:text-slate-300 font-semibold mr-2">Asset-to-Debt Ratio:</span>
                     <span className={results.totalAssets > results.totalLiabilities ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
                       {results.totalLiabilities > 0 ? (results.totalAssets / results.totalLiabilities).toFixed(2) : 'Infinity'} : 1
                     </span>
@@ -342,12 +342,12 @@ export default function NetWorthCalculator() {
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-emerald-400 to-green-500" />
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Assets</div>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total Assets</div>
                     <p className="font-bold text-lg text-emerald-300">{disp(results.totalAssets)}</p>
                   </div>
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1 relative overflow-hidden">
                     <div className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-rose-400 to-pink-500" />
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Liabilities</div>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total Liabilities</div>
                     <p className="font-bold text-lg text-rose-300">{disp(results.totalLiabilities)}</p>
                   </div>
                 </div>
@@ -377,8 +377,8 @@ export default function NetWorthCalculator() {
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Asset vs Liability Balance</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Asset vs Liability Balance</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -399,8 +399,8 @@ export default function NetWorthCalculator() {
             </div>
           </div>
           
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Asset Composition</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Asset Composition</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               {pieData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">

@@ -221,10 +221,10 @@ export default function PayrollCalculator() {
           <Briefcase className="w-4 h-4" />
           HR Dashboard
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Payroll <span className="text-indigo-400">Calculator</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Calculate employee salary, deductions, and take-home pay efficiently.
         </p>
       </div>
@@ -232,15 +232,15 @@ export default function PayrollCalculator() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="lg:col-span-7 bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+        <div className="lg:col-span-7 bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Salary Components</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter earnings and deductions</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Salary Components</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter earnings and deductions</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
@@ -248,12 +248,12 @@ export default function PayrollCalculator() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
               <select
                 value={selectedInputCurrency}
                 onChange={e => setSelectedInputCurrency(e.target.value as never)}
                 disabled={ratesLoading}
-                className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
               >
                 {availableCurrencies.map(c => (
                   <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -261,15 +261,15 @@ export default function PayrollCalculator() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Employee Name (Optional)</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Employee Name (Optional)</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400"><User className="w-4 h-4"/></span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400"><User className="w-4 h-4"/></span>
                 <input
                   type="text"
                   value={employeeName}
                   onChange={e => setEmployeeName(e.target.value)}
                   placeholder="John Doe"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -278,89 +278,89 @@ export default function PayrollCalculator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Allowances */}
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+              <h3 className="text-sm font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
                 <Banknote className="w-4 h-4"/> Earnings
               </h3>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Basic Salary</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Basic Salary</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                  <input type="number" min={0} value={basicSalary} onChange={e => setBasicSalary(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                  <input type="number" min={0} value={basicSalary} onChange={e => setBasicSalary(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">HRA</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">HRA</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                  <input type="number" min={0} value={hra} onChange={e => setHra(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                  <input type="number" min={0} value={hra} onChange={e => setHra(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">DA</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">DA</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                    <input type="number" min={0} value={da} onChange={e => setDa(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                    <input type="number" min={0} value={da} onChange={e => setDa(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Bonus</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Bonus</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                    <input type="number" min={0} value={bonus} onChange={e => setBonus(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                    <input type="number" min={0} value={bonus} onChange={e => setBonus(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                   </div>
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other Allowances</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Other Allowances</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                  <input type="number" min={0} value={otherAllowances} onChange={e => setOtherAllowances(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                  <input type="number" min={0} value={otherAllowances} onChange={e => setOtherAllowances(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
               </div>
             </div>
 
             {/* Deductions */}
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-red-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+              <h3 className="text-sm font-bold text-red-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
                 <MinusCircle className="w-4 h-4"/> Deductions
               </h3>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">PF (%)</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">PF (%)</label>
                   <div className="relative">
-                    <input type="number" min={0} max={100} value={pfPercent} onChange={e => setPfPercent(e.target.value)} className="w-full pl-3 pr-8 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">%</span>
+                    <input type="number" min={0} max={100} value={pfPercent} onChange={e => setPfPercent(e.target.value)} className="w-full pl-3 pr-8 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">%</span>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Tax (%)</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Tax (%)</label>
                   <div className="relative">
-                    <input type="number" min={0} max={100} value={incomeTaxPercent} onChange={e => setIncomeTaxPercent(e.target.value)} className="w-full pl-3 pr-8 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">%</span>
+                    <input type="number" min={0} max={100} value={incomeTaxPercent} onChange={e => setIncomeTaxPercent(e.target.value)} className="w-full pl-3 pr-8 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">%</span>
                   </div>
                 </div>
               </div>
               <div>
-                <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Insurance</label>
+                <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Insurance</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                  <input type="number" min={0} value={insurance} onChange={e => setInsurance(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                  <input type="number" min={0} value={insurance} onChange={e => setInsurance(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Prof. Tax</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Prof. Tax</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                    <input type="number" min={0} value={professionalTax} onChange={e => setProfessionalTax(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                    <input type="number" min={0} value={professionalTax} onChange={e => setProfessionalTax(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Other</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Other</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                    <input type="number" min={0} value={otherDeductions} onChange={e => setOtherDeductions(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                    <input type="number" min={0} value={otherDeductions} onChange={e => setOtherDeductions(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                   </div>
                 </div>
               </div>
@@ -368,23 +368,23 @@ export default function PayrollCalculator() {
             
             {/* Work Details */}
             <div className="space-y-4 md:col-span-2">
-              <h3 className="text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-gray-200 dark:border-white/10 pb-2">
+              <h3 className="text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 dark:border-white/10 pb-2">
                 <Clock className="w-4 h-4"/> Work & Overtime Details
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Working Days</label>
-                  <input type="number" min={0} value={workingDays} onChange={e => setWorkingDays(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Working Days</label>
+                  <input type="number" min={0} value={workingDays} onChange={e => setWorkingDays(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">Overtime Hrs</label>
-                  <input type="number" min={0} value={overtimeHours} onChange={e => setOvertimeHours(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">Overtime Hrs</label>
+                  <input type="number" min={0} value={overtimeHours} onChange={e => setOvertimeHours(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                 </div>
                 <div>
-                  <label className="block text-[13px] text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1">OT Rate / Hr</label>
+                  <label className="block text-[13px] text-slate-700 dark:text-slate-300 mb-1">OT Rate / Hr</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
-                    <input type="number" min={0} value={overtimeRate} onChange={e => setOvertimeRate(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-xs">{inputSym}</span>
+                    <input type="number" min={0} value={overtimeRate} onChange={e => setOvertimeRate(e.target.value)} className="w-full pl-8 pr-3 py-2 rounded-lg bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 transition-all outline-none" />
                   </div>
                 </div>
               </div>
@@ -402,11 +402,11 @@ export default function PayrollCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="lg:col-span-5 flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 h-full flex flex-col">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Salary Slip</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Salary Slip</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-indigo-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -418,7 +418,7 @@ export default function PayrollCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -427,7 +427,7 @@ export default function PayrollCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -440,21 +440,21 @@ export default function PayrollCalculator() {
               <div className="flex flex-col flex-1">
                 {employeeName && (
                   <div className="mb-3">
-                    <p className="text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-wider">Employee</p>
-                    <p className="text-lg text-slate-900 dark:text-slate-900 dark:text-white font-bold">{employeeName}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-wider">Employee</p>
+                    <p className="text-lg text-slate-900 dark:text-white font-bold">{employeeName}</p>
                   </div>
                 )}
                 <div className="bg-gradient-to-r from-emerald-600/20 to-teal-600/20 border border-emerald-500/30 rounded-2xl p-6 mb-4 text-center">
                   <p className="text-xs font-semibold text-emerald-300 uppercase tracking-widest mb-1">
                     Net Take-Home 💰
                   </p>
-                  <p className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-1">{disp(results.netSalary)}</p>
+                  <p className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1">{disp(results.netSalary)}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-1">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">Total Gross</div>
-                    <p className="font-bold text-lg text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.grossSalary)}</p>
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">Total Gross</div>
+                    <p className="font-bold text-lg text-slate-900 dark:text-white">{disp(results.grossSalary)}</p>
                   </div>
                   <div className="rounded-xl border bg-red-900/20 border-red-500/20 p-4 flex flex-col gap-1">
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-red-300">Deductions</div>
@@ -464,19 +464,19 @@ export default function PayrollCalculator() {
 
                 <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold text-xs">
+                    <thead className="bg-gray-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-semibold text-xs">
                       <tr>
                         <th className="px-3 py-2">Component</th>
                         <th className="px-3 py-2 text-right">Amount</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300 text-xs">
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-300 text-xs">
+                      <tr className="hover:bg-white/5">
                         <td className="px-3 py-2">Basic + Allowances</td>
                         <td className="px-3 py-2 text-right text-indigo-200">{disp(results.grossSalary)}</td>
                       </tr>
                       {results.overtimePay > 0 && (
-                        <tr className="hover:bg-white dark:bg-white dark:bg-white/5">
+                        <tr className="hover:bg-white/5">
                           <td className="px-3 py-2">Overtime Pay</td>
                           <td className="px-3 py-2 text-right text-emerald-200">{disp(results.overtimePay)}</td>
                         </tr>
@@ -512,8 +512,8 @@ export default function PayrollCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-7xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Salary Breakdown</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Salary Breakdown</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
@@ -534,8 +534,8 @@ export default function PayrollCalculator() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Earnings vs Deductions</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Earnings vs Deductions</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

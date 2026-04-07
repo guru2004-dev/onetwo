@@ -181,10 +181,10 @@ export default function ProfitLossCalculator() {
           <TrendingUp className="w-4 h-4" />
           Business Calculator
         </div>
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Profit & Loss <span className="text-emerald-400">Calculator</span>
         </h1>
-        <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">
           Determine your profitability, margins, and cost efficiency in real-time.
         </p>
       </div>
@@ -192,27 +192,27 @@ export default function ProfitLossCalculator() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* LEFT — INPUTS */}
-        <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+        <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Cost & Sales Details</h2>
-              <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your trade values</p>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Cost & Sales Details</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Enter your trade values</p>
             </div>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
             <select
               value={selectedInputCurrency}
               onChange={e => setSelectedInputCurrency(e.target.value as never)}
               disabled={ratesLoading}
-              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
             >
               {availableCurrencies.map(c => (
                 <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>
@@ -222,9 +222,9 @@ export default function ProfitLossCalculator() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Cost Price (CP)</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Cost Price (CP)</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
                 <input
                   type="number"
                   value={costPrice}
@@ -232,14 +232,14 @@ export default function ProfitLossCalculator() {
                   placeholder="0.00"
                   min={0}
                   step="any"
-                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Selling Price (SP)</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Selling Price (SP)</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
                 <input
                   type="number"
                   value={sellingPrice}
@@ -247,7 +247,7 @@ export default function ProfitLossCalculator() {
                   placeholder="0.00"
                   min={0}
                   step="any"
-                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                 />
               </div>
             </div>
@@ -255,9 +255,9 @@ export default function ProfitLossCalculator() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Quantity</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Quantity</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none"><Package className="w-4 h-4"/></span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none"><Package className="w-4 h-4"/></span>
                 <input
                   type="number"
                   value={quantity}
@@ -265,14 +265,14 @@ export default function ProfitLossCalculator() {
                   placeholder="1"
                   min={1}
                   step="1"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">Additional Costs</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Additional Costs</label>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
                 <input
                   type="number"
                   value={additionalCosts}
@@ -280,7 +280,7 @@ export default function ProfitLossCalculator() {
                   placeholder="0.00"
                   min={0}
                   step="any"
-                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-transparent dark:bg-transparent dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                 />
               </div>
             </div>
@@ -297,11 +297,11 @@ export default function ProfitLossCalculator() {
 
         {/* RIGHT — RESULTS */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results Analysis</h2>
-                <p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Results Analysis</h2>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-emerald-300">{relTime}</span></p>
               </div>
               <button
                 onClick={() => updateCurrencyRates()}
@@ -314,7 +314,7 @@ export default function ProfitLossCalculator() {
             </div>
 
             <div className="mb-5">
-              <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p>
               <div className="flex flex-wrap gap-2">
                 {availableCurrencies.map(c => (
                   <button
@@ -323,7 +323,7 @@ export default function ProfitLossCalculator() {
                     className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
                       selectedResultCurrency === c
                         ? 'bg-emerald-600 border-emerald-500 text-white'
-                        : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
+                        : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-emerald-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {c}
@@ -338,7 +338,7 @@ export default function ProfitLossCalculator() {
                   <p className={`text-xs font-semibold uppercase tracking-widest mb-1 ${results.isProfit ? 'text-emerald-300' : 'text-red-300'}`}>
                     Net {results.isProfit ? 'Profit 📈' : 'Loss 📉'}
                   </p>
-                  <p className="text-5xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-1">{disp(results.profitLoss)}</p>
+                  <p className="text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1">{disp(results.profitLoss)}</p>
                   <div className="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-100 dark:bg-black/20 rounded-full px-3 py-0.5 text-sm">
                     <span className={results.isProfit ? "text-emerald-400" : "text-red-400"}>
                       {results.isProfit ? '+' : '-'}{Math.abs(results.profitPercentage).toFixed(2)}% Margin
@@ -348,41 +348,41 @@ export default function ProfitLossCalculator() {
 
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                       <Layers className="w-4 h-4" /> Total Cost
                     </div>
-                    <p className="font-bold text-xl text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalCost)}</p>
+                    <p className="font-bold text-xl text-slate-900 dark:text-white">{disp(results.totalCost)}</p>
                   </div>
                   <div className="rounded-xl border bg-gray-50 dark:bg-white dark:bg-gray-50 dark:bg-slate-800/50 border-gray-100 dark:border-gray-100 dark:border-white/5 p-4 flex flex-col gap-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-600 dark:text-slate-400">
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                       <DollarSign className="w-4 h-4" /> Total Revenue
                     </div>
-                    <p className="font-bold text-xl text-slate-900 dark:text-slate-900 dark:text-white">{disp(results.totalSelling)}</p>
+                    <p className="font-bold text-xl text-slate-900 dark:text-white">{disp(results.totalSelling)}</p>
                   </div>
                 </div>
 
                 <div className="border border-gray-100 dark:border-gray-100 dark:border-white/5 rounded-xl overflow-hidden mb-5">
                   <table className="w-full text-sm text-left">
-                    <thead className="bg-gray-50 dark:bg-white dark:bg-white/5 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-semibold">
+                    <thead className="bg-gray-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 font-semibold">
                       <tr>
                         <th className="px-4 py-3">Component</th>
                         <th className="px-4 py-3 text-right">Amount</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-700 dark:text-slate-300">
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors text-xs sm:text-sm">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-100 dark:divide-white/5 text-slate-700 dark:text-slate-300">
+                      <tr className="hover:bg-white/5 transition-colors text-xs sm:text-sm">
                         <td className="px-4 py-3">Cost Price × {quantity}</td>
                         <td className="px-4 py-3 text-right">{disp(Number(costPrice) * Number(quantity))}</td>
                       </tr>
                       {Number(additionalCosts) > 0 && (
-                        <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors text-xs sm:text-sm">
+                        <tr className="hover:bg-white/5 transition-colors text-xs sm:text-sm">
                           <td className="px-4 py-3">Additional Costs</td>
                           <td className="px-4 py-3 text-right">{disp(Number(additionalCosts))}</td>
                         </tr>
                       )}
-                      <tr className="hover:bg-white dark:bg-white dark:bg-white/5 transition-colors text-xs sm:text-sm">
-                        <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-900 dark:text-white">Revenue (SP × {quantity})</td>
-                        <td className="px-4 py-3 text-right font-medium text-slate-900 dark:text-slate-900 dark:text-white">{disp(Number(sellingPrice) * Number(quantity))}</td>
+                      <tr className="hover:bg-white/5 transition-colors text-xs sm:text-sm">
+                        <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">Revenue (SP × {quantity})</td>
+                        <td className="px-4 py-3 text-right font-medium text-slate-900 dark:text-white">{disp(Number(sellingPrice) * Number(quantity))}</td>
                       </tr>
                       <tr className={`font-bold text-xs sm:text-sm ${results.isProfit ? 'bg-emerald-900/20 text-emerald-300' : 'bg-red-900/20 text-red-300'}`}>
                         <td className="px-4 py-3">Gross {results.isProfit ? 'Profit' : 'Loss'}</td>
@@ -416,8 +416,8 @@ export default function ProfitLossCalculator() {
       {/* CHARTS SECTION */}
       {results && (
         <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-6">Financial Comparison</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-6">Financial Comparison</h3>
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
@@ -438,8 +438,8 @@ export default function ProfitLossCalculator() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col">
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-900 dark:text-white mb-2">Cost vs Return Split</h3>
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">Cost vs Return Split</h3>
             <div className="flex-1 min-h-[250px] w-full flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

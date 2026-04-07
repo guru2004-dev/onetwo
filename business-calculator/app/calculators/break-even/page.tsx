@@ -55,20 +55,20 @@ export default function BreakEvenCalculator() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 border border-teal-500/30 text-teal-300 text-sm font-medium mb-4">
           <Target className="w-4 h-4" /> Break-Even Analysis
         </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight mb-2">
+        <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           Break-Even <span className="text-teal-400">Calculator</span>
         </motion.h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-lg">Find the exact point where your revenue equals your total costs.</motion.p>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-slate-600 dark:text-slate-400 text-lg">Find the exact point where your revenue equals your total costs.</motion.p>
       </div>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6 flex flex-col gap-5">
           <div className="flex items-center justify-between">
-            <div><h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Inputs</h2><p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Enter your cost structure</p></div>
-            <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-slate-900 dark:text-white bg-white dark:bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-lg transition-all"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>
+            <div><h2 className="text-lg font-bold text-slate-900 dark:text-white">Inputs</h2><p className="text-slate-600 dark:text-slate-400 text-sm">Enter your cost structure</p></div>
+            <button onClick={handleReset} className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-white dark:bg-white/5 hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg transition-all"><RotateCcw className="w-3.5 h-3.5" /> Reset</button>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
-            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }} disabled={ratesLoading} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all">
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Input Currency</label>
+            <select value={selectedInputCurrency} onChange={e => { if (availableCurrencies.includes(e.target.value as never)) setSelectedInputCurrency(e.target.value as never); }} disabled={ratesLoading} className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all">
               {availableCurrencies.map(c => <option key={c} value={c} className="bg-white dark:bg-slate-800">{c} ({getCurrencySymbol(c)})</option>)}
             </select>
           </div>
@@ -78,38 +78,38 @@ export default function BreakEvenCalculator() {
             { label: 'Selling Price per Unit', val: priceRaw, set: setPriceRaw, ph: 'e.g. 500', hint: 'Price charged per unit' },
           ].map(field => (
             <div key={field.label}>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-700 dark:text-slate-300 mb-1.5">{field.label}</label>
-              <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
-                <input type="number" value={field.val} onChange={e => field.set(e.target.value)} placeholder={field.ph} min={0} className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-900 dark:text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all" /></div>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{field.label}</label>
+              <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 font-bold text-sm pointer-events-none">{inputSym}</span>
+                <input type="number" value={field.val} onChange={e => field.set(e.target.value)} placeholder={field.ph} min={0} className="w-full pl-8 pr-4 py-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all" /></div>
               <p className="text-xs text-slate-500 mt-1">{field.hint}</p>
             </div>
           ))}
           {error && <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-sm"><Info className="w-4 h-4 shrink-0" /> {error}</div>}
-          <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4 mt-auto"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Formula</p><p className="text-xs font-mono text-slate-600 dark:text-slate-600 dark:text-slate-400">BEP = Fixed Costs / (Price − Variable Cost)</p></div>
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 mt-auto"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Formula</p><p className="text-xs font-mono text-slate-600 dark:text-slate-400">BEP = Fixed Costs / (Price − Variable Cost)</p></div>
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col gap-6">
-          <div className="bg-white dark:bg-white dark:bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-gray-200 dark:border-gray-200 dark:border-white/10 shadow-sm dark:shadow-2xl rounded-2xl shadow-2xl p-6">
+          <div className="bg-white dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md dark:shadow-2xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
-              <div><h2 className="text-lg font-bold text-slate-900 dark:text-slate-900 dark:text-white">Results</h2><p className="text-slate-600 dark:text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-teal-300">{relTime}</span></p></div>
+              <div><h2 className="text-lg font-bold text-slate-900 dark:text-white">Results</h2><p className="text-slate-600 dark:text-slate-400 text-sm">Updated: <span className="text-teal-300">{relTime}</span></p></div>
               <button onClick={() => updateCurrencyRates()} disabled={ratesLoading} className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-500 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-all"><RefreshCw className={`w-4 h-4 ${ratesLoading ? 'animate-spin' : ''}`} /> Update</button>
             </div>
-            <div className="mb-5"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p><div className="flex flex-wrap gap-2">{availableCurrencies.map(c => <button key={c} onClick={() => setSelectedResultCurrency(c as never)} className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-teal-600 border-teal-500 text-white' : 'bg-white dark:bg-white dark:bg-white/5 border-gray-200 dark:border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-600 dark:text-slate-400 hover:border-teal-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'}`}>{c}</button>)}</div></div>
+            <div className="mb-5"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Display Currency</p><div className="flex flex-wrap gap-2">{availableCurrencies.map(c => <button key={c} onClick={() => setSelectedResultCurrency(c as never)} className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c ? 'bg-teal-600 border-teal-500 text-white' : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-teal-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'}`}>{c}</button>)}</div></div>
             {result ? (
               <div className="flex flex-col gap-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 rounded-xl p-4"><p className="text-xs font-semibold text-teal-300 uppercase tracking-wider mb-1">Break-Even Units</p><p className="text-2xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{Math.ceil(result.units).toLocaleString()}</p><p className="text-xs text-slate-600 dark:text-slate-600 dark:text-slate-400">units</p></div>
-                  <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-xl p-4"><p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-1">Break-Even Revenue</p><p className="text-2xl font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{dispShort(result.revenue)}</p></div>
+                  <div className="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 rounded-xl p-4"><p className="text-xs font-semibold text-teal-300 uppercase tracking-wider mb-1">Break-Even Units</p><p className="text-2xl font-extrabold text-slate-900 dark:text-white">{Math.ceil(result.units).toLocaleString()}</p><p className="text-xs text-slate-600 dark:text-slate-400">units</p></div>
+                  <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-xl p-4"><p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-1">Break-Even Revenue</p><p className="text-2xl font-extrabold text-slate-900 dark:text-white">{dispShort(result.revenue)}</p></div>
                 </div>
-                <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Contribution per Unit</p><p className="text-xl font-bold text-emerald-300">{disp(result.contribution)}</p><p className="text-xs text-slate-500 mt-1">Price ({disp(result.price)}) − Variable ({disp(result.variable)})</p></div>
-                <div className="bg-white dark:bg-white dark:bg-white/5 border border-gray-200 dark:border-gray-200 dark:border-white/10 rounded-xl p-4">
-                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Cost Structure</p>
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4"><p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Contribution per Unit</p><p className="text-xl font-bold text-emerald-300">{disp(result.contribution)}</p><p className="text-xs text-slate-500 mt-1">Price ({disp(result.price)}) − Variable ({disp(result.variable)})</p></div>
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4">
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3">Cost Structure</p>
                   {(() => {
                     const totalAtBEP = result.revenue; const fixedPct = totalAtBEP > 0 ? (result.fixed / totalAtBEP) * 100 : 0;
                     const varTotalAtBEP = result.variable * result.units; const varPct = totalAtBEP > 0 ? (varTotalAtBEP / totalAtBEP) * 100 : 0;
                     return [{ label: 'Fixed Costs', pct: fixedPct, color: 'bg-rose-500', text: 'text-rose-300' }, { label: 'Variable Costs', pct: varPct, color: 'bg-amber-500', text: 'text-amber-300' }].map((bar, i) => (
                       <div key={bar.label} className="mb-2">
-                        <div className="flex justify-between text-xs mb-1"><span className={`font-semibold ${bar.text}`}>{bar.label}</span><span className="text-slate-700 dark:text-slate-700 dark:text-slate-300">{bar.pct.toFixed(1)}%</span></div>
-                        <div className="h-3 bg-white dark:bg-white dark:bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${bar.pct}%` }} transition={{ duration: 0.8, delay: i * 0.1 }} className={`h-full ${bar.color} rounded-full`} /></div>
+                        <div className="flex justify-between text-xs mb-1"><span className={`font-semibold ${bar.text}`}>{bar.label}</span><span className="text-slate-700 dark:text-slate-300">{bar.pct.toFixed(1)}%</span></div>
+                        <div className="h-3 bg-white dark:bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${bar.pct}%` }} transition={{ duration: 0.8, delay: i * 0.1 }} className={`h-full ${bar.color} rounded-full`} /></div>
                       </div>
                     ));
                   })()}
