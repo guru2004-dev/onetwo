@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Search, Calculator as CalcIcon, TrendingUp, Sparkles, Building2, Globe, FileText, Receipt, ShoppingCart, BarChart3, Zap, Brain } from 'lucide-react';
 import ExpandableCategoryCard from '@/components/ExpandableCategoryCard';
+import { OPEN_CHAT_EVENT } from '@/components/ChatCalcAI';
 import { calculatorCategories } from '@/lib/calculators-data';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/components/ThemeProvider';
@@ -23,47 +24,49 @@ export default function Home() {
       <section className={`relative h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-300
         ${isDarkMode ? 'bg-[#0a0a0a]' : 'bg-white'}`}
       >
-        {/* Light Mode: Image Background */}
+        {/* Light Mode: Video Background */}
         {!isDarkMode && (
-          <div 
-            className="absolute inset-0 w-full h-full z-0"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {/* Subtle dark gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-[#F8FAFC] z-5" />
+          <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover blur-[1px] brightness-90 contrast-110 z-0"
+            >
+              <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-white/30 z-10" />
           </div>
         )}
 
-        {/* Dark Mode: Original Overlays */}
+        {/* Dark Mode: Video Background */}
+        {isDarkMode && (
+          <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover z-0"
+            >
+              <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260308_114720_3dabeb9e-2c39-4907-b747-bc3544e2d5b7.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/60 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-10" />
+          </div>
+        )}
+
+        {/* Animated Glow Blobs - Dark Mode Only */}
         {isDarkMode && (
           <>
-            <div className="absolute inset-0 w-full h-full z-0">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              >
-                <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260308_114720_3dabeb9e-2c39-4907-b747-bc3544e2d5b7.mp4" type="video/mp4" />
-              </video>
-            </div>
-            
-            <div className="absolute inset-0 bg-black/70 z-10" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-10" />
-            
-            {/* Animated Glow Blobs - Dark Mode Only */}
             <motion.div 
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
               }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] z-10"
+              className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] z-10 pointer-events-none"
             />
             <motion.div 
               animate={{
@@ -71,29 +74,29 @@ export default function Home() {
                 opacity: [0.2, 0.4, 0.2],
               }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[150px] z-10"
+              className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[150px] z-10 pointer-events-none"
             />
           </>
         )}
 
         {/* Hero Content - Adaptive Typography */}
         <div className="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
-          <div className={`transition-all duration-500 rounded-3xl ${!isDarkMode ? 'backdrop-blur-md bg-white/50 border border-white/40 shadow-2xl p-8 md:p-14' : ''}`}>
+          <div className="transition-all duration-500 rounded-3xl p-8 md:p-14">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold tracking-tight mb-8
+              <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold tracking-tight mb-8 drop-shadow-md
                 ${isDarkMode 
-                  ? 'text-white drop-shadow-md' 
-                  : 'text-slate-900 drop-shadow-md [text-shadow:_0_2px_10px_rgba(255,255,255,0.8)]'
+                  ? 'text-white' 
+                  : 'text-slate-700'
                 }`}
               >
-                Advanced <span className={`text-transparent bg-clip-text
+                Advanced <span className={`text-transparent bg-clip-text drop-shadow-sm
                   ${isDarkMode 
                     ? 'bg-gradient-to-r from-purple-400 to-indigo-400' 
-                    : 'bg-gradient-to-r from-purple-700 to-blue-700 drop-shadow-sm'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600'
                   }`}
                 >
                   AI Business
@@ -106,10 +109,10 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <p className={`text-lg md:text-2xl mb-12 mt-6 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed
+              <p className={`text-lg md:text-2xl mb-12 mt-6 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed drop-shadow-sm
                 ${isDarkMode 
-                  ? 'text-gray-300 drop-shadow-md' 
-                  : 'text-slate-900 drop-shadow-sm font-semibold'
+                  ? 'text-gray-300' 
+                  : 'text-slate-500'
                 }`}
               >
                 Fast, accurate, and easy-to-use calculators for business, finance, banking, accounting, taxes, and more.
@@ -132,7 +135,9 @@ export default function Home() {
               >
                 Browse All Calculators
               </Link>
-              <button className={`px-8 py-4 backdrop-blur-md rounded-full font-semibold hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group shadow-sm
+              <button
+                onClick={() => window.dispatchEvent(new Event(OPEN_CHAT_EVENT))}
+                className={`px-8 py-4 backdrop-blur-md rounded-full font-semibold hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group shadow-sm
                 ${isDarkMode
                   ? 'bg-white/5 text-white border border-white/20 hover:bg-white/10'
                   : 'bg-white/90 text-[#0F172A] border border-white/50 hover:bg-white hover:shadow-xl'
