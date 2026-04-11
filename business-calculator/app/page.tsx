@@ -23,19 +23,18 @@ export default function Home() {
       <section className={`relative h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-300
         ${isDarkMode ? 'bg-[#0a0a0a]' : 'bg-white'}`}
       >
-        {/* Light Mode: Video Background */}
+        {/* Light Mode: Image Background */}
         {!isDarkMode && (
-          <div className="absolute inset-0 w-full h-full z-0">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover blur-[1px] brightness-90 contrast-110"
-            >
-              <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-white/30 z-5" />
+          <div 
+            className="absolute inset-0 w-full h-full z-0"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Subtle dark gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-[#F8FAFC] z-5" />
           </div>
         )}
 
@@ -79,71 +78,73 @@ export default function Home() {
 
         {/* Hero Content - Adaptive Typography */}
         <div className="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold tracking-tight mb-8 drop-shadow-md
-              ${isDarkMode 
-                ? 'text-white' 
-                : 'text-slate-900'
-              }`}
+          <div className={`transition-all duration-500 rounded-3xl ${!isDarkMode ? 'backdrop-blur-md bg-white/50 border border-white/40 shadow-2xl p-8 md:p-14' : ''}`}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Advanced <span className={`text-transparent bg-clip-text
+              <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold tracking-tight mb-8
                 ${isDarkMode 
-                  ? 'bg-gradient-to-r from-purple-400 to-indigo-400' 
-                  : 'bg-gradient-to-r from-purple-600 to-blue-600'
+                  ? 'text-white drop-shadow-md' 
+                  : 'text-slate-900 drop-shadow-md [text-shadow:_0_2px_10px_rgba(255,255,255,0.8)]'
                 }`}
               >
-                AI Business
-              </span> Intelligence
-            </h1>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <p className={`text-lg md:text-2xl mb-12 mt-6 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed drop-shadow-md
-              ${isDarkMode 
-                ? 'text-gray-300' 
-                : 'text-slate-800 bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-600'
-              }`}
+                Advanced <span className={`text-transparent bg-clip-text
+                  ${isDarkMode 
+                    ? 'bg-gradient-to-r from-purple-400 to-indigo-400' 
+                    : 'bg-gradient-to-r from-purple-700 to-blue-700 drop-shadow-sm'
+                  }`}
+                >
+                  AI Business
+                </span> Intelligence Calculator
+              </h1>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Fast, accurate, and easy-to-use calculators for business, finance, banking, accounting, taxes, and more.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center gap-6"
-          >
-            <Link
-              href="/categories"
-              className={`px-8 py-4 rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg
-                ${isDarkMode
-                  ? 'bg-white text-black hover:bg-gray-100'
-                  : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700'
+              <p className={`text-lg md:text-2xl mb-12 mt-6 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed
+                ${isDarkMode 
+                  ? 'text-gray-300 drop-shadow-md' 
+                  : 'text-slate-900 drop-shadow-sm font-semibold'
                 }`}
+              >
+                Fast, accurate, and easy-to-use calculators for business, finance, banking, accounting, taxes, and more.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row justify-center gap-6"
             >
-              Browse All Calculators
-            </Link>
-            <button className={`px-8 py-4 backdrop-blur-md rounded-full font-semibold hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group
-              ${isDarkMode
-                ? 'bg-white/5 text-white border border-white/20 hover:bg-white/10'
-                : 'bg-white/70 text-[#0F172A] border border-[#E2E8F0] hover:bg-white/80'
-              }`}
-            >
-              <Sparkles className={`w-5 h-5 group-hover:animate-pulse
-                ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`}
-              />
-              Try Chat Calc AI
-            </button>
-          </motion.div>
+              <Link
+                href="/categories"
+                className={`px-8 py-4 rounded-full font-semibold hover:-translate-y-1 transition-all duration-300 shadow-lg
+                  ${isDarkMode
+                    ? 'bg-white text-black hover:bg-gray-100'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 hover:shadow-purple-500/30'
+                  }`}
+              >
+                Browse All Calculators
+              </Link>
+              <button className={`px-8 py-4 backdrop-blur-md rounded-full font-semibold hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group shadow-sm
+                ${isDarkMode
+                  ? 'bg-white/5 text-white border border-white/20 hover:bg-white/10'
+                  : 'bg-white/90 text-[#0F172A] border border-white/50 hover:bg-white hover:shadow-xl'
+                }`}
+              >
+                <Sparkles className={`w-5 h-5 group-hover:animate-pulse
+                  ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`}
+                />
+                Try Chat Calc AI
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BusinessCalc - Advanced AI Business Intelligence Calculators",
+  title: "BusinessCalc - Advanced AI Business Intelligence Calculator",
   description: "Comprehensive collection of business, banking, finance, accounting, tax, and analytical calculators. Fast, accurate, and easy to use.",
 };
 

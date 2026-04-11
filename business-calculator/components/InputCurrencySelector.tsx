@@ -40,9 +40,6 @@ export default function InputCurrencySelector({
     getCurrencySymbol,
   } = useCurrency();
 
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark';
-
   const [displayAmount, setDisplayAmount] = useState<string>('');
   const safeAvailableCurrencies = availableCurrencies?.length ? availableCurrencies : [...SUPPORTED_CURRENCIES];
   const safeSelectedCurrency = isSupportedCurrency(selectedInputCurrency) ? selectedInputCurrency : 'INR';

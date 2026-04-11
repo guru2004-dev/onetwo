@@ -46,14 +46,14 @@ export default function CalculatorLayout({
       </button>
 
       <div className={`min-h-screen py-8 transition-colors duration-300
-        ${isDarkMode ? 'bg-[#0B0F19]' : 'bg-[#F8FAFC]'}`
+        ${isDarkMode ? 'bg-[#0B0F19]' : 'bg-[#F8FAFC]'}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="mb-8">
           <h1 className={`text-3xl font-bold mb-2
-            ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`
+            ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
           >
             {title}
           </h1>
@@ -72,7 +72,7 @@ export default function CalculatorLayout({
             }`}
           >
             <h2 className={`text-xl font-semibold mb-4
-              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`
+              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
             >
               Input
             </h2>
@@ -88,7 +88,7 @@ export default function CalculatorLayout({
           >
             <div className="flex justify-between items-center mb-4">
               <h2 className={`text-xl font-semibold
-                ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`
+                ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
               >
                 Result
               </h2>
@@ -97,7 +97,7 @@ export default function CalculatorLayout({
             <CurrencyChanger variant="result" />
             {results || (
               <div className={`text-center py-8
-                ${isDarkMode ? 'text-gray-500' : 'text-[#64748B]'}`
+                ${isDarkMode ? 'text-gray-500' : 'text-[#64748B]'}`}
               >
                 Enter values to see results
               </div>
@@ -114,7 +114,7 @@ export default function CalculatorLayout({
             }`}
           >
             <h2 className={`text-xl font-semibold mb-4
-              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`
+              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
             >
               Visualization
             </h2>
