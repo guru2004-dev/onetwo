@@ -33,6 +33,7 @@ export default function ChatCalcAI() {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { theme } = useTheme();
@@ -40,6 +41,7 @@ export default function ChatCalcAI() {
 
   // Listen for the custom "open chat" event dispatched from the hero button
   useEffect(() => {
+    setIsMounted(true);
     const handleOpenChat = () => setIsOpen(true);
     window.addEventListener(OPEN_CHAT_EVENT, handleOpenChat);
     return () => window.removeEventListener(OPEN_CHAT_EVENT, handleOpenChat);
@@ -233,7 +235,7 @@ export default function ChatCalcAI() {
                     : isDark ? 'text-gray-500' : 'text-slate-400'
                   }`}
                 >
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {isMounted ? message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}
                 </p>
               </div>
             </div>

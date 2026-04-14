@@ -46,8 +46,8 @@ function fmtAmt(n: number, symbol: string): string {
 function fmtShort(n: number, symbol: string): string {
   if (!isFinite(n)) return `${symbol}0`;
   if (n >= 1_00_00_000) return `${symbol}${(n / 1_00_00_000).toFixed(2)} Cr`;
-  if (n >= 1_00_000)    return `${symbol}${(n / 1_00_000).toFixed(2)} L`;
-  if (n >= 1_000)       return `${symbol}${(n / 1_000).toFixed(1)} K`;
+  if (n >= 1_00_000) return `${symbol}${(n / 1_00_000).toFixed(2)} L`;
+  if (n >= 1_000) return `${symbol}${(n / 1_000).toFixed(1)} K`;
   return `${symbol}${n.toFixed(2)}`;
 }
 
@@ -90,14 +90,14 @@ function PieChart({ principal, interest }: { principal: number; interest: number
   const total = principal + interest;
   if (total <= 0) return null;
   const principalPct = (principal / total) * 100;
-  const interestPct  = (interest  / total) * 100;
+  const interestPct = (interest / total) * 100;
 
   const r = 70;
   const cx = 90;
   const cy = 90;
   const circumference = 2 * Math.PI * r;
   const principalLen = (principalPct / 100) * circumference;
-  const interestLen  = (interestPct  / 100) * circumference;
+  const interestLen = (interestPct / 100) * circumference;
   const gap = 3;
 
   return (
@@ -162,15 +162,15 @@ export default function EMICalculator() {
 
   // ── Inputs ───────────────────────────────────
   const [principal, setPrincipal] = useState('500000');
-  const [rate, setRate]           = useState('8.5');
-  const [tenure, setTenure]       = useState('5');
+  const [rate, setRate] = useState('8.5');
+  const [tenure, setTenure] = useState('5');
   const [tenureUnit, setTenureUnit] = useState<'years' | 'months'>('years');
 
   // ── Results ──────────────────────────────────
-  const [results, setResults]   = useState<Results | null>(null);
-  const [amort, setAmort]       = useState<AmortRow[]>([]);
+  const [results, setResults] = useState<Results | null>(null);
+  const [amort, setAmort] = useState<AmortRow[]>([]);
   const [showAmort, setShowAmort] = useState(false);
-  const [error, setError]       = useState('');
+  const [error, setError] = useState('');
 
   // ── Slider ref for max ───────────────────────
   const sliderMax = 10_000_000;
@@ -188,9 +188,9 @@ export default function EMICalculator() {
     void tick;
     if (!lastUpdatedTime) return 'never';
     const s = Math.max(1, Math.floor((Date.now() - lastUpdatedTime) / 1000));
-    if (s < 60)  return `${s}s ago`;
+    if (s < 60) return `${s}s ago`;
     const m = Math.floor(s / 60);
-    if (m < 60)  return `${m}m ago`;
+    if (m < 60) return `${m}m ago`;
     return `${Math.floor(m / 60)}h ago`;
   })();
 
@@ -198,8 +198,8 @@ export default function EMICalculator() {
   const calculate = useCallback(() => {
     setError('');
     const pDisplay = Number(principal);
-    const r        = Number(rate);
-    const t        = Number(tenure);
+    const r = Number(rate);
+    const t = Number(tenure);
 
     if (!principal || isNaN(pDisplay) || pDisplay <= 0) {
       setError('Enter a valid Loan Amount greater than 0.');
@@ -214,9 +214,9 @@ export default function EMICalculator() {
       setResults(null); return;
     }
 
-    const months       = tenureUnit === 'years' ? Math.round(t * 12) : Math.round(t);
+    const months = tenureUnit === 'years' ? Math.round(t * 12) : Math.round(t);
     const principalINR = convertToINR(pDisplay, selectedInputCurrency);
-    const emiVal       = calcEMI(principalINR, r, months);
+    const emiVal = calcEMI(principalINR, r, months);
     const totalPayment = emiVal * months;
     const totalInterest = totalPayment - principalINR;
 
@@ -247,7 +247,7 @@ export default function EMICalculator() {
   const insightStyle = {
     warning: 'bg-amber-50 border-amber-400 text-amber-800',
     success: 'bg-emerald-50 border-emerald-400 text-emerald-800',
-    info:    'bg-blue-50 border-blue-400 text-blue-800',
+    info: 'bg-blue-50 border-blue-400 text-blue-800',
   };
   const InsightIcon = insight ? { warning: AlertTriangle, success: CheckCircle, info: Info }[insight.type] : Info;
 
@@ -480,11 +480,10 @@ export default function EMICalculator() {
                   <button
                     key={c}
                     onClick={() => setSelectedResultCurrency(c as never)}
-                    className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${
-                      selectedResultCurrency === c
+                    className={`px-3 py-1 text-xs rounded-full border font-medium transition-all ${selectedResultCurrency === c
                         ? 'bg-indigo-600 border-indigo-500 text-white'
                         : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-400 hover:text-slate-800 dark:text-slate-800 dark:text-slate-200'
-                    }`}
+                      }`}
                   >
                     {c}
                   </button>
@@ -611,9 +610,8 @@ export default function EMICalculator() {
                         return (
                           <tr
                             key={row.month}
-                            className={`border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white/5 transition-colors ${
-                              row.month === amort.length ? 'bg-emerald-900/10' : ''
-                            }`}
+                            className={`border-t border-gray-100 dark:border-gray-100 dark:border-white/5 hover:bg-white/5 transition-colors ${row.month === amort.length ? 'bg-emerald-900/10' : ''
+                              }`}
                           >
                             <td className="px-3 py-2.5 text-slate-600 dark:text-slate-400">{row.month}</td>
                             <td className="px-3 py-2.5 text-right text-slate-700 dark:text-slate-300">{disp(row.emi)}</td>
@@ -641,8 +639,8 @@ export default function EMICalculator() {
 
 const accentMap: Record<string, string> = {
   indigo: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300',
-  amber:  'bg-amber-500/10  border-amber-500/20  text-amber-300',
-  emerald:'bg-emerald-500/10 border-emerald-500/20 text-emerald-300',
+  amber: 'bg-amber-500/10  border-amber-500/20  text-amber-300',
+  emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300',
 };
 
 function MetricCard({ icon, label, value, full, accent }: {

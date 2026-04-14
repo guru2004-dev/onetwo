@@ -134,10 +134,10 @@ export default function Header() {
   const calculators = getAllCalculators();
   const filteredCalculators = searchQuery
     ? calculators.filter(
-        (calc) =>
-          calc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          calc.description.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      (calc) =>
+        calc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        calc.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : [];
 
   // Close sidebar on route change
@@ -206,8 +206,8 @@ export default function Header() {
               : 'bg-white/70 border-[#E2E8F0] shadow-sm'
             }`}
           style={{
-            boxShadow: isDarkMode 
-              ? '0 0 30px rgba(139,92,246,0.08)' 
+            boxShadow: isDarkMode
+              ? '0 0 30px rgba(139,92,246,0.08)'
               : '0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)'
           }}
         >
@@ -565,9 +565,9 @@ export default function Header() {
                       style={
                         isExpanded
                           ? {
-                              background: 'rgba(139,92,246,0.08)',
-                              borderLeft: '2px solid rgba(139,92,246,0.6)',
-                            }
+                            background: 'rgba(139,92,246,0.08)',
+                            borderLeft: '2px solid rgba(139,92,246,0.6)',
+                          }
                           : {}
                       }
                       aria-expanded={isExpanded}
@@ -631,18 +631,17 @@ export default function Header() {
                                   initial="hidden"
                                   animate="visible"
                                   onClick={() => handleCalcClick(calc.path, calc.id)}
-                                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 group/item flex items-center justify-between ${
-                                    isActive
+                                  className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 group/item flex items-center justify-between ${isActive
                                       ? 'text-white'
                                       : 'text-gray-400 hover:text-gray-200'
-                                  }`}
+                                    }`}
                                   style={
                                     isActive
                                       ? {
-                                          background:
-                                            'linear-gradient(90deg, rgba(139,92,246,0.25), rgba(59,130,246,0.12))',
-                                          boxShadow: '0 0 12px rgba(139,92,246,0.15)',
-                                        }
+                                        background:
+                                          'linear-gradient(90deg, rgba(139,92,246,0.25), rgba(59,130,246,0.12))',
+                                        boxShadow: '0 0 12px rgba(139,92,246,0.15)',
+                                      }
                                       : {}
                                   }
                                   whileHover={{ x: 3, scale: 1.01 }}

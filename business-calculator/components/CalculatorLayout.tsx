@@ -50,86 +50,86 @@ export default function CalculatorLayout({
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold mb-2
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className={`text-3xl font-bold mb-2
             ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
-          >
-            {title}
-          </h1>
-          <p className={isDarkMode ? 'text-gray-400' : 'text-[#64748B]'}>
-            {description}
-          </p>
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {/* Input Section */}
-          <div className={`rounded-3xl shadow-sm p-6 transition-colors duration-300
-            ${isDarkMode
-              ? 'bg-white/5 border border-white/10'
-              : 'bg-white border border-[#E2E8F0]'
-            }`}
-          >
-            <h2 className={`text-xl font-semibold mb-4
-              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
             >
-              Input
-            </h2>
-            {children}
+              {title}
+            </h1>
+            <p className={isDarkMode ? 'text-gray-400' : 'text-[#64748B]'}>
+              {description}
+            </p>
           </div>
 
-          {/* Results Section */}
-          <div className={`rounded-3xl shadow-sm p-6 transition-colors duration-300
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {/* Input Section */}
+            <div className={`rounded-3xl shadow-sm p-6 transition-colors duration-300
             ${isDarkMode
-              ? 'bg-white/5 border border-white/10'
-              : 'bg-white border border-[#E2E8F0]'
-            }`}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h2 className={`text-xl font-semibold
-                ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
+                ? 'bg-white/5 border border-white/10'
+                : 'bg-white border border-[#E2E8F0]'
+              }`}
+            >
+              <h2 className={`text-xl font-semibold mb-4
+              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
               >
-                Result
+                Input
               </h2>
-              <UpdateCurrencyButton />
+              {children}
             </div>
-            <CurrencyChanger variant="result" />
-            {results || (
-              <div className={`text-center py-8
-                ${isDarkMode ? 'text-gray-500' : 'text-[#64748B]'}`}
-              >
-                Enter values to see results
-              </div>
-            )}
-          </div>
-        </div>
 
-        {/* Chart Section */}
-        {chart && (
-          <div className={`rounded-3xl shadow-sm p-6 mb-6 transition-colors duration-300
+            {/* Results Section */}
+            <div className={`rounded-3xl shadow-sm p-6 transition-colors duration-300
             ${isDarkMode
-              ? 'bg-white/5 border border-white/10'
-              : 'bg-white border border-[#E2E8F0]'
-            }`}
-          >
-            <h2 className={`text-xl font-semibold mb-4
-              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
+                ? 'bg-white/5 border border-white/10'
+                : 'bg-white border border-[#E2E8F0]'
+              }`}
             >
-              Visualization
-            </h2>
-            {chart}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className={`text-xl font-semibold
+                ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
+                >
+                  Result
+                </h2>
+                <UpdateCurrencyButton />
+              </div>
+              <CurrencyChanger variant="result" />
+              {results || (
+                <div className={`text-center py-8
+                ${isDarkMode ? 'text-gray-500' : 'text-[#64748B]'}`}
+                >
+                  Enter values to see results
+                </div>
+              )}
+            </div>
           </div>
-        )}
 
-        {/* Explanation Section */}
-        {explanation && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">How It Works</h2>
-            {explanation}
-          </div>
-        )}
-      </div>
+          {/* Chart Section */}
+          {chart && (
+            <div className={`rounded-3xl shadow-sm p-6 mb-6 transition-colors duration-300
+            ${isDarkMode
+                ? 'bg-white/5 border border-white/10'
+                : 'bg-white border border-[#E2E8F0]'
+              }`}
+            >
+              <h2 className={`text-xl font-semibold mb-4
+              ${isDarkMode ? 'text-white' : 'text-[#0F172A]'}`}
+              >
+                Visualization
+              </h2>
+              {chart}
+            </div>
+          )}
+
+          {/* Explanation Section */}
+          {explanation && (
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">How It Works</h2>
+              {explanation}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

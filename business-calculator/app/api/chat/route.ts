@@ -94,6 +94,8 @@ BEHAVIOR RULES:
 export async function POST(request: NextRequest) {
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY;
+    const baseURL = process.env.ANTHROPIC_BASE_URL;
+    const model = process.env.ANTHROPIC_DEFAULT_SONNET_MODEL || 'claude-3-5-sonnet-20241022';
 
     if (!apiKey || apiKey === 'your-api-key-here') {
       return NextResponse.json(
@@ -111,10 +113,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const client = new Anthropic({ apiKey });
+    const client = new Anthropic({ 
+      apiKey,
+      baseURL: baseURL || undefined,
+    });
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: model,
       max_tokens: 512,
       system: SYSTEM_PROMPT,
       messages: messages.map((msg: { role: string; content: string }) => ({

@@ -32,10 +32,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased 
-          bg-[#F8FAFC] dark:bg-[#0B0F19]
-          text-[#0F172A] dark:text-gray-100
-          transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F8FAFC] dark:bg-[#0B0F19] text-[#0F172A] dark:text-gray-100 transition-colors duration-300`}
       >
         <ThemeProvider>
           <CurrencyProvider>
