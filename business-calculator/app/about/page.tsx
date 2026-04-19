@@ -6,6 +6,7 @@ import { ArrowLeft, RefreshCcw, ShieldCheck, Zap, BarChart3, Clock } from 'lucid
 import { useCurrency } from '@/context/CurrencyContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AreaChart, Area, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis } from 'recharts';
+import { useTheme } from '@/components/ThemeProvider';
 
 const SUPPORTED_CALCULATORS = [
   { key: 'sip', label: 'SIP' },
@@ -43,6 +44,8 @@ const getCurrencySymbol = (currencyCode: string) => {
 function PremiumFloatInput({ 
   label, value, onChange, type = "number", min, max, prefix = "", suffix = "", isRange = false, step 
 }: any) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   return (
     <div className="space-y-4">
       <div className="relative group">
@@ -54,14 +57,14 @@ function PremiumFloatInput({
           value={value} 
           onChange={onChange}
           placeholder=" " 
-          className="peer w-full bg-white/[0.03] border border-white/10 hover:border-white/20 focus:border-indigo-500/50 rounded-2xl px-4 pt-7 pb-2 text-white outline-none backdrop-blur-md transition-all shadow-inner focus:ring-4 focus:ring-indigo-500/10 text-right font-medium text-lg placeholder-transparent"
+          className={`peer w-full rounded-2xl px-4 pt-7 pb-2 outline-none backdrop-blur-md transition-all shadow-inner focus:ring-4 focus:ring-indigo-500/10 text-right font-medium text-lg placeholder-transparent ${isDarkMode ? 'bg-white/[0.03] border border-white/10 hover:border-white/20 focus:border-indigo-500/50 text-white' : 'bg-white border border-gray-200 hover:border-gray-300 focus:border-indigo-500 text-slate-900'}`}
         />
         {prefix && (
-          <span className="absolute left-4 top-[60%] -translate-y-1/2 text-gray-400 peer-focus:text-indigo-400 transition-colors pointer-events-none text-lg">
+          <span className={`absolute left-4 top-[60%] -translate-y-1/2 peer-focus:text-indigo-400 transition-colors pointer-events-none text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             {prefix}
           </span>
         )}
-        <label className="absolute left-4 top-4 text-gray-400 text-sm transition-all duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:-translate-y-0.5 peer-focus:text-xs peer-focus:text-indigo-400 pointer-events-none font-medium opacity-80 peer-focus:opacity-100 uppercase tracking-wide">
+        <label className={`absolute left-4 top-4 text-sm transition-all duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:-translate-y-0.5 peer-focus:text-xs peer-focus:text-indigo-400 pointer-events-none font-medium opacity-80 peer-focus:opacity-100 uppercase tracking-wide ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           {label}
         </label>
       </div>
@@ -75,7 +78,7 @@ function PremiumFloatInput({
             step={step}
             value={value}
             onChange={onChange}
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition-all focus:outline-none"
+            className={`w-full h-2 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition-all focus:outline-none ${isDarkMode ? 'bg-white/10' : 'bg-gray-200'}`}
           />
         </div>
       )}
@@ -85,18 +88,20 @@ function PremiumFloatInput({
 
 // Reusable Premium Select
 function PremiumSelect({ label, value, onChange, options }: any) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   return (
     <div className="relative group">
       <select
         value={value}
         onChange={onChange}
-        className="w-full bg-white/[0.03] border border-white/10 hover:border-white/20 focus:border-indigo-500/50 rounded-2xl px-4 pt-7 pb-2 text-white outline-none backdrop-blur-md transition-all shadow-inner focus:ring-4 focus:ring-indigo-500/10 appearance-none font-medium cursor-pointer"
+        className={`w-full rounded-2xl px-4 pt-7 pb-2 outline-none backdrop-blur-md transition-all shadow-inner focus:ring-4 focus:ring-indigo-500/10 appearance-none font-medium cursor-pointer ${isDarkMode ? 'bg-white/[0.03] border border-white/10 hover:border-white/20 focus:border-indigo-500/50 text-white' : 'bg-white border border-gray-200 hover:border-gray-300 focus:border-indigo-500 text-slate-900'}`}
       >
         {options.map((opt: any) => (
-          <option key={opt.value} value={opt.value} className="bg-[#0B0F19] text-white py-2">{opt.label}</option>
+          <option key={opt.value} value={opt.value} className={isDarkMode ? 'bg-[#0B0F19] text-white' : 'bg-white text-slate-900'}>{opt.label}</option>
         ))}
       </select>
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 border-l border-b border-gray-400 w-2.5 h-2.5 rotate-[-45deg] pointer-events-none" />
+      <div className={`absolute right-4 top-1/2 -translate-y-1/2 border-l border-b w-2.5 h-2.5 rotate-[-45deg] pointer-events-none ${isDarkMode ? 'border-gray-400' : 'border-gray-500'}`} />
       <label className="absolute left-4 top-3 text-xs text-indigo-400 pointer-events-none font-medium uppercase tracking-wide">
         {label}
       </label>
@@ -816,10 +821,13 @@ export default function AboutPage() {
 
 // Mini Component for Results
 function MetricCard({ label, value, color, full = false }: { label: string, value: string, color: 'indigo' | 'cyan' | 'emerald', full?: boolean }) {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
   const colorMap = {
-    indigo: 'from-indigo-500/20 to-indigo-500/5 text-indigo-400 border-indigo-500/20',
-    cyan: 'from-cyan-500/20 to-cyan-500/5 text-cyan-400 border-cyan-500/20',
-    emerald: 'from-emerald-500/20 to-emerald-500/5 text-emerald-400 border-emerald-500/20'
+    indigo: isDarkMode ? 'from-indigo-500/20 to-indigo-500/5 text-indigo-400 border-indigo-500/20' : 'from-indigo-50 to-white text-indigo-600 border-indigo-200',
+    cyan: isDarkMode ? 'from-cyan-500/20 to-cyan-500/5 text-cyan-400 border-cyan-500/20' : 'from-cyan-50 to-white text-cyan-600 border-cyan-200',
+    emerald: isDarkMode ? 'from-emerald-500/20 to-emerald-500/5 text-emerald-400 border-emerald-500/20' : 'from-emerald-50 to-white text-emerald-600 border-emerald-200',
   };
 
   return (
@@ -830,8 +838,8 @@ function MetricCard({ label, value, color, full = false }: { label: string, valu
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className={`p-6 rounded-2xl border bg-gradient-to-br ${colorMap[color]} ${full ? 'md:col-span-2' : ''}`}
     >
-       <div className="text-sm font-medium uppercase tracking-wide opacity-80 mb-2 text-gray-300">{label}</div>
-       <div className={`text-3xl font-extrabold tracking-tight ${colorMap[color].split(' ')[1]}`}>{value}</div>
+       <div className={`text-sm font-medium uppercase tracking-wide opacity-80 mb-2 ${isDarkMode ? 'text-gray-300' : 'text-slate-500'}`}>{label}</div>
+       <div className={`text-3xl font-extrabold tracking-tight ${colorMap[color]}`}>{value}</div>
     </motion.div>
   );
 }

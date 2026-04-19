@@ -433,14 +433,15 @@ export default function Header() {
             className="fixed top-0 left-0 h-full z-50 flex flex-col"
             style={{
               width: '300px',
-              background: 'rgba(10, 15, 30, 0.92)',
+              background: isDarkMode ? 'rgba(10, 15, 30, 0.92)' : 'rgba(255, 255, 255, 0.96)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
-              borderRight: '1px solid rgba(139,92,246,0.2)',
+              borderRight: isDarkMode ? '1px solid rgba(139,92,246,0.2)' : '1px solid rgba(226, 232, 240, 1)',
               borderTopRightRadius: '1rem',
               borderBottomRightRadius: '1rem',
-              boxShadow:
-                '4px 0 40px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.15), inset 0 0 1px rgba(255,255,255,0.05)',
+              boxShadow: isDarkMode 
+                ? '4px 0 40px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.15), inset 0 0 1px rgba(255,255,255,0.05)'
+                : '4px 0 20px rgba(0,0,0,0.08)',
             }}
             role="dialog"
             aria-label="Navigation sidebar"
@@ -458,7 +459,7 @@ export default function Header() {
             {/* ── Sidebar Header ───────────────────────────────────────────── */}
             <div
               className="flex items-center justify-between px-5 py-4 border-b flex-shrink-0"
-              style={{ borderColor: 'rgba(139,92,246,0.15)' }}
+              style={{ borderColor: isDarkMode ? 'rgba(139,92,246,0.15)' : 'rgba(226, 232, 240, 1)' }}
             >
               <Link
                 href="/"
@@ -477,11 +478,11 @@ export default function Header() {
                 <div>
                   <p
                     className="text-base font-bold leading-tight tracking-tight"
-                    style={{
+                    style={isDarkMode ? {
                       background: 'linear-gradient(90deg, #fff, #a78bfa)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
-                    }}
+                    } : { color: '#0F172A' }}
                   >
                     BusinessCalc
                   </p>
@@ -493,7 +494,7 @@ export default function Header() {
 
               <button
                 onClick={() => setIsSidebarOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200 hover:scale-110 focus:outline-none"
+                className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-200 hover:scale-110 focus:outline-none ${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`}
                 aria-label="Close sidebar"
               >
                 <X className="w-4 h-4" />
@@ -512,7 +513,7 @@ export default function Header() {
                     setShowSearchResults(true);
                   }}
                   placeholder="Quick search..."
-                  className="w-full pl-8 pr-4 py-2 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-violet-500/50 focus:border-violet-500/30 transition-all"
+                  className={`w-full pl-8 pr-4 py-2 text-sm rounded-xl focus:outline-none focus:ring-1 transition-all ${isDarkMode ? 'bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:ring-violet-500/50 focus:border-violet-500/30' : 'bg-gray-50 border border-gray-200 text-slate-900 placeholder-gray-400 focus:ring-purple-500/50 focus:border-purple-500/30'}`}
                 />
               </div>
 
@@ -523,17 +524,17 @@ export default function Header() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="mt-2 rounded-xl overflow-hidden border border-white/10"
-                    style={{ background: 'rgba(15,20,40,0.95)' }}
+                    className={`mt-2 rounded-xl overflow-hidden border ${isDarkMode ? 'border-white/10' : 'border-gray-200'}`}
+                    style={{ background: isDarkMode ? 'rgba(15,20,40,0.95)' : 'rgba(255,255,255,0.95)' }}
                   >
                     {filteredCalculators.length > 0 ? (
                       filteredCalculators.slice(0, 6).map((calc) => (
                         <button
                           key={calc.id}
                           onClick={() => handleCalcClick(calc.path, calc.id)}
-                          className="w-full text-left px-3 py-2.5 hover:bg-violet-500/15 border-b border-white/5 last:border-0 transition-colors"
+                          className={`w-full text-left px-3 py-2.5 border-b last:border-0 transition-colors ${isDarkMode ? 'hover:bg-violet-500/15 border-white/5' : 'hover:bg-purple-50 border-gray-100'}`}
                         >
-                          <p className="text-sm font-medium text-gray-200">{calc.name}</p>
+                          <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-slate-700'}`}>{calc.name}</p>
                         </button>
                       ))
                     ) : (
@@ -580,7 +581,7 @@ export default function Header() {
                           {meta.icon}
                         </div>
 
-                        <span className="text-sm font-semibold text-gray-200 group-hover:text-white transition-colors">
+                        <span className={`text-sm font-semibold transition-colors ${isDarkMode ? 'text-gray-200 group-hover:text-white' : 'text-slate-700 group-hover:text-slate-900'}`}>
                           {category.name}
                         </span>
                       </div>
@@ -618,7 +619,7 @@ export default function Header() {
                           exit="exit"
                           className="overflow-hidden"
                         >
-                          <div className="ml-4 mt-1 space-y-0.5 pb-1 pl-3 border-l border-white/8">
+                          <div className={`ml-4 mt-1 space-y-0.5 pb-1 pl-3 border-l ${isDarkMode ? 'border-white/8' : 'border-gray-200'}`}>
                             {category.calculators.map((calc, i) => {
                               const isActive =
                                 pathname === calc.path || activeItem === calc.id;
@@ -632,8 +633,8 @@ export default function Header() {
                                   animate="visible"
                                   onClick={() => handleCalcClick(calc.path, calc.id)}
                                   className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 group/item flex items-center justify-between ${isActive
-                                      ? 'text-white'
-                                      : 'text-gray-400 hover:text-gray-200'
+                                      ? (isDarkMode ? 'text-white' : 'text-purple-700 font-bold')
+                                      : (isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-slate-800')
                                     }`}
                                   style={
                                     isActive
@@ -667,8 +668,8 @@ export default function Header() {
             <div
               className="flex-shrink-0 px-5 py-4 border-t"
               style={{
-                borderColor: 'rgba(139,92,246,0.15)',
-                background: 'rgba(139,92,246,0.04)',
+                borderColor: isDarkMode ? 'rgba(139,92,246,0.15)' : 'rgba(226, 232, 240, 1)',
+                background: isDarkMode ? 'rgba(139,92,246,0.04)' : 'rgba(248, 250, 252, 1)',
               }}
             >
               <div className="flex items-center justify-between">

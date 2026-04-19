@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     const baseURL = process.env.ANTHROPIC_BASE_URL;
     const model = process.env.ANTHROPIC_DEFAULT_SONNET_MODEL || 'claude-3-5-sonnet-20241022';
 
-    if (!apiKey || apiKey === 'your-api-key-here') {
+    if (!apiKey || apiKey === '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') {
       return NextResponse.json(
         { error: 'ANTHROPIC_API_KEY is not configured. Please add your API key to .env.local' },
         { status: 500 }
@@ -113,22 +113,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const client = new Anthropic({ 
-      apiKey,
-      baseURL: baseURL || undefined,
+    const response = await fetch(`${baseURL}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "BusinessCalc",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages.map((msg: { role: string; content: string }) => ({
+            role: msg.role === 'assistant' ? 'assistant' : 'user',
+            content: msg.content,
+          }))
+        ],
+        max_tokens: 512,
+      })
     });
 
-    const response = await client.messages.create({
-      model: model,
-      max_tokens: 512,
-      system: SYSTEM_PROMPT,
-      messages: messages.map((msg: { role: string; content: string }) => ({
-        role: msg.role as 'user' | 'assistant',
-        content: msg.content,
-      })),
-    });
+    // Check if the response is JSON before parsing
+    const contentType = response.headers.get("content-type");
+    let data;
+    
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      const text = await response.text();
+      console.error('OpenRouter non-JSON response:', text);
+      throw new Error(`OpenRouter returned an unexpected response format (${response.status} ${response.statusText}).`);
+    }
 
-    const reply = response.content[0].type === 'text' ? response.content[0].text : '';
+    if (!response.ok) {
+      const errorMessage = data?.error?.message || data?.error || `OpenRouter Error ${response.status}: ${response.statusText}`;
+      throw new Error(errorMessage);
+    }
+
+    const reply = data.choices[0].message.content;
 
     return NextResponse.json({ reply });
   } catch (error: unknown) {

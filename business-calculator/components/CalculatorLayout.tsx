@@ -124,9 +124,11 @@ export default function CalculatorLayout({
 
           {/* Explanation Section */}
           {explanation && (
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">How It Works</h2>
-              {explanation}
+            <div className={`rounded-lg shadow p-6 transition-colors duration-300 ${isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-white'}`}>
+              <h2 className={`text-xl font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>How It Works</h2>
+              <div className={isDarkMode ? 'text-gray-300' : 'text-slate-600'}>
+                {explanation}
+              </div>
             </div>
           )}
         </div>
